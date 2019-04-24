@@ -16,4 +16,4 @@ SimpleFeedly.Crawler START
 SimpleFeedly.Crawler UNINSTALL
 ```
 
-Script: <a href="https://raw.githubusercontent.com/minhhungit/SimpleFeedly/master/wiki/Scripts/list-of-channels.sql" target="_blank">list-of-channels</a>
+Script: <a href="https://github.com/minhhungit/SimpleFeedly/blob/master/wiki/Scripts/list-of-channels.sql" target="_blank">list-of-channels</a>
