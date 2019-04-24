@@ -576,5 +576,5 @@ INSERT [dbo].[RssChannels] ([Id], [Type], [Title], [Link], [Description], [Langu
 GO
 INSERT [dbo].[RssChannels] ([Id], [Type], [Title], [Link], [Description], [Language], [Copyright], [LastUpdatedDate], [ImageUrl], [OriginalDocument], [IsError], [ErrorMessage]) VALUES (80297, NULL, N'https://codeblog.jonskeet.uk/', N'https://codeblog.jonskeet.uk/feed/', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL)
 GO
-SET IDENTITY_INSERT [dbo].[SimpleFeedly] OFF
+SET IDENTITY_INSERT [dbo].[RssChannels] OFF
 GO
