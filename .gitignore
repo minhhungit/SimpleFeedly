@@ -1,0 +1,15 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/packages
+/.vs
+/Src/SimpleFeedly.Web/bin
+/Src/SimpleFeedly.Web/node_modules/@types
+/Src/SimpleFeedly.Web/obj/Debug
+/Src/SimpleFeedly.Core/bin/Debug
+/Src/SimpleFeedly.Core/obj/Debug
+/Src/SimpleFeedly.Crawler/bin/Debug
+/Src/SimpleFeedly.Crawler/obj/Debug
+/Src/SimpleFeedly.DbUpdater/bin/Debug
+/Src/SimpleFeedly.DbUpdater/obj/Debug
