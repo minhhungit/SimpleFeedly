@@ -134,17 +134,15 @@ namespace SimpleFeedly.Rss {
                         return Q.warning("Please select at least one item");
                     }
 
-                    return Q.confirm('Mark checked for all?',
+                    return Q.confirm('Mark checked for all items int this page?',
                         () => {
                             if (!this.onViewSubmit()) {
                                 return;
                             }
 
-                            $.each(selectedItems, (idx, item: RssFeedItemsRow) => {
-                                RssFeedItemsService.MarkCheckedFeedItem({ FeedItemId: item.Id, IsChecked: true }, response => {
-                                    this.rowSelection.resetCheckedAndRefresh();
-                                });
-                            })
+                            RssFeedItemsService.MarkCheckedBatchFeedItems({ FeedItemIds: selectedItems.map(x => x.Id), IsChecked: true }, response => {
+                                this.rowSelection.resetCheckedAndRefresh();
+                            });
                         },
                         {
                             title: 'Confirm',

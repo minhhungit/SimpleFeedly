@@ -8,6 +8,7 @@
         export declare function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<RssFeedItemsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         export declare function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<RssFeedItemsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         export declare function MarkCheckedFeedItem(request: MarkCheckedFeedItemRequest, onSuccess?: (response: Serenity.ServiceResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        export declare function MarkCheckedBatchFeedItems(request: MarkCheckedBatchFeedItemsRequest, onSuccess?: (response: Serenity.ServiceResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         export declare function GetFeedItemCheckedState(request: Serenity.ServiceRequest, onSuccess?: (response: FeedItemCheckedStateResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
 
         export declare const enum Methods {
@@ -17,6 +18,7 @@
             Retrieve = "Rss/RssFeedItems/Retrieve",
             List = "Rss/RssFeedItems/List",
             MarkCheckedFeedItem = "Rss/RssFeedItems/MarkCheckedFeedItem",
+            MarkCheckedBatchFeedItems = "Rss/RssFeedItems/MarkCheckedBatchFeedItems",
             GetFeedItemCheckedState = "Rss/RssFeedItems/GetFeedItemCheckedState"
         }
 
@@ -27,6 +29,7 @@
             'Retrieve', 
             'List', 
             'MarkCheckedFeedItem', 
+            'MarkCheckedBatchFeedItems', 
             'GetFeedItemCheckedState'
         ].forEach(x => {
             (<any>RssFeedItemsService)[x] = function (r, s, o) {

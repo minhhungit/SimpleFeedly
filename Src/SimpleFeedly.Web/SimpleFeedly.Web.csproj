@@ -1053,6 +1053,9 @@
     <TypeScriptCompile Include="Imports\ServerTypings\Rss.FeedItemCheckedStateResponse.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Rss.MarkCheckedBatchFeedItemsRequest.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Rss.MarkCheckedFeedItemRequest.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
@@ -1737,6 +1740,7 @@
     <Compile Include="Modules\Rss\RssChannels\ServiceModel\TestChannelRequest.cs" />
     <Compile Include="Modules\Rss\RssChannelTester\RssChannelTesterPage.cs" />
     <Compile Include="Modules\Rss\RssFeedItems\ServiceModel\FeedItemCheckedStateResponse.cs" />
+    <Compile Include="Modules\Rss\RssFeedItems\ServiceModel\MarkCheckedBatchFeedItems.cs" />
     <Compile Include="Modules\Rss\RssFeedItems\ServiceModel\MarkCheckedFeedItemRequest.cs" />
     <Compile Include="Modules\SimpleFeedlyDatabaseAccess.cs" />
     <Compile Include="Modules\Texts.cs" />

@@ -1,10 +1,12 @@
 ﻿
 namespace SimpleFeedly.Rss.Endpoints
 {
+    using Dapper;
     using Serenity;
     using Serenity.Data;
     using Serenity.Services;
     using System.Data;
+    using System.Linq;
     using System.Web.Mvc;
     using MyRepository = Repositories.RssFeedItemsRepository;
     using MyRow = Entities.RssFeedItemsRow;
@@ -51,6 +53,26 @@ namespace SimpleFeedly.Rss.Endpoints
                 request.CheckNotNull();
 
                 SimpleFeedlyDatabaseAccess.MarkCheckedFeedItem(request.FeedItemId, request.IsChecked);
+
+                return new ServiceResponse();
+            });
+        }
+
+        [HttpPost, JsonFilter]
+        public Result<ServiceResponse> MarkCheckedBatchFeedItems(MarkCheckedBatchFeedItemsRequest request)
+        {
+            if (request.FeedItemIds == null || !request.FeedItemIds.Any())
+            {
+                throw new System.Exception("Please choose at least one feed item");
+            }
+
+            return this.ExecuteMethod(() =>
+            {
+                request.CheckNotNull();
+
+                var ids = request.FeedItemIds.Distinct().ToList();
+
+                SimpleFeedlyDatabaseAccess.MarkCheckedFeedItems(ids, request.IsChecked);
 
                 return new ServiceResponse();
             });

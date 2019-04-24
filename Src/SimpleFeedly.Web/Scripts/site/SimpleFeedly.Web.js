@@ -598,6 +598,7 @@ var SimpleFeedly;
                 'Retrieve',
                 'List',
                 'MarkCheckedFeedItem',
+                'MarkCheckedBatchFeedItems',
                 'GetFeedItemCheckedState'
             ].forEach(function (x) {
                 RssFeedItemsService[x] = function (r, s, o) {
@@ -3164,14 +3165,12 @@ var SimpleFeedly;
                         if (selectedItems === null || selectedItems === undefined || selectedItems.length === 0) {
                             return Q.warning("Please select at least one item");
                         }
-                        return Q.confirm('Mark checked for all?', function () {
+                        return Q.confirm('Mark checked for all items int this page?', function () {
                             if (!_this.onViewSubmit()) {
                                 return;
                             }
-                            $.each(selectedItems, function (idx, item) {
-                                Rss.RssFeedItemsService.MarkCheckedFeedItem({ FeedItemId: item.Id, IsChecked: true }, function (response) {
-                                    _this.rowSelection.resetCheckedAndRefresh();
-                                });
+                            Rss.RssFeedItemsService.MarkCheckedBatchFeedItems({ FeedItemIds: selectedItems.map(function (x) { return x.Id; }), IsChecked: true }, function (response) {
+                                _this.rowSelection.resetCheckedAndRefresh();
                             });
                         }, {
                             title: 'Confirm',

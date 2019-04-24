@@ -1,9 +1,11 @@
 ﻿using Dapper;
+using SimpleFeedly.Rss;
 using SimpleFeedly.Rss.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace SimpleFeedly
 {
@@ -136,6 +138,31 @@ namespace SimpleFeedly
                 parms.Add("@errorMessage", errorMessage);
 
                 con.Execute("UpdateChannelErrorStatus", parms, commandType: CommandType.StoredProcedure, commandTimeout: 30);
+            }
+        }
+
+        public static void MarkCheckedFeedItems(List<long> ids, bool isChecked)
+        {            
+            using (var con = new SqlConnection(Settings.ConnectionString))
+            {
+                var data = new ListBigIntNumbersCollection();
+                if (ids.Any())
+                {
+                    data.AddRange(ids);
+                }
+
+                var parm = new DynamicParameters();
+                parm.Add("@isChecked", isChecked);
+                if (data.Count > 0)
+                {
+                    parm.Add("@ids", data.AsTableValuedParameter());
+                }
+
+                con.Execute(
+                        "MarkCheckedFeedItems",
+                        parm,
+                        commandType: CommandType.StoredProcedure,
+                        commandTimeout: Settings.ConnectionTimeout);
             }
         }
     }

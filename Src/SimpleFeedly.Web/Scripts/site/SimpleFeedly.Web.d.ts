@@ -529,6 +529,12 @@ declare namespace SimpleFeedly.Rss {
     }
 }
 declare namespace SimpleFeedly.Rss {
+    interface MarkCheckedBatchFeedItemsRequest extends Serenity.ServiceRequest {
+        FeedItemIds?: number[];
+        IsChecked?: boolean;
+    }
+}
+declare namespace SimpleFeedly.Rss {
     interface MarkCheckedFeedItemRequest extends Serenity.ServiceRequest {
         FeedItemId?: number;
         IsChecked?: boolean;
@@ -668,6 +674,7 @@ declare namespace SimpleFeedly.Rss {
         function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<RssFeedItemsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<RssFeedItemsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function MarkCheckedFeedItem(request: MarkCheckedFeedItemRequest, onSuccess?: (response: Serenity.ServiceResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function MarkCheckedBatchFeedItems(request: MarkCheckedBatchFeedItemsRequest, onSuccess?: (response: Serenity.ServiceResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function GetFeedItemCheckedState(request: Serenity.ServiceRequest, onSuccess?: (response: FeedItemCheckedStateResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         const enum Methods {
             Create = "Rss/RssFeedItems/Create",
@@ -676,6 +683,7 @@ declare namespace SimpleFeedly.Rss {
             Retrieve = "Rss/RssFeedItems/Retrieve",
             List = "Rss/RssFeedItems/List",
             MarkCheckedFeedItem = "Rss/RssFeedItems/MarkCheckedFeedItem",
+            MarkCheckedBatchFeedItems = "Rss/RssFeedItems/MarkCheckedBatchFeedItems",
             GetFeedItemCheckedState = "Rss/RssFeedItems/GetFeedItemCheckedState"
         }
     }
