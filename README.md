@@ -26,6 +26,9 @@ Deploy it as normal web ASP.NET MVC application, too easy, right?
 
 
 ## Demo
+### DbUpdater
+<img src="https://github.com/minhhungit/SimpleFeedly/blob/master/wiki/Images/demo03.png" />
+
 ### Rss Reader (Web App)
 <img src="https://github.com/minhhungit/SimpleFeedly/blob/master/wiki/Images/demo01.png" />
 
