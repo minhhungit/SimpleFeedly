@@ -15,3 +15,5 @@ SimpleFeedly.Crawler START
 ```js
 SimpleFeedly.Crawler UNINSTALL
 ```
+
+Script: <a href="https://raw.githubusercontent.com/minhhungit/SimpleFeedly/master/wiki/Scripts/list-of-channels.sql" target="_blank">list-of-channels</a>
