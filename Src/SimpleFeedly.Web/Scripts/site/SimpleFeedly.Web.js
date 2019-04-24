@@ -479,12 +479,13 @@ var SimpleFeedly;
                     var s = Serenity;
                     var w0 = s.StringEditor;
                     var w1 = s.BooleanEditor;
+                    var w2 = s.TextAreaEditor;
                     Q.initFormType(RssChannelsForm, [
                         'Title', w0,
                         'Link', w0,
                         'Description', w0,
                         'IsError', w1,
-                        'ErrorMessage', w0
+                        'ErrorMessage', w2
                     ]);
                 }
                 return _this;
@@ -524,7 +525,8 @@ var SimpleFeedly;
                 'Update',
                 'Delete',
                 'Retrieve',
-                'List'
+                'List',
+                'TestChannel'
             ].forEach(function (x) {
                 RssChannelsService[x] = function (r, s, o) {
                     return Q.serviceRequest(RssChannelsService.baseUrl + '/' + x, r, s, o);
@@ -547,18 +549,19 @@ var SimpleFeedly;
                     var w0 = s.LookupEditor;
                     var w1 = s.BooleanEditor;
                     var w2 = s.StringEditor;
-                    var w3 = s.DateEditor;
-                    var w4 = s.HtmlContentEditor;
+                    var w3 = s.TextAreaEditor;
+                    var w4 = s.DateEditor;
+                    var w5 = s.HtmlContentEditor;
                     Q.initFormType(RssFeedItemsForm, [
                         'ChannelId', w0,
                         'IsChecked', w1,
                         'FeedItemId', w2,
                         'Title', w2,
                         'Link', w2,
-                        'Description', w2,
-                        'PublishingDate', w3,
+                        'Description', w3,
+                        'PublishingDate', w4,
                         'Author', w2,
-                        'Content', w4
+                        'Content', w5
                     ]);
                 }
                 return _this;
@@ -2925,6 +2928,50 @@ var SimpleFeedly;
 (function (SimpleFeedly) {
     var Rss;
     (function (Rss) {
+        var RssChannelTesterForm = /** @class */ (function (_super) {
+            __extends(RssChannelTesterForm, _super);
+            function RssChannelTesterForm(container) {
+                var _this = _super.call(this, container) || this;
+                _this.templateHtml = _this.byId("templateItems")[0].innerHTML;
+                _this.byId("btnCheck").click(function () { return _this.CheckChannel(_this.byId("txtChannelUrl").val()); });
+                return _this;
+            }
+            RssChannelTesterForm.prototype.CheckChannel = function (channelUrl) {
+                var _this = this;
+                if (Q.trimToNull(channelUrl) == null) {
+                    Q.warning("Please enter channel url");
+                    return;
+                }
+                Rss.RssChannelsService.TestChannel({ FeedUrl: channelUrl }, function (response) {
+                    console.log(response);
+                    if (response.Error != null) {
+                        Q.alert(response.Error.Message);
+                    }
+                    else {
+                        //var rendered = Mustache.render(this.byId('template').html(), { items : response.Entities });
+                        var result = "";
+                        response.Entities.forEach(function (item, idx) {
+                            result += _this.templateHtml
+                                .replace(/{{Link}}/g, item.Link)
+                                .replace(/{{Title}}/g, item.Title);
+                        });
+                        console.log(result);
+                        _this.byId("postContainer").html(result);
+                    }
+                });
+            };
+            RssChannelTesterForm = __decorate([
+                Serenity.Decorators.registerClass()
+            ], RssChannelTesterForm);
+            return RssChannelTesterForm;
+        }(Serenity.TemplatedWidget));
+        Rss.RssChannelTesterForm = RssChannelTesterForm;
+    })(Rss = SimpleFeedly.Rss || (SimpleFeedly.Rss = {}));
+})(SimpleFeedly || (SimpleFeedly = {}));
+var SimpleFeedly;
+(function (SimpleFeedly) {
+    var Rss;
+    (function (Rss) {
         var RssChannelsDialog = /** @class */ (function (_super) {
             __extends(RssChannelsDialog, _super);
             function RssChannelsDialog() {
@@ -3062,7 +3109,8 @@ var SimpleFeedly;
                 buttons.splice(Q.indexOf(buttons, function (x) { return x.cssClass == "add-button"; }), 1);
                 buttons.unshift({
                     title: '',
-                    cssClass: 'delete-button',
+                    cssClass: 'delete-button text-orange',
+                    icon: "fa fa-undo",
                     separator: 'right',
                     onClick: function () {
                         var selectedItems = _this.getSelectedItems();

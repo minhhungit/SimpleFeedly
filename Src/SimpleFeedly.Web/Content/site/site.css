@@ -7405,10 +7405,11 @@ section.content > .s-DataGrid {
   color: #966;
 }
 .s-Rss-RssChannelsDialog > .size {
-  width: 650px;
+  width: 1070px;
+  height: 470px;
 }
 .s-Rss-RssChannelsDialog .caption {
-  width: 150px;
+  width: 140px;
 }
 .s-Rss-RssFeedItemsDialog > .size {
   width: 650px;

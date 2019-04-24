@@ -18,6 +18,8 @@ namespace SimpleFeedly.Rss.Forms
         public String Link { get; set; }
         public String Description { get; set; }
         public Boolean IsError { get; set; }
+
+        [TextAreaEditor(Rows = 10)]
         public String ErrorMessage { get; set; }
         //public String Language { get; set; }
         //public String Copyright { get; set; }

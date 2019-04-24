@@ -4,7 +4,7 @@
         Link: Serenity.StringEditor;
         Description: Serenity.StringEditor;
         IsError: Serenity.BooleanEditor;
-        ErrorMessage: Serenity.StringEditor;
+        ErrorMessage: Serenity.TextAreaEditor;
     }
 
     export class RssChannelsForm extends Serenity.PrefixedContext {
@@ -20,13 +20,14 @@
                 var s = Serenity;
                 var w0 = s.StringEditor;
                 var w1 = s.BooleanEditor;
+                var w2 = s.TextAreaEditor;
 
                 Q.initFormType(RssChannelsForm, [
                     'Title', w0,
                     'Link', w0,
                     'Description', w0,
                     'IsError', w1,
-                    'ErrorMessage', w0
+                    'ErrorMessage', w2
                 ]);
             }
         }

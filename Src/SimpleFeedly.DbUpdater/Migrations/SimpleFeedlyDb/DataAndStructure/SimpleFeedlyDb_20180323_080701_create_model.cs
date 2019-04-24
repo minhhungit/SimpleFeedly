@@ -56,7 +56,7 @@ namespace SimpleFeedly.DbUpdater.Migrations.SimpleFeedlyDb
     }
 
     [ExtMgrDataStructure(2018, 03, 23, 08, 07, 02)]
-    public class RssReaderDb_20180323_080701_create_model_index : Migration
+    public class SimpleFeedlyDb_20180323_080701_create_model_index : Migration
     {
         public override void Up()
         {

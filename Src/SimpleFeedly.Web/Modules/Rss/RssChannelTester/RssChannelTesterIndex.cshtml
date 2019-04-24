@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Test Channel";
+}
+
+<h2>Test Channel</h2>
+
+<div id="testForm"></div>
+
+<script type="text/javascript">
+    jQuery(function () {
+        new SimpleFeedly.Rss.RssChannelTesterForm($('#testForm')).init();
+    });
+</script>

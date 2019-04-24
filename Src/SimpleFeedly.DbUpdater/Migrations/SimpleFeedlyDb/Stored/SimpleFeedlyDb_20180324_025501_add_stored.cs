@@ -19,7 +19,7 @@ namespace SimpleFeedly.DbUpdater.Migrations.SimpleFeedlyDb
     }
 
     [ExtMgrStoredProcedure(2018, 03, 24, 02, 55, 02)]
-    public class RssReaderDb_20180324_025502_add_stored : Migration
+    public class SimpleFeedlyDb_20180324_025502_add_stored : Migration
     {
         public override void Up()
         {
@@ -30,7 +30,7 @@ namespace SimpleFeedly.DbUpdater.Migrations.SimpleFeedlyDb
     }
 
     [ExtMgrStoredProcedure(2018, 03, 24, 02, 55, 03)]
-    public class RssReaderDb_20180324_025502_add_stored_03 : Migration
+    public class SimpleFeedlyDb_20180324_025502_add_stored_03 : Migration
     {
         public override void Up()
         {

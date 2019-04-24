@@ -37,7 +37,7 @@ namespace SimpleFeedly.DbUpdater.Migrations.SimpleFeedlyDb
     }
 
     [ExtMgrDataStructure(2018, 04, 08, 20, 54, 01)]
-    public class RssReaderDb_20180408205401_add_new_column : Migration
+    public class SimpleFeedlyDb_20180408205401_add_new_column : Migration
     {
         public override void Up()
         {

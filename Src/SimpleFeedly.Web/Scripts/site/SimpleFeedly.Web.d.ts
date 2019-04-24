@@ -542,7 +542,7 @@ declare namespace SimpleFeedly.Rss {
         Link: Serenity.StringEditor;
         Description: Serenity.StringEditor;
         IsError: Serenity.BooleanEditor;
-        ErrorMessage: Serenity.StringEditor;
+        ErrorMessage: Serenity.TextAreaEditor;
     }
     class RssChannelsForm extends Serenity.PrefixedContext {
         static formKey: string;
@@ -595,12 +595,14 @@ declare namespace SimpleFeedly.Rss {
         function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<RssChannelsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<RssChannelsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function TestChannel(request: TestChannelRequest, onSuccess?: (response: Serenity.ListResponse<RssChannelsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         const enum Methods {
             Create = "Rss/RssChannels/Create",
             Update = "Rss/RssChannels/Update",
             Delete = "Rss/RssChannels/Delete",
             Retrieve = "Rss/RssChannels/Retrieve",
-            List = "Rss/RssChannels/List"
+            List = "Rss/RssChannels/List",
+            TestChannel = "Rss/RssChannels/TestChannel"
         }
     }
 }
@@ -613,7 +615,7 @@ declare namespace SimpleFeedly.Rss {
         FeedItemId: Serenity.StringEditor;
         Title: Serenity.StringEditor;
         Link: Serenity.StringEditor;
-        Description: Serenity.StringEditor;
+        Description: Serenity.TextAreaEditor;
         PublishingDate: Serenity.DateEditor;
         Author: Serenity.StringEditor;
         Content: Serenity.HtmlContentEditor;
@@ -676,6 +678,11 @@ declare namespace SimpleFeedly.Rss {
             MarkCheckedFeedItem = "Rss/RssFeedItems/MarkCheckedFeedItem",
             GetFeedItemCheckedState = "Rss/RssFeedItems/GetFeedItemCheckedState"
         }
+    }
+}
+declare namespace SimpleFeedly.Rss {
+    interface TestChannelRequest extends Serenity.ServiceRequest {
+        FeedUrl?: string;
     }
 }
 declare namespace SimpleFeedly {
@@ -1138,6 +1145,13 @@ declare namespace SimpleFeedly.Membership {
         protected getFormKey(): string;
         private form;
         constructor(container: JQuery);
+    }
+}
+declare namespace SimpleFeedly.Rss {
+    class RssChannelTesterForm extends Serenity.TemplatedWidget<any> {
+        private templateHtml;
+        constructor(container: JQuery);
+        private CheckChannel;
     }
 }
 declare namespace SimpleFeedly.Rss {

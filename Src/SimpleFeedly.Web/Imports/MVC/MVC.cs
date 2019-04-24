@@ -88,6 +88,11 @@ namespace MVC
                 public const string RssChannelsIndex = "~/Modules/Rss/RssChannels/RssChannelsIndex.cshtml";
             }
 
+            public static class RssChannelTester
+            {
+                public const string RssChannelTesterIndex = "~/Modules/Rss/RssChannelTester/RssChannelTesterIndex.cshtml";
+            }
+
             public static class RssFeedItems
             {
                 public const string RssFeedItemsIndex = "~/Modules/Rss/RssFeedItems/RssFeedItemsIndex.cshtml";

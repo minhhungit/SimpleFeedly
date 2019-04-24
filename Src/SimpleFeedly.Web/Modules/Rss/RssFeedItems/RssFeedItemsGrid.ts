@@ -63,7 +63,8 @@ namespace SimpleFeedly.Rss {
 
             buttons.unshift({
                 title: '',
-                cssClass: 'delete-button',
+                cssClass: 'delete-button text-orange',
+                icon: "fa fa-undo",
                 separator: 'right',
                 onClick: () => {
                     var selectedItems = this.getSelectedItems();

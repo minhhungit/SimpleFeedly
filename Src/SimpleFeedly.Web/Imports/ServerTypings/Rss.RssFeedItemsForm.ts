@@ -5,7 +5,7 @@
         FeedItemId: Serenity.StringEditor;
         Title: Serenity.StringEditor;
         Link: Serenity.StringEditor;
-        Description: Serenity.StringEditor;
+        Description: Serenity.TextAreaEditor;
         PublishingDate: Serenity.DateEditor;
         Author: Serenity.StringEditor;
         Content: Serenity.HtmlContentEditor;
@@ -25,8 +25,9 @@
                 var w0 = s.LookupEditor;
                 var w1 = s.BooleanEditor;
                 var w2 = s.StringEditor;
-                var w3 = s.DateEditor;
-                var w4 = s.HtmlContentEditor;
+                var w3 = s.TextAreaEditor;
+                var w4 = s.DateEditor;
+                var w5 = s.HtmlContentEditor;
 
                 Q.initFormType(RssFeedItemsForm, [
                     'ChannelId', w0,
@@ -34,10 +35,10 @@
                     'FeedItemId', w2,
                     'Title', w2,
                     'Link', w2,
-                    'Description', w2,
-                    'PublishingDate', w3,
+                    'Description', w3,
+                    'PublishingDate', w4,
                     'Author', w2,
-                    'Content', w4
+                    'Content', w5
                 ]);
             }
         }

@@ -19,7 +19,7 @@ namespace SimpleFeedly.Rss.Columns
         public Boolean IsError { get; set; }
 
         //public Int32 Type { get; set; }
-        [EditLink, Width(250)]
+        [EditLink, Width(325)]
         public String Title { get; set; }
         [Width(500)]
         public String Link { get; set; }

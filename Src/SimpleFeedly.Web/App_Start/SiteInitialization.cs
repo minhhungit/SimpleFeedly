@@ -30,6 +30,14 @@
                     registrar.RegisterInstance<IDirectoryService>(new ActiveDirectoryService());
 
                 InitializeExceptionLog();
+
+                new SimpleFeedlyDatabaseAccess().Setup(() =>
+                {
+                    return new DatabaseAccessSettings(
+                        ConfigurationManager.ConnectionStrings["SimpleFeedlyConn"].ConnectionString,
+                        200
+                    );
+                });
             }
             catch (Exception ex)
             {
