@@ -17,3 +17,11 @@ SimpleFeedly.Crawler UNINSTALL
 ```
 
 Script: <a href="https://github.com/minhhungit/SimpleFeedly/blob/master/wiki/Scripts/list-of-channels.sql" target="_blank">list-of-channels</a>
+
+
+## Demo
+### Rss Reader (Web App)
+<img src="https://github.com/minhhungit/SimpleFeedly/blob/master/wiki/Images/demo01.png" />
+
+### Rss Crawler (Windows Service with Topshelf)
+<img src="https://github.com/minhhungit/SimpleFeedly/blob/master/wiki/Images/demo02.png" />
