@@ -173,10 +173,7 @@ else
     $(function () {
         //$.connection.hub.logging = true;
         var channelHub = $.connection.channelHub;
-        $.connection.hub.start().done(() => {
-            //this.clientId = ($ as any).connection.hub.id;
-        });
-
+        
         channelHub.client.updateChannelProgress = (data) => {
             // reset color
             $(".singalr-channel-progressing-info-dot-status").removeClass("bg-orange");
@@ -192,6 +189,10 @@ else
             // update message
             $(".singalr-channel-progressing-info").html(data.Message);
         };
+
+        $.connection.hub.start().done(() => {
+            //this.clientId = ($ as any).connection.hub.id;
+        });
     });
 </script>
 }
