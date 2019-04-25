@@ -7420,3 +7420,16 @@ section.content > .s-DataGrid {
 .inline-action.view-details {
   background-image: url(../serenity/images/magnifier-left.png);
 }
+@media (max-width: 767px) {
+  .main-header .logo {
+    display: none;
+  }
+  .main-sidebar,
+  .left-side {
+    padding-top: 50px;
+  }
+  .fixed .content-wrapper,
+  .fixed .right-side {
+    padding-top: 50px;
+  }
+}
