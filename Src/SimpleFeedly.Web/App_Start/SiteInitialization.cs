@@ -7,11 +7,15 @@
     using Serenity.Web;
     using System;
     using System.Configuration;
+    using System.Net;
 
     public static partial class SiteInitialization
     {
         public static void ApplicationStart()
         {
+            ServicePointManager.Expect100Continue = true;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
             try
             {
                 SqlSettings.AutoQuotedIdentifiers = true;
@@ -32,7 +36,7 @@
                 InitializeExceptionLog();
                 InitializeAppCfg();
                 InitializeDataAccessHelpers();
-                InitializeRssCrawler();
+                //InitializeRssCrawler();
             }
             catch (Exception ex)
             {
