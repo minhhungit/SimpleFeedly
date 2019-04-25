@@ -3241,7 +3241,7 @@ var SimpleFeedly;
             };
             RssFeedItemsGrid.prototype.getQuickSearchFields = function () {
                 return [
-                    { name: "", title: "all" },
+                    { name: "", title: "All" },
                     { name: "Title" /* Title */, title: "Title" },
                     { name: "Description" /* Description */, title: "Description" }
                 ];

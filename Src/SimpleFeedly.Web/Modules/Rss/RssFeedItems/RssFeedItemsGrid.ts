@@ -229,7 +229,7 @@ namespace SimpleFeedly.Rss {
 
         protected getQuickSearchFields(): Serenity.QuickSearchField[] {
             return [
-                { name: "", title: "all" },
+                { name: "", title: "All" },
                 { name: fld.Title, title: "Title" },
                 { name: fld.Description, title: "Description" }
             ];

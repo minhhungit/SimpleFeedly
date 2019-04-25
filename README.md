@@ -2,7 +2,7 @@
 Very simple Rss Crawler & Reader tool
 
 ### SimpleFeedly.DbUpdater
-Create an empty database, update App.config file then and run SimpleFeedly.DbUpdater.exe to setup your database
+Create an empty database, update App.config file then run SimpleFeedly.DbUpdater.exe to setup your database
 
 ### SimpleFeedly.Crawler
 
@@ -23,6 +23,7 @@ Deploy it as normal web ASP.NET MVC application, too easy, right?
 
 ### Script 
 <a href="https://github.com/minhhungit/SimpleFeedly/blob/master/wiki/Scripts/list-of-channels.sql" target="_blank">list-of-channels</a> (for demo)
+<a href="https://github.com/minhhungit/SimpleFeedly/releases" target="_blank">MSSQL database backup file</a> (for demo)
 
 
 ## Demo
@@ -32,7 +33,7 @@ Deploy it as normal web ASP.NET MVC application, too easy, right?
 ### Rss Reader (Web App)
 <img src="https://github.com/minhhungit/SimpleFeedly/blob/master/wiki/Images/demo01.png" />
 
-### Rss Crawler (Windows Service with Topshelf)
+### Rss Crawler (Windows Service application using Topshelf)
 <img src="https://github.com/minhhungit/SimpleFeedly/blob/master/wiki/Images/demo02.png" />
 
 
