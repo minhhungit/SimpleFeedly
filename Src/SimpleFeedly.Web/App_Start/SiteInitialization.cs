@@ -36,7 +36,7 @@
                 InitializeExceptionLog();
                 InitializeAppCfg();
                 InitializeDataAccessHelpers();
-                //InitializeRssCrawler();
+                InitializeRssCrawler();
             }
             catch (Exception ex)
             {
