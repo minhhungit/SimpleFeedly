@@ -10,6 +10,7 @@
     using System.Net;
     using System.Runtime.Caching;
     using System.Web;
+    using System.Xml;
 
     public static partial class SiteInitialization
     {
@@ -252,7 +253,10 @@
             {
                 try
                 {
-                    using (var reader = System.Xml.XmlReader.Create(channelUrl))
+                    XmlReaderSettings settings = new XmlReaderSettings();
+                    settings.DtdProcessing = DtdProcessing.Parse;
+
+                    using (var reader = XmlReader.Create(channelUrl, settings))
                     {
                         var feed = System.ServiceModel.Syndication.SyndicationFeed.Load(reader);
                         reader.Close();
