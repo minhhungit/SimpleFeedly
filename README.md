@@ -1,30 +1,13 @@
 # SimpleFeedly
-Very simple Rss Crawler & Reader tool
+Very simple Rss Reader Web Application using <a href="https://github.com/volkanceylan/Serenity" target="_blank">Serenity Framework</a> 
 
-### SimpleFeedly.DbUpdater
-Create an empty database, update App.config file then run SimpleFeedly.DbUpdater.exe to setup your database
-
-### SimpleFeedly.Crawler
-
-1. Install
-> Remember run CMD as Administrator
-
-```js
-SimpleFeedly.Crawler INSTALL --autostart
-SimpleFeedly.Crawler START
-```
-
-2. Uninstall
-```js
-SimpleFeedly.Crawler UNINSTALL
-```
-### SimpleFeedly.Web
-Deploy it as normal web ASP.NET MVC application, too easy, right?
+### Deploy
+1. Create an empty database, update App.config file then run SimpleFeedly.DbUpdater.exe to setup your database
+2. Update web.config and deploy SimpleFeedly.Web as normal MVC web application, it used Serenity Framework so you might need to read Serenity document at <a href="https://serenity.is/docs/getting_started/README" target="_blank">here</a>  
 
 ### Script 
 <a href="https://github.com/minhhungit/SimpleFeedly/blob/master/wiki/Scripts/list-of-channels.sql" target="_blank">list-of-channels</a> (for demo)
 <a href="https://github.com/minhhungit/SimpleFeedly/releases" target="_blank">MSSQL database backup file</a> (for demo)
-
 
 ## Demo
 ### DbUpdater
@@ -32,10 +15,6 @@ Deploy it as normal web ASP.NET MVC application, too easy, right?
 
 ### Rss Reader (Web App)
 <img src="https://github.com/minhhungit/SimpleFeedly/blob/master/wiki/Images/demo01.png" />
-
-### Rss Crawler (Windows Service application using Topshelf)
-<img src="https://github.com/minhhungit/SimpleFeedly/blob/master/wiki/Images/demo02.png" />
-
 
 ```
 

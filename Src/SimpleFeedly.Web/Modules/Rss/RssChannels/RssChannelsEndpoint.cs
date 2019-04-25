@@ -46,28 +46,30 @@ namespace SimpleFeedly.Rss.Endpoints
             return new MyRepository().List(connection, request);
         }
 
-        public ListResponse<MyRow> TestChannel(IDbConnection connection, TestChannelRequest request)
+        public TestChannelResponse TestChannel(IDbConnection connection, TestChannelRequest request)
         {
             try
             {
                 request.CheckNotNull();
 
-                var feed = FeedReader.ReadAsync(request.FeedUrl).GetAwaiter().GetResult();
+                RssFeedEngine usedEngine = RssFeedEngine.CodeHollowFeedReader;
+                var feed = SiteInitialization.GetFeedsFromChannel(request.FeedUrl, out usedEngine);
 
-                if (feed == null || feed.Items == null)
+                if (feed == null || feed.Items == null || feed.Items.Count == 0)
                 {
                     throw new Exception("Cannot fetch data");
                 }
                 else
                 {
-                    return new ListResponse<MyRow>
+                    return new TestChannelResponse
                     {
                         Entities = feed.Items.Select(x => new MyRow
                         {
                             Title = x.Title,
                             Link = x.Link,
                             Description = x.Description
-                        }).ToList()
+                        }).ToList(),
+                        Engine = usedEngine.ToString()
                     };
                 }
             }

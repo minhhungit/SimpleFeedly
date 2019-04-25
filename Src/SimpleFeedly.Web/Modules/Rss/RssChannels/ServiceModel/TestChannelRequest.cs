@@ -7,6 +7,6 @@ namespace SimpleFeedly.Rss
     public class TestChannelRequest : ServiceRequest
     {
         [Required(true), DisplayName("Feed Url")]
-        public string FeedUrl { get; set; }
+        public string FeedUrl { get; set; }        
     }
 }

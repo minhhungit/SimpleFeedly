@@ -2949,7 +2949,7 @@ var SimpleFeedly;
                         Q.alert(response.Error.Message);
                     }
                     else {
-                        //var rendered = Mustache.render(this.byId('template').html(), { items : response.Entities });
+                        _this.byId("usedEngine").html("Engine: " + response.Engine);
                         var result = "";
                         response.Entities.forEach(function (item, idx) {
                             result += _this.templateHtml

@@ -601,7 +601,7 @@ declare namespace SimpleFeedly.Rss {
         function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<RssChannelsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<RssChannelsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
-        function TestChannel(request: TestChannelRequest, onSuccess?: (response: Serenity.ListResponse<RssChannelsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function TestChannel(request: TestChannelRequest, onSuccess?: (response: TestChannelResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         const enum Methods {
             Create = "Rss/RssChannels/Create",
             Update = "Rss/RssChannels/Update",
@@ -691,6 +691,12 @@ declare namespace SimpleFeedly.Rss {
 declare namespace SimpleFeedly.Rss {
     interface TestChannelRequest extends Serenity.ServiceRequest {
         FeedUrl?: string;
+    }
+}
+declare namespace SimpleFeedly.Rss {
+    interface TestChannelResponse extends Serenity.ServiceResponse {
+        Entities?: RssChannelsRow[];
+        Engine?: string;
     }
 }
 declare namespace SimpleFeedly {

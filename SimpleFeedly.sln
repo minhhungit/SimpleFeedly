@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFeedly.DbUpdater", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFeedly.Core", "Src\SimpleFeedly.Core\SimpleFeedly.Core.csproj", "{609AF0C3-68FF-463A-B103-CA448D2EE6E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFeedly.Crawler", "Src\SimpleFeedly.Crawler\SimpleFeedly.Crawler.csproj", "{5C67D3CD-A2F7-4236-AC74-4C283D7F8D9A}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DbUpdater", "DbUpdater", "{768C8DDE-847B-4F6A-BA8F-2785FDB383AB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3A34698D-D5D9-494E-911A-1232D2101E95}"
@@ -41,10 +39,6 @@ Global
 		{609AF0C3-68FF-463A-B103-CA448D2EE6E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{609AF0C3-68FF-463A-B103-CA448D2EE6E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{609AF0C3-68FF-463A-B103-CA448D2EE6E8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5C67D3CD-A2F7-4236-AC74-4C283D7F8D9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5C67D3CD-A2F7-4236-AC74-4C283D7F8D9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5C67D3CD-A2F7-4236-AC74-4C283D7F8D9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5C67D3CD-A2F7-4236-AC74-4C283D7F8D9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

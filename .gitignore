@@ -13,3 +13,5 @@
 /Src/SimpleFeedly.Crawler/obj/Debug
 /Src/SimpleFeedly.DbUpdater/bin/Debug
 /Src/SimpleFeedly.DbUpdater/obj/Debug
+/Legacy/SimpleFeedly.Crawler/obj/Debug
+/Src/SimpleFeedly.Web/Logs

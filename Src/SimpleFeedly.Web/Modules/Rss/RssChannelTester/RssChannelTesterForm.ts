@@ -28,7 +28,7 @@ namespace SimpleFeedly.Rss {
                     Q.alert(response.Error.Message);
                 }
                 else {
-                    //var rendered = Mustache.render(this.byId('template').html(), { items : response.Entities });
+                    this.byId("usedEngine").html("Engine: " + response.Engine);
 
                     var result: string = "";
                     response.Entities.forEach((item, idx) => {
