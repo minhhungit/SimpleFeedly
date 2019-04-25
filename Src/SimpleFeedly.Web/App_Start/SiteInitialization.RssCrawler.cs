@@ -295,6 +295,7 @@
             }
             else
             {
+                error = null;
                 result.Items = items;
                 return result;
             }            
