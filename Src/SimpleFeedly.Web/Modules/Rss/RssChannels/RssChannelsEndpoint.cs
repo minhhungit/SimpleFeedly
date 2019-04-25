@@ -52,8 +52,7 @@ namespace SimpleFeedly.Rss.Endpoints
             {
                 request.CheckNotNull();
 
-                RssFeedEngine usedEngine = RssFeedEngine.CodeHollowFeedReader;
-                var feed = SiteInitialization.GetFeedsFromChannel(request.FeedUrl, out usedEngine);
+                var feed = SiteInitialization.GetFeedsFromChannel(request.FeedUrl, out RssFeedEngine usedEngine, out Exception fetchError);
 
                 if (feed == null || feed.Items == null || feed.Items.Count == 0)
                 {

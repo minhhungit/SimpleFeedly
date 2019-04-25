@@ -67,53 +67,61 @@
                                 try
                                 {
                                     RssFeedEngine usedEngine = RssFeedEngine.CodeHollowFeedReader;
-                                    var feed = GetFeedsFromChannel(channel.Link, out usedEngine);
+                                    Exception fetchFeedError = null;
+                                    var feed = GetFeedsFromChannel(channel.Link, out usedEngine, out fetchFeedError);
 
-                                    _logger.Info($"  + Number of items: {feed.Items.Count}");
-
-                                    var hasNew = false;
-                                    foreach (var fItem in feed.Items)
+                                    if (feed != null)
                                     {
-                                        var feedItemId = GenerateFeedItemId(fItem);
-                                        var feedCacheKey = GenerateFeedCacheKey((long)channel.Id, feedItemId);
+                                        _logger.Info($"  + Number of items: {feed.Items.Count}");
 
-                                        if (string.IsNullOrWhiteSpace(feedItemId) || string.IsNullOrWhiteSpace(fItem.Link))
+                                        var hasNew = false;
+                                        foreach (var fItem in feed.Items)
                                         {
-                                            _logger.Info($"  + Skipped item: {JsonConvert.SerializeObject(fItem)}");
-                                            continue;
-                                        }
+                                            var feedItemId = GenerateFeedItemId(fItem);
+                                            var feedCacheKey = GenerateFeedCacheKey((long)channel.Id, feedItemId);
 
-                                        if (!_feedCache.Contains(feedCacheKey))
-                                        {
-                                            if (!SimpleFeedlyDatabaseAccess.CheckExistFeedItem((long)channel.Id, feedItemId))
+                                            if (string.IsNullOrWhiteSpace(feedItemId) || string.IsNullOrWhiteSpace(fItem.Link))
                                             {
-                                                var feedItem = new RssFeedItemsRow
-                                                {
-                                                    ChannelId = channel.Id,
-                                                    FeedItemId = feedItemId,
-                                                    Title = string.IsNullOrWhiteSpace(fItem.Title) ? fItem.Link : fItem.Title,
-                                                    Link = fItem.Link,
-                                                    Description = fItem.Description,
-                                                    PublishingDate = fItem.PublishingDate,
-                                                    Author = fItem.Author,
-                                                    Content = fItem.Content
-                                                };
-
-                                                SimpleFeedlyDatabaseAccess.InsertFeedItem(feedItem);
-
-                                                hasNew = true;
+                                                _logger.Info($"  + Skipped item: {JsonConvert.SerializeObject(fItem)}");
+                                                continue;
                                             }
 
-                                            _feedCache.Add(feedCacheKey);
+                                            if (!_feedCache.Contains(feedCacheKey))
+                                            {
+                                                if (!SimpleFeedlyDatabaseAccess.CheckExistFeedItem((long)channel.Id, feedItemId))
+                                                {
+                                                    var feedItem = new RssFeedItemsRow
+                                                    {
+                                                        ChannelId = channel.Id,
+                                                        FeedItemId = feedItemId,
+                                                        Title = string.IsNullOrWhiteSpace(fItem.Title) ? fItem.Link : fItem.Title,
+                                                        Link = fItem.Link,
+                                                        Description = fItem.Description,
+                                                        PublishingDate = fItem.PublishingDate,
+                                                        Author = fItem.Author,
+                                                        Content = fItem.Content
+                                                    };
+
+                                                    SimpleFeedlyDatabaseAccess.InsertFeedItem(feedItem);
+
+                                                    hasNew = true;
+                                                }
+
+                                                _feedCache.Add(feedCacheKey);
+                                            }
+                                        }
+
+                                        SimpleFeedlyDatabaseAccess.UpdateChannelErrorStatus((long)channel.Id, false, null);
+
+                                        if (!hasNew)
+                                        {
+                                            var randomExpiryTime =
+                                            cache.Add(channelSleepingCacheKey, true, DateTime.Now.Add(GenerateChannelSleepTime()));
                                         }
                                     }
-
-                                    SimpleFeedlyDatabaseAccess.UpdateChannelErrorStatus((long)channel.Id, false, null);
-
-                                    if (!hasNew)
+                                    else
                                     {
-                                        var randomExpiryTime =
-                                        cache.Add(channelSleepingCacheKey, true, DateTime.Now.Add(GenerateChannelSleepTime()));
+                                        SimpleFeedlyDatabaseAccess.UpdateChannelErrorStatus((long)channel.Id, true, fetchFeedError == null ? null : JsonConvert.SerializeObject(fetchFeedError));
                                     }
                                 }
                                 catch (Exception err)
@@ -192,8 +200,9 @@
             return TimeSpan.FromMinutes(ranMinutes);
         }
 
-        public static SimpleFeedlyFeed GetFeedsFromChannel(string channelUrl, out RssFeedEngine engine)
+        public static SimpleFeedlyFeed GetFeedsFromChannel(string channelUrl, out RssFeedEngine engine, out Exception error)
         {
+            error = null;
             engine = RssFeedEngine.CodeHollowFeedReader;
             SimpleFeedlyFeed result = new SimpleFeedlyFeed();
             var items = new List<SimpleFeedlyFeedItem>();
@@ -227,6 +236,7 @@
                     status = true;
                 }
                 catch (Exception ex) {
+                    error = ex;
                     ErrorStore.LogException(ex, HttpContext.Current, false, false,
                                        new Dictionary<string, string>
                                        {
@@ -269,6 +279,7 @@
                 }
                 catch (Exception ex)
                 {
+                    error = ex;
                     ErrorStore.LogException(ex, HttpContext.Current, false, false,
                                        new Dictionary<string, string>
                                        {
@@ -278,9 +289,15 @@
                 }
             }
 
-            result.Items = items;
-
-            return result;
+            if (!status)
+            {
+                return null;
+            }
+            else
+            {
+                result.Items = items;
+                return result;
+            }            
         }
     }
 
