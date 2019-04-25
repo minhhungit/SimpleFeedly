@@ -6,8 +6,9 @@ Very simple Rss Reader Web Application using <a href="https://github.com/volkanc
 2. Update web.config and deploy SimpleFeedly.Web as normal MVC web application, it used Serenity Framework so you might need to read Serenity document at <a href="https://serenity.is/docs/getting_started/README" target="_blank">here</a>  
 
 ### Script 
-<a href="https://github.com/minhhungit/SimpleFeedly/blob/master/wiki/Scripts/list-of-channels.sql" target="_blank">list-of-channels</a> (for demo)
-<a href="https://github.com/minhhungit/SimpleFeedly/releases" target="_blank">MSSQL database backup file</a> (for demo)
+<a href="https://github.com/minhhungit/SimpleFeedly/blob/master/wiki/Scripts/list-of-channels.sql" target="_blank">list-of-channels</a> (only channels, without feed items)
+
+<a href="https://github.com/minhhungit/SimpleFeedly/releases/download/v1.0/bkSimpleFeedly-20190425-0352am-MSSM-2017.zip" target="_blank">MSSQL database backup file</a> (for demo)
 
 ## Demo
 ### DbUpdater
