@@ -63,9 +63,10 @@ namespace SimpleFeedly.Rss {
 
             buttons.unshift({
                 title: '',
-                cssClass: 'delete-button text-orange',
+                cssClass: 'text-orange',
                 icon: "fa fa-undo",
                 separator: 'right',
+                hint: 'Mark as unread',
                 onClick: () => {
                     var selectedItems = this.getSelectedItems();
 
@@ -96,6 +97,7 @@ namespace SimpleFeedly.Rss {
                 title: '',
                 cssClass: 'text-green',
                 icon: 'fa fa-check',
+                hint: 'Mark as read',
                 onClick: () => {
                     var selectedItems = this.getSelectedItems();
 
@@ -127,6 +129,7 @@ namespace SimpleFeedly.Rss {
                 cssClass: 'text-green',
                 icon: 'fa fa-check-circle-o',
                 separator: 'right',
+                hint: 'Mark this page as read',
                 onClick: () => {
                     var selectedItems = this.view.getItems();
 
@@ -153,6 +156,7 @@ namespace SimpleFeedly.Rss {
             buttons.push({
                 title: '',
                 icon: 'fa fa-filter text-blue',
+                hint: 'Filters',
                 onClick: () => {
                     this.quickFiltersDiv.slideToggle();
                 }

@@ -3110,9 +3110,10 @@ var SimpleFeedly;
                 buttons.splice(Q.indexOf(buttons, function (x) { return x.cssClass == "add-button"; }), 1);
                 buttons.unshift({
                     title: '',
-                    cssClass: 'delete-button text-orange',
+                    cssClass: 'text-orange',
                     icon: "fa fa-undo",
                     separator: 'right',
+                    hint: 'Mark as unread',
                     onClick: function () {
                         var selectedItems = _this.getSelectedItems();
                         if (selectedItems === null || selectedItems === undefined || selectedItems.length === 0) {
@@ -3136,6 +3137,7 @@ var SimpleFeedly;
                     title: '',
                     cssClass: 'text-green',
                     icon: 'fa fa-check',
+                    hint: 'Mark as read',
                     onClick: function () {
                         var selectedItems = _this.getSelectedItems();
                         if (selectedItems === null || selectedItems === undefined || selectedItems.length === 0) {
@@ -3160,6 +3162,7 @@ var SimpleFeedly;
                     cssClass: 'text-green',
                     icon: 'fa fa-check-circle-o',
                     separator: 'right',
+                    hint: 'Mark this page as read',
                     onClick: function () {
                         var selectedItems = _this.view.getItems();
                         if (selectedItems === null || selectedItems === undefined || selectedItems.length === 0) {
@@ -3180,6 +3183,7 @@ var SimpleFeedly;
                 buttons.push({
                     title: '',
                     icon: 'fa fa-filter text-blue',
+                    hint: 'Filters',
                     onClick: function () {
                         _this.quickFiltersDiv.slideToggle();
                     }
