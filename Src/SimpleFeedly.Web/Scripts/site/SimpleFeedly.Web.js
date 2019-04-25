@@ -3029,6 +3029,26 @@ var SimpleFeedly;
 (function (SimpleFeedly) {
     var Rss;
     (function (Rss) {
+        var RssChannelsProgression = /** @class */ (function () {
+            function RssChannelsProgression() {
+                $.connection.hub.logging = true;
+                var channelHub = $.connection.channelHub;
+                channelHub.client.updateChannelProgress = function (data) {
+                    $(".singalr-channel-progressing-info").text(data.Message);
+                };
+                $.connection.hub.start().done(function () {
+                    //this.clientId = ($ as any).connection.hub.id;
+                });
+            }
+            return RssChannelsProgression;
+        }());
+        Rss.RssChannelsProgression = RssChannelsProgression;
+    })(Rss = SimpleFeedly.Rss || (SimpleFeedly.Rss = {}));
+})(SimpleFeedly || (SimpleFeedly = {}));
+var SimpleFeedly;
+(function (SimpleFeedly) {
+    var Rss;
+    (function (Rss) {
         var RssFeedItemsDialog = /** @class */ (function (_super) {
             __extends(RssFeedItemsDialog, _super);
             function RssFeedItemsDialog() {

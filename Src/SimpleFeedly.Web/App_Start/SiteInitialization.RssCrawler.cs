@@ -1,7 +1,9 @@
 ﻿namespace SimpleFeedly
 {
+    using Microsoft.AspNet.SignalR;
     using Newtonsoft.Json;
     using NLog;
+    using SimpleFeedly.Hubs;
     using SimpleFeedly.Rss.Entities;
     using StackExchange.Exceptional;
     using System;
@@ -21,8 +23,9 @@
 
         private static void InitializeRssCrawler()
         {
-            System.Threading.Tasks.Task.Run(() => 
+            System.Threading.Tasks.Task.Run(() =>
             {
+                var channelHubCtx = GlobalHost.ConnectionManager.GetHubContext<ChannelHub>();
                 ObjectCache cache = MemoryCache.Default;
                 const string LIST_CHANNEL_CACHE_KEY = "cache_list_of_channels";
 
@@ -53,7 +56,9 @@
                         foreach (var channel in channels)
                         {
                             count++;
+
                             _logger.Info($"- [{count}/{channels.Count}] Working on channel: {channel.Id} | {channel.Link}");
+                            channelHubCtx.Clients.All.updateChannelProgress(new { Message = $"<strong>[{count}/{channels.Count}]</strong> <a href='{channel.Link}' target='_blank'>{channel.Link}</a>" });
 
                             if (string.IsNullOrWhiteSpace(channel.Link))
                             {
@@ -151,6 +156,8 @@
                         System.Threading.Thread.Sleep(AppSettings.Crawler.ErrorDelay);
                     }
 
+                    channelHubCtx.Clients.All.updateChannelProgress(new { Message = "<span class='link-muted'>Crawler's sleeping...</span>" });
+
                     _currentDate = DateTime.Now.Day;
 
                     // we should delay a little bit, some seconds maybe
@@ -237,7 +244,8 @@
                     engine = RssFeedEngine.CodeHollowFeedReader;
                     status = true;
                 }
-                catch (Exception ex) {
+                catch (Exception ex)
+                {
                     error = ex;
                     ErrorStore.LogException(ex, HttpContext.Current, false, false,
                                        new Dictionary<string, string>
@@ -303,7 +311,7 @@
                 error = null;
                 result.Items = items;
                 return result;
-            }            
+            }
         }
     }
 

@@ -1191,6 +1191,11 @@ declare namespace SimpleFeedly.Rss {
     }
 }
 declare namespace SimpleFeedly.Rss {
+    class RssChannelsProgression {
+        constructor();
+    }
+}
+declare namespace SimpleFeedly.Rss {
     class RssFeedItemsDialog extends Serenity.EntityDialog<RssFeedItemsRow, any> {
         protected getFormKey(): string;
         protected getIdProperty(): string;

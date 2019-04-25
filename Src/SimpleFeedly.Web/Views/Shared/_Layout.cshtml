@@ -116,7 +116,7 @@ else
 
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-            @Texts.Site.Layout.FooterInfo
+            <span class="singalr-channel-progressing-info"></span>
         </div>
         <strong>@Texts.Site.Layout.FooterCopyright</strong> @Texts.Site.Layout.FooterRights
     </footer>
@@ -163,6 +163,22 @@ else
 
         $(window).bind("load resize layout", doLayout);
         doLayout();
+    });
+</script>
+
+<script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+<script src="~/signalr/hubs"></script>
+<script>
+    $(function () {
+        //$.connection.hub.logging = true;
+        var channelHub = $.connection.channelHub;
+        $.connection.hub.start().done(() => {
+            //this.clientId = ($ as any).connection.hub.id;
+        });
+
+        channelHub.client.updateChannelProgress = (data) => {
+            $(".singalr-channel-progressing-info").html(data.Message);
+        };
     });
 </script>
 }
