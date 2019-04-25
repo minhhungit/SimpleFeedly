@@ -8,9 +8,9 @@ namespace SimpleFeedly.Membership
     [BasedOnRow(typeof(Administration.Entities.UserRow))]
     public class LoginRequest : ServiceRequest
     {
-        [Placeholder("default username is 'admin'")]
+        [Placeholder("default username is 'demo'")]
         public string Username { get; set; }
-        [PasswordEditor, Placeholder("default password for 'admin' is 'serenity'"), Required(true)]
+        [PasswordEditor, Placeholder("default password for 'demo' is '1234567'"), Required(true)]
         public string Password { get; set; }
     }
 }

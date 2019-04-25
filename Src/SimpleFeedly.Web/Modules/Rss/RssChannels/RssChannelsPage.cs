@@ -5,7 +5,7 @@ namespace SimpleFeedly.Rss.Pages
     using Serenity.Web;
     using System.Web.Mvc;
 
-    [RoutePrefix("Rss/RssChannels"), Route("{action=index}")]
+    [RoutePrefix("Rss/Channels"), Route("{action=index}")]
     [PageAuthorize(typeof(Entities.RssChannelsRow))]
     public class RssChannelsController : Controller
     {

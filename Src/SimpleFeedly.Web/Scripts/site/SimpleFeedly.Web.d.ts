@@ -1165,13 +1165,6 @@ declare namespace SimpleFeedly.Membership {
     }
 }
 declare namespace SimpleFeedly.Rss {
-    class RssChannelVerifierForm extends Serenity.TemplatedWidget<any> {
-        private templateHtml;
-        constructor(container: JQuery);
-        private CheckChannel;
-    }
-}
-declare namespace SimpleFeedly.Rss {
     class RssChannelsDialog extends Serenity.EntityDialog<RssChannelsRow, any> {
         protected getFormKey(): string;
         protected getIdProperty(): string;
@@ -1191,6 +1184,13 @@ declare namespace SimpleFeedly.Rss {
         protected getService(): string;
         constructor(container: JQuery);
         getAddButtonCaption(): string;
+    }
+}
+declare namespace SimpleFeedly.Rss {
+    class RssChannelsVerifierForm extends Serenity.TemplatedWidget<any> {
+        private templateHtml;
+        constructor(container: JQuery);
+        private CheckChannel;
     }
 }
 declare namespace SimpleFeedly.Rss {

@@ -2943,50 +2943,6 @@ var SimpleFeedly;
 (function (SimpleFeedly) {
     var Rss;
     (function (Rss) {
-        var RssChannelVerifierForm = /** @class */ (function (_super) {
-            __extends(RssChannelVerifierForm, _super);
-            function RssChannelVerifierForm(container) {
-                var _this = _super.call(this, container) || this;
-                _this.templateHtml = _this.byId("templateItems")[0].innerHTML;
-                _this.byId("btnCheck").click(function () { return _this.CheckChannel(_this.byId("txtChannelUrl").val()); });
-                return _this;
-            }
-            RssChannelVerifierForm.prototype.CheckChannel = function (channelUrl) {
-                var _this = this;
-                if (Q.trimToNull(channelUrl) == null) {
-                    Q.warning("Please enter channel url");
-                    return;
-                }
-                Rss.RssChannelsService.TestChannel({ FeedUrl: channelUrl }, function (response) {
-                    console.log(response);
-                    if (response.Error != null) {
-                        Q.alert(response.Error.Message);
-                    }
-                    else {
-                        _this.byId("usedEngine").html("Engine: " + response.Engine);
-                        var result = "";
-                        response.Entities.forEach(function (item, idx) {
-                            result += _this.templateHtml
-                                .replace(/{{Link}}/g, item.Link)
-                                .replace(/{{Title}}/g, item.Title);
-                        });
-                        console.log(result);
-                        _this.byId("postContainer").html(result);
-                    }
-                });
-            };
-            RssChannelVerifierForm = __decorate([
-                Serenity.Decorators.registerClass()
-            ], RssChannelVerifierForm);
-            return RssChannelVerifierForm;
-        }(Serenity.TemplatedWidget));
-        Rss.RssChannelVerifierForm = RssChannelVerifierForm;
-    })(Rss = SimpleFeedly.Rss || (SimpleFeedly.Rss = {}));
-})(SimpleFeedly || (SimpleFeedly = {}));
-var SimpleFeedly;
-(function (SimpleFeedly) {
-    var Rss;
-    (function (Rss) {
         var RssChannelsDialog = /** @class */ (function (_super) {
             __extends(RssChannelsDialog, _super);
             function RssChannelsDialog() {
@@ -3043,6 +2999,50 @@ var SimpleFeedly;
 (function (SimpleFeedly) {
     var Rss;
     (function (Rss) {
+        var RssChannelsVerifierForm = /** @class */ (function (_super) {
+            __extends(RssChannelsVerifierForm, _super);
+            function RssChannelsVerifierForm(container) {
+                var _this = _super.call(this, container) || this;
+                _this.templateHtml = _this.byId("templateItems")[0].innerHTML;
+                _this.byId("btnCheck").click(function () { return _this.CheckChannel(_this.byId("txtChannelUrl").val()); });
+                return _this;
+            }
+            RssChannelsVerifierForm.prototype.CheckChannel = function (channelUrl) {
+                var _this = this;
+                if (Q.trimToNull(channelUrl) == null) {
+                    Q.warning("Please enter channel url");
+                    return;
+                }
+                Rss.RssChannelsService.TestChannel({ FeedUrl: channelUrl }, function (response) {
+                    console.log(response);
+                    if (response.Error != null) {
+                        Q.alert(response.Error.Message);
+                    }
+                    else {
+                        _this.byId("usedEngine").html("Engine: " + response.Engine);
+                        var result = "";
+                        response.Entities.forEach(function (item, idx) {
+                            result += _this.templateHtml
+                                .replace(/{{Link}}/g, item.Link)
+                                .replace(/{{Title}}/g, item.Title);
+                        });
+                        console.log(result);
+                        _this.byId("postContainer").html(result);
+                    }
+                });
+            };
+            RssChannelsVerifierForm = __decorate([
+                Serenity.Decorators.registerClass()
+            ], RssChannelsVerifierForm);
+            return RssChannelsVerifierForm;
+        }(Serenity.TemplatedWidget));
+        Rss.RssChannelsVerifierForm = RssChannelsVerifierForm;
+    })(Rss = SimpleFeedly.Rss || (SimpleFeedly.Rss = {}));
+})(SimpleFeedly || (SimpleFeedly = {}));
+var SimpleFeedly;
+(function (SimpleFeedly) {
+    var Rss;
+    (function (Rss) {
         var RssFeedItemsDialog = /** @class */ (function (_super) {
             __extends(RssFeedItemsDialog, _super);
             function RssFeedItemsDialog() {
@@ -3082,7 +3082,7 @@ var SimpleFeedly;
                     if (_this.quickFiltersDiv) {
                         _this.quickFiltersDiv.hide();
                     }
-                    $(".s-QuickSearchInput").css("width", "119px");
+                    $(".s-QuickSearchInput").css("width", "118px");
                     $(".refresh-button").hide();
                 }
                 else {
@@ -3256,7 +3256,7 @@ var SimpleFeedly;
                 var _this = this;
                 var result = _super.prototype.onViewProcessData.call(this, response);
                 Rss.RssFeedItemsService.GetFeedItemCheckedState({}, function (res) {
-                    _this.setTitle("Feeds (" + res.UnCheckedItems + " unchecked)");
+                    _this.setTitle("Feed Items (" + res.UnCheckedItems + " unchecked)");
                 });
                 return result;
             };

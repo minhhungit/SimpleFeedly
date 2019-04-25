@@ -10,9 +10,11 @@ namespace SimpleFeedly.Rss.Entities
     using System.IO;
 
     [ConnectionKey("SimpleFeedlyConn"), Module("Rss"), TableName("[dbo].[RssFeedItems]")]
-    [DisplayName("Rss Feed Items"), InstanceName("Rss Feed Items")]
-    [ReadPermission("Administration:General")]
-    [ModifyPermission("Administration:General")]
+    [DisplayName("Feed Items"), InstanceName("Rss Feed Items")]
+    [ReadPermission(PermissionKeys.FeedItems.Read)]
+    [InsertPermission(PermissionKeys.FeedItems.Insert)]
+    [UpdatePermission(PermissionKeys.FeedItems.Update)]
+    [DeletePermission(PermissionKeys.FeedItems.Delete)]
     public sealed class RssFeedItemsRow : Row, IIdRow, INameRow
     {
         [DisplayName("Id"), Identity]

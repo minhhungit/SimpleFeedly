@@ -226,7 +226,7 @@ namespace SimpleFeedly.Rss {
             var result = super.onViewProcessData(response);
 
             RssFeedItemsService.GetFeedItemCheckedState({}, res => {
-                this.setTitle("Feeds (" + res.UnCheckedItems + " unchecked)");
+                this.setTitle("Feed Items (" + res.UnCheckedItems + " unchecked)");
             });
 
             return result;

@@ -12,7 +12,7 @@ namespace SimpleFeedly.Common.Pages
         [Authorize, HttpGet, Route("~/")]
         public ActionResult Index()
         {
-            return Redirect("~/Rss/RssFeedItems");
+            return Redirect("~/Rss/FeedItems");
             //return View(MVC.Views.Common.Dashboard.DashboardIndex, new DashboardPageModel());
         }
     }
