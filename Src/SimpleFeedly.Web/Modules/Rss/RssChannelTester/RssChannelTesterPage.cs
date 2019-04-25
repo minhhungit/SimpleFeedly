@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace SimpleFeedly.Rss.Pages
 {
-    [RoutePrefix("Rss/Channel/Tester"), Route("{action=index}")]
+    [RoutePrefix("Rss/Channel/Verify"), Route("{action=index}")]
     public class RssChannelTesterController : Controller
     {
         public ActionResult Index()
