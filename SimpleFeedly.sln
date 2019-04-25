@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFeedly.DbUpdater", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFeedly.Core", "Src\SimpleFeedly.Core\SimpleFeedly.Core.csproj", "{609AF0C3-68FF-463A-B103-CA448D2EE6E8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DbUpdater", "DbUpdater", "{768C8DDE-847B-4F6A-BA8F-2785FDB383AB}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3A34698D-D5D9-494E-911A-1232D2101E95}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
@@ -44,7 +42,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{0D630322-9BB7-4C55-B216-6E7EB719587B} = {768C8DDE-847B-4F6A-BA8F-2785FDB383AB}
 		{E0B8D847-FA7C-4C02-BE7F-1370D4C7A789} = {3A34698D-D5D9-494E-911A-1232D2101E95}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
