@@ -3239,6 +3239,13 @@ var SimpleFeedly;
                 });
                 return result;
             };
+            RssFeedItemsGrid.prototype.getQuickSearchFields = function () {
+                return [
+                    { name: "", title: "all" },
+                    { name: "Title" /* Title */, title: "Title" },
+                    { name: "Description" /* Description */, title: "Description" }
+                ];
+            };
             RssFeedItemsGrid.prototype.getSlickOptions = function () {
                 var opt = _super.prototype.getSlickOptions.call(this);
                 opt.rowHeight = 30;

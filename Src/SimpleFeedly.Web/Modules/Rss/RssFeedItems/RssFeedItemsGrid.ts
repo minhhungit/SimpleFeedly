@@ -227,6 +227,15 @@ namespace SimpleFeedly.Rss {
             return result;
         }
 
+        protected getQuickSearchFields(): Serenity.QuickSearchField[] {
+            return [
+                { name: "", title: "all" },
+                { name: fld.Title, title: "Title" },
+                { name: fld.Description, title: "Description" }
+            ];
+        }
+
+
         protected getSlickOptions(): Slick.GridOptions {
             var opt = super.getSlickOptions();
             opt.rowHeight = 30;
@@ -242,5 +251,6 @@ namespace SimpleFeedly.Rss {
         protected getPersistanceStorage(): Serenity.SettingStorage {
             return new Common.UserPreferenceStorage();
         }
+
     }
 }

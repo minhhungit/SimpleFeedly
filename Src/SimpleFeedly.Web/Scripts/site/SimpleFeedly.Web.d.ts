@@ -1212,6 +1212,7 @@ declare namespace SimpleFeedly.Rss {
         protected getColumns(): Slick.Column[];
         protected onClick(e: JQueryEventObject, row: number, cell: number): void;
         protected onViewProcessData(response: any): Serenity.ListResponse<RssFeedItemsRow>;
+        protected getQuickSearchFields(): Serenity.QuickSearchField[];
         protected getSlickOptions(): Slick.GridOptions;
         protected getViewOptions(): Slick.RemoteViewOptions;
         protected getPersistanceStorage(): Serenity.SettingStorage;
