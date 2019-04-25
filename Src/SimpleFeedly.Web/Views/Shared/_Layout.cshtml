@@ -115,8 +115,9 @@ else
     </div>
 
     <footer class="main-footer">
+        <div class="singalr-channel-progressing-info-dot-status pull-right dot dot-sm bg-orange visible-xs" style="margin-top: 4px; margin-right: 4px;"></div>
         <div class="pull-right hidden-xs">
-            <span class="singalr-channel-progressing-info"></span>
+            <div class="singalr-channel-progressing-info"><span class='link-muted'>Crawler's sleeping...</span></div>
         </div>
         <strong>@Texts.Site.Layout.FooterCopyright</strong> @Texts.Site.Layout.FooterRights
     </footer>
@@ -177,6 +178,18 @@ else
         });
 
         channelHub.client.updateChannelProgress = (data) => {
+            // reset color
+            $(".singalr-channel-progressing-info-dot-status").removeClass("bg-orange");
+            $(".singalr-channel-progressing-info-dot-status").removeClass("bg-green");
+
+            if (data.IsSleeping) {
+                $(".singalr-channel-progressing-info-dot-status").addClass("bg-orange");
+            }
+            else {
+                $(".singalr-channel-progressing-info-dot-status").addClass("bg-green");
+            }
+
+            // update message
             $(".singalr-channel-progressing-info").html(data.Message);
         };
     });

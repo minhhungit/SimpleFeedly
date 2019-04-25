@@ -7433,3 +7433,15 @@ section.content > .s-DataGrid {
     padding-top: 50px;
   }
 }
+
+.dot {
+    border-radius: 50%;
+    display: inline-block;
+    height: 11px;
+    width: 11px;
+}
+
+.dot-sm {
+    height: 11px;
+    width: 11px;
+}

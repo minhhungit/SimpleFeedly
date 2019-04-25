@@ -58,7 +58,7 @@
                             count++;
 
                             _logger.Info($"- [{count}/{channels.Count}] Working on channel: {channel.Id} | {channel.Link}");
-                            channelHubCtx.Clients.All.updateChannelProgress(new { Message = $"<strong>[{count}/{channels.Count}]</strong> <a href='{channel.Link}' target='_blank'>{channel.Link}</a>" });
+                            channelHubCtx.Clients.All.updateChannelProgress(new { Message = $"<strong>[{count}/{channels.Count}]</strong> <a href='{channel.Link}' target='_blank'>{channel.Link}</a>", IsSleeping = false });
 
                             if (string.IsNullOrWhiteSpace(channel.Link))
                             {
@@ -156,7 +156,7 @@
                         System.Threading.Thread.Sleep(AppSettings.Crawler.ErrorDelay);
                     }
 
-                    channelHubCtx.Clients.All.updateChannelProgress(new { Message = "<span class='link-muted'>Crawler's sleeping...</span>" });
+                    channelHubCtx.Clients.All.updateChannelProgress(new { Message = "<span class='link-muted'>Crawler's sleeping...</span>", IsSleeping = true });
 
                     _currentDate = DateTime.Now.Day;
 
