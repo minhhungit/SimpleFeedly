@@ -3067,7 +3067,7 @@ var SimpleFeedly;
                 if (_this.quickFiltersDiv) {
                     _this.quickFiltersDiv.hide();
                 }
-                $(".s-QuickSearchInput").css("width", "130px");
+                $(".s-QuickSearchInput").css("width", "104px");
                 $(".refresh-button").hide();
                 return _this;
             }
