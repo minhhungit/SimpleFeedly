@@ -11,6 +11,7 @@
     using System.Linq;
     using System.Net;
     using System.Runtime.Caching;
+    using System.Text.RegularExpressions;
     using System.Web;
     using System.Xml;
 
@@ -263,10 +264,11 @@
                             var feedItem = new SimpleFeedlyFeedItem();
 
                             var link = item.Links.FirstOrDefault()?.Uri.ToString();
+                            link = string.IsNullOrWhiteSpace(link) ? item.Id : link;
 
                             feedItem.Id = item.Id;
-                            feedItem.Title = item.Title.Text;
-                            feedItem.Link = string.IsNullOrWhiteSpace(link) ? item.Id : link;
+                            feedItem.Title = string.IsNullOrWhiteSpace(item.Title.Text) ? link : item.Title.Text;
+                            feedItem.Link = link;
                             feedItem.Description = item.Summary.Text;
                             feedItem.PublishingDate = item.PublishDate.UtcDateTime;
                             feedItem.Author = item.Authors.FirstOrDefault()?.Name ?? string.Empty;
@@ -287,6 +289,76 @@
                                        {
                                            { "channelId",channelUrl },
                                            { "engine", nameof(RssFeedEngine.SyndicationFeed)}
+                                       });
+                }
+            }
+
+            if (!status)
+            {
+                try
+                {
+                    var xmlString = string.Empty;
+                    using (WebClient client = new WebClient())
+                    {
+                        var htmlData = client.DownloadData(channelUrl);
+                        xmlString = System.Text.Encoding.UTF8.GetString(htmlData);
+
+                        // ReplaceHexadecimalSymbols
+                        string r = "[\x00-\x08\x0B\x0C\x0E-\x1F\x26]";
+                        xmlString = Regex.Replace(xmlString, r, "", RegexOptions.Compiled);
+                    }
+
+                    XmlDocument rssXmlDoc = new XmlDocument();
+                    rssXmlDoc.LoadXml(xmlString);
+
+                    // Parse the Items in the RSS file
+                    XmlNodeList rssNodes = rssXmlDoc.SelectNodes("rss/channel/item");
+
+                    // Iterate through the items in the RSS file
+                    foreach (XmlNode rssNode in rssNodes)
+                    {
+                        var feedItem = new SimpleFeedlyFeedItem();
+
+                        XmlNode rssSubNode = rssNode.SelectSingleNode("link");
+                        feedItem.Link = rssSubNode != null ? rssSubNode.InnerText : null;
+
+                        rssSubNode = rssNode.SelectSingleNode("title");
+                        feedItem.Title = rssSubNode != null ? rssSubNode.InnerText : null;
+                        feedItem.Title = string.IsNullOrWhiteSpace(feedItem.Title) ? feedItem.Link : feedItem.Title;
+
+                        rssSubNode = rssNode.SelectSingleNode("description");
+                        feedItem.Description = rssSubNode != null ? rssSubNode.InnerText : null;
+
+                        rssSubNode = rssNode.SelectSingleNode("pubDate");
+                        DateTime pubDate = DateTime.Now;
+
+                        if (rssSubNode != null)
+                        {
+                            if (DateTime.TryParse(rssSubNode.InnerText, out DateTime tmpDate))
+                            {
+                                pubDate = tmpDate;
+                            }
+                        }
+
+                        feedItem.PublishingDate = pubDate;
+
+                        if (!string.IsNullOrWhiteSpace(feedItem.Link))
+                        {
+                            items.Add(feedItem);
+                        }
+                    }
+
+                    engine = RssFeedEngine.ParseRssByXml;
+                    status = true;
+                }
+                catch(Exception ex)
+                {
+                    error = ex;
+                    ErrorStore.LogException(ex, HttpContext.Current, false, false,
+                                       new Dictionary<string, string>
+                                       {
+                                           { "channelId",channelUrl },
+                                           { "engine", nameof(RssFeedEngine.ParseRssByXml)}
                                        });
                 }
             }
@@ -328,6 +400,7 @@
     public enum RssFeedEngine
     {
         SyndicationFeed = 1,
-        CodeHollowFeedReader = 2
+        CodeHollowFeedReader = 2,
+        ParseRssByXml = 3
     }
 }
