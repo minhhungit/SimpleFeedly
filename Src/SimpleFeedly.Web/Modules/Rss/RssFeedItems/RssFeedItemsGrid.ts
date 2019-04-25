@@ -14,14 +14,18 @@ namespace SimpleFeedly.Rss {
         private rowSelection: Serenity.GridRowSelectionMixin;
 
         constructor(container: JQuery) {
-            super(container);
+            super(container);         
 
-            if (this.quickFiltersDiv) {
-                this.quickFiltersDiv.hide();
+            if (J.isMobile()) {
+                if (this.quickFiltersDiv) {
+                    this.quickFiltersDiv.hide();
+                }
+
+                $(".s-QuickSearchInput").css("width", "118px");
+                $(".refresh-button").hide();
+            } else {
+                $(".s-QuickSearchInput").css("width", "170px");
             }
-
-            $(".s-QuickSearchInput").css("width", "104px");
-            $(".refresh-button").hide();
         }
 
         getAddButtonCaption() {
@@ -62,7 +66,7 @@ namespace SimpleFeedly.Rss {
             buttons.splice(Q.indexOf(buttons, x => x.cssClass == "add-button"), 1);
 
             buttons.unshift({
-                title: '',
+                title: J.isMobile() ? '' : 'Mark as unread',
                 cssClass: 'text-orange',
                 icon: "fa fa-undo",
                 separator: 'right',
@@ -94,8 +98,8 @@ namespace SimpleFeedly.Rss {
             });
 
             buttons.unshift({
-                title: '',
-                cssClass: 'text-green',
+                title: J.isMobile() ? '' : 'Mark as read',
+                cssClass: 'text-blue',
                 icon: 'fa fa-check',
                 hint: 'Mark as read',
                 onClick: () => {
@@ -125,9 +129,9 @@ namespace SimpleFeedly.Rss {
             });
 
             buttons.splice(0, 0, {
-                title: 'All',
-                cssClass: 'text-green',
-                icon: 'fa fa-check-circle-o',
+                title: J.isMobile() ? '' : 'Page as read',
+                cssClass: 'text-blue',
+                icon: 'fa fa-tags',
                 separator: 'right',
                 hint: 'Mark this page as read',
                 onClick: () => {
@@ -153,15 +157,16 @@ namespace SimpleFeedly.Rss {
                 }
             });
 
-            buttons.push({
-                title: '',
-                icon: 'fa fa-filter text-blue',
-                hint: 'Filters',
-                onClick: () => {
-                    this.quickFiltersDiv.slideToggle();
-                }
-            });
-
+            if (J.isMobile()) {
+                buttons.push({
+                    title: '',
+                    icon: 'fa fa-filter text-blue',
+                    hint: 'Filters',
+                    onClick: () => {
+                        this.quickFiltersDiv.slideToggle();
+                    }
+                });
+            }
 
             return buttons;
         }

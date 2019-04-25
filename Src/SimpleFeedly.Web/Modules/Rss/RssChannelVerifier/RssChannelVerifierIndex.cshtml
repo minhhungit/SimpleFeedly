@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Channel Verifier";
+}
+
+<div id="GridDiv" class="s-DataGrid" style="width: 100%; display: inline-block;">
+    <div class="grid-title">
+        <div class="title-text">Channel Verifier</div>
+    </div>
+    <div id="testForm"></div>
+</div>
+
+<script type="text/javascript">
+    jQuery(function () {
+        new SimpleFeedly.Rss.RssChannelVerifierForm($('#testForm')).init();
+    });
+</script>

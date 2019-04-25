@@ -2,7 +2,7 @@
 namespace SimpleFeedly.Rss {
 
     @Serenity.Decorators.registerClass()
-    export class RssChannelTesterForm extends Serenity.TemplatedWidget<any> {
+    export class RssChannelVerifierForm extends Serenity.TemplatedWidget<any> {
 
         private templateHtml: string;
 

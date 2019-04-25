@@ -1,0 +1,22 @@
+﻿<div style="width: 50%">
+    <div class="box-body">
+        <div class="input-group input-group-sm">
+
+            <input type="text" class="form-control" id="~_txtChannelUrl" placeholder="enter channel url here...">
+            <span class="input-group-btn">
+                <button id="~_btnCheck" class="btn btn-info btn-flat">Verify</button>
+            </span>
+        </div>
+    </div>
+
+    <div class="col-lg-12" style="margin-top: 20px">
+        <h4 id="~_usedEngine" class="text-green"></h4>
+        <ul id="~_postContainer"></ul>
+    </div>
+</div>
+
+<script id="~_templateItems" type="text/template">
+    <li>
+        <a href="{{Link}}">{{Title}}</a>
+    </li>
+</script>

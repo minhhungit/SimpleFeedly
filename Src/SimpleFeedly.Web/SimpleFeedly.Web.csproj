@@ -603,7 +603,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\ionicons.svg" />
     <Content Include="fonts\Simple-Line-Icons.svg" />
-    <Content Include="Modules\Rss\RssChannelTester\RssChannelTesterForm.Template.html" />
+    <Content Include="Modules\Rss\RssChannelVerifier\RssChannelVerifierForm.Template.html" />
     <Content Include="Readme.CodeGenerator.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -899,7 +899,7 @@
     <Content Include="node_modules\csstype\LICENSE" />
     <Content Include="node_modules\csstype\package.json" />
     <Content Include="node_modules\csstype\README.md" />
-    <Content Include="Modules\Rss\RssChannelTester\RssChannelTesterIndex.cshtml" />
+    <Content Include="Modules\Rss\RssChannelVerifier\RssChannelVerifierIndex.cshtml" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1470,6 +1470,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ClientTypes.tt</DependentUpon>
     </Content>
+    <TypeScriptCompile Include="Modules\Common\Helpers\J.ts" />
     <TypeScriptCompile Include="Modules\Common\Helpers\StaticTextBlock.ts" />
     <TypeScriptCompile Include="Modules\Administration\Language\LanguageDialog.ts" />
     <TypeScriptCompile Include="Modules\Administration\Language\LanguageGrid.ts" />
@@ -1659,7 +1660,7 @@
     <TypeScriptCompile Include="Modules\Common\Helpers\ExcelExportHelper.ts" />
     <TypeScriptCompile Include="Modules\Common\Helpers\BasicProgressDialog.ts" />
     <TypeScriptCompile Include="Modules\Common\Helpers\BulkServiceAction.ts" />
-    <TypeScriptCompile Include="Modules\Rss\RssChannelTester\RssChannelTesterForm.ts" />
+    <TypeScriptCompile Include="Modules\Rss\RssChannelVerifier\RssChannelVerifierForm.ts" />
     <TypeScriptCompile Include="node_modules\%40types\jquery.blockui\index.d.ts" />
     <TypeScriptCompile Include="node_modules\%40types\jquery.cookie\index.d.ts" />
     <TypeScriptCompile Include="node_modules\%40types\jquery.validation\index.d.ts" />
@@ -1798,7 +1799,7 @@
     <Compile Include="Modules\Common\Helpers\GetNextNumberHelper.cs" />
     <Compile Include="Modules\Common\Helpers\GetNextNumberRequest.cs" />
     <Compile Include="Modules\Rss\RssChannels\ServiceModel\TestChannelResponse.cs" />
-    <Compile Include="Modules\Rss\RssChannelTester\RssChannelTesterPage.cs" />
+    <Compile Include="Modules\Rss\RssChannelVerifier\RssChannelVerifierPage.cs" />
     <Compile Include="Modules\Rss\RssFeedItems\ServiceModel\FeedItemCheckedStateResponse.cs" />
     <Compile Include="Modules\Rss\RssFeedItems\ServiceModel\MarkCheckedBatchFeedItems.cs" />
     <Compile Include="Modules\Rss\RssFeedItems\ServiceModel\MarkCheckedFeedItemRequest.cs" />

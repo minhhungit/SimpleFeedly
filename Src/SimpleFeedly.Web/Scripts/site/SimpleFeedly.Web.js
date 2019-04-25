@@ -2123,6 +2123,20 @@ var SimpleFeedly;
         Common.GridEditorDialog = GridEditorDialog;
     })(Common = SimpleFeedly.Common || (SimpleFeedly.Common = {}));
 })(SimpleFeedly || (SimpleFeedly = {}));
+var J;
+(function (J) {
+    // https://stackoverflow.com/a/3540295
+    function isMobile() {
+        var isMobile = false; //initiate as false
+        // device detection
+        if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent)
+            || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0, 4))) {
+            isMobile = true;
+        }
+        return isMobile;
+    }
+    J.isMobile = isMobile;
+})(J || (J = {}));
 var SimpleFeedly;
 (function (SimpleFeedly) {
     /**
@@ -2929,15 +2943,15 @@ var SimpleFeedly;
 (function (SimpleFeedly) {
     var Rss;
     (function (Rss) {
-        var RssChannelTesterForm = /** @class */ (function (_super) {
-            __extends(RssChannelTesterForm, _super);
-            function RssChannelTesterForm(container) {
+        var RssChannelVerifierForm = /** @class */ (function (_super) {
+            __extends(RssChannelVerifierForm, _super);
+            function RssChannelVerifierForm(container) {
                 var _this = _super.call(this, container) || this;
                 _this.templateHtml = _this.byId("templateItems")[0].innerHTML;
                 _this.byId("btnCheck").click(function () { return _this.CheckChannel(_this.byId("txtChannelUrl").val()); });
                 return _this;
             }
-            RssChannelTesterForm.prototype.CheckChannel = function (channelUrl) {
+            RssChannelVerifierForm.prototype.CheckChannel = function (channelUrl) {
                 var _this = this;
                 if (Q.trimToNull(channelUrl) == null) {
                     Q.warning("Please enter channel url");
@@ -2961,12 +2975,12 @@ var SimpleFeedly;
                     }
                 });
             };
-            RssChannelTesterForm = __decorate([
+            RssChannelVerifierForm = __decorate([
                 Serenity.Decorators.registerClass()
-            ], RssChannelTesterForm);
-            return RssChannelTesterForm;
+            ], RssChannelVerifierForm);
+            return RssChannelVerifierForm;
         }(Serenity.TemplatedWidget));
-        Rss.RssChannelTesterForm = RssChannelTesterForm;
+        Rss.RssChannelVerifierForm = RssChannelVerifierForm;
     })(Rss = SimpleFeedly.Rss || (SimpleFeedly.Rss = {}));
 })(SimpleFeedly || (SimpleFeedly = {}));
 var SimpleFeedly;
@@ -3029,26 +3043,6 @@ var SimpleFeedly;
 (function (SimpleFeedly) {
     var Rss;
     (function (Rss) {
-        var RssChannelsProgression = /** @class */ (function () {
-            function RssChannelsProgression() {
-                $.connection.hub.logging = true;
-                var channelHub = $.connection.channelHub;
-                channelHub.client.updateChannelProgress = function (data) {
-                    $(".singalr-channel-progressing-info").text(data.Message);
-                };
-                $.connection.hub.start().done(function () {
-                    //this.clientId = ($ as any).connection.hub.id;
-                });
-            }
-            return RssChannelsProgression;
-        }());
-        Rss.RssChannelsProgression = RssChannelsProgression;
-    })(Rss = SimpleFeedly.Rss || (SimpleFeedly.Rss = {}));
-})(SimpleFeedly || (SimpleFeedly = {}));
-var SimpleFeedly;
-(function (SimpleFeedly) {
-    var Rss;
-    (function (Rss) {
         var RssFeedItemsDialog = /** @class */ (function (_super) {
             __extends(RssFeedItemsDialog, _super);
             function RssFeedItemsDialog() {
@@ -3084,11 +3078,16 @@ var SimpleFeedly;
             __extends(RssFeedItemsGrid, _super);
             function RssFeedItemsGrid(container) {
                 var _this = _super.call(this, container) || this;
-                if (_this.quickFiltersDiv) {
-                    _this.quickFiltersDiv.hide();
+                if (J.isMobile()) {
+                    if (_this.quickFiltersDiv) {
+                        _this.quickFiltersDiv.hide();
+                    }
+                    $(".s-QuickSearchInput").css("width", "119px");
+                    $(".refresh-button").hide();
                 }
-                $(".s-QuickSearchInput").css("width", "104px");
-                $(".refresh-button").hide();
+                else {
+                    $(".s-QuickSearchInput").css("width", "170px");
+                }
                 return _this;
             }
             RssFeedItemsGrid.prototype.getColumnsKey = function () { return 'Rss.RssFeedItems'; };
@@ -3129,7 +3128,7 @@ var SimpleFeedly;
                 var buttons = _super.prototype.getButtons.call(this);
                 buttons.splice(Q.indexOf(buttons, function (x) { return x.cssClass == "add-button"; }), 1);
                 buttons.unshift({
-                    title: '',
+                    title: J.isMobile() ? '' : 'Mark as unread',
                     cssClass: 'text-orange',
                     icon: "fa fa-undo",
                     separator: 'right',
@@ -3154,8 +3153,8 @@ var SimpleFeedly;
                     }
                 });
                 buttons.unshift({
-                    title: '',
-                    cssClass: 'text-green',
+                    title: J.isMobile() ? '' : 'Mark as read',
+                    cssClass: 'text-blue',
                     icon: 'fa fa-check',
                     hint: 'Mark as read',
                     onClick: function () {
@@ -3178,9 +3177,9 @@ var SimpleFeedly;
                     }
                 });
                 buttons.splice(0, 0, {
-                    title: 'All',
-                    cssClass: 'text-green',
-                    icon: 'fa fa-check-circle-o',
+                    title: J.isMobile() ? '' : 'Page as read',
+                    cssClass: 'text-blue',
+                    icon: 'fa fa-tags',
                     separator: 'right',
                     hint: 'Mark this page as read',
                     onClick: function () {
@@ -3200,14 +3199,16 @@ var SimpleFeedly;
                         });
                     }
                 });
-                buttons.push({
-                    title: '',
-                    icon: 'fa fa-filter text-blue',
-                    hint: 'Filters',
-                    onClick: function () {
-                        _this.quickFiltersDiv.slideToggle();
-                    }
-                });
+                if (J.isMobile()) {
+                    buttons.push({
+                        title: '',
+                        icon: 'fa fa-filter text-blue',
+                        hint: 'Filters',
+                        onClick: function () {
+                            _this.quickFiltersDiv.slideToggle();
+                        }
+                    });
+                }
                 return buttons;
             };
             RssFeedItemsGrid.prototype.getColumns = function () {

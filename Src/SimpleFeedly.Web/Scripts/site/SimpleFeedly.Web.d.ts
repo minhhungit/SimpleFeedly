@@ -1007,6 +1007,9 @@ declare namespace SimpleFeedly.Common {
         protected deleteHandler(options: Serenity.ServiceOptions<Serenity.DeleteResponse>, callback: (response: Serenity.DeleteResponse) => void): void;
     }
 }
+declare namespace J {
+    function isMobile(): boolean;
+}
 declare namespace SimpleFeedly {
     /**
      * This is an editor widget but it only displays a text, not edits it.
@@ -1162,7 +1165,7 @@ declare namespace SimpleFeedly.Membership {
     }
 }
 declare namespace SimpleFeedly.Rss {
-    class RssChannelTesterForm extends Serenity.TemplatedWidget<any> {
+    class RssChannelVerifierForm extends Serenity.TemplatedWidget<any> {
         private templateHtml;
         constructor(container: JQuery);
         private CheckChannel;
@@ -1188,11 +1191,6 @@ declare namespace SimpleFeedly.Rss {
         protected getService(): string;
         constructor(container: JQuery);
         getAddButtonCaption(): string;
-    }
-}
-declare namespace SimpleFeedly.Rss {
-    class RssChannelsProgression {
-        constructor();
     }
 }
 declare namespace SimpleFeedly.Rss {
