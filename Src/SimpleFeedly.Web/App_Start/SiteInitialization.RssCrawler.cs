@@ -27,7 +27,6 @@
             {
                 var channelHubCtx = GlobalHost.ConnectionManager.GetHubContext<ChannelHub>();
                 ObjectCache cache = MemoryCache.Default;
-                const string LIST_CHANNEL_CACHE_KEY = "cache_list_of_channels";
 
                 while (true)
                 {
@@ -39,17 +38,7 @@
 
                     try
                     {
-                        List<RssChannelsRow> channels = null;
-                        var chanelsCached = cache[LIST_CHANNEL_CACHE_KEY] as List<RssChannelsRow>;
-                        if (chanelsCached != null)
-                        {
-                            channels = chanelsCached;
-                        }
-                        else
-                        {
-                            channels = SimpleFeedlyDatabaseAccess.GetAllChannels().OrderBy(x => x.Id).ToList();
-                            cache.Add(LIST_CHANNEL_CACHE_KEY, channels, DateTime.Now.Add(new TimeSpan(0, 1, 0))); // not really need to cache list of channels
-                        }
+                        List<RssChannelsRow> channels = channels = SimpleFeedlyDatabaseAccess.GetAllChannels().OrderBy(x => x.Id).ToList();
 
                         var count = 0;
 
