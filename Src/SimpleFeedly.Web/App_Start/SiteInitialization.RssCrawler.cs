@@ -48,7 +48,7 @@
                             count++;
 
                             _logger.Info($"- [{count}/{channels.Count}] Working on channel: {channel.Id} | {channel.Link}");
-                            channelHubCtx.Clients.All.updateChannelProgress(new { Message = $"<strong>[{count}/{channels.Count}]</strong> <a href='{channel.Link}' target='_blank'>{channel.Link}</a>", IsSleeping = false });
+                            channelHubCtx.Clients.All.updateChannelProgress(new { Message = $"<strong>Fetching</strong> <a href='{channel.Link}' target='_blank'>{channel.Link}</a>", IsSleeping = false });
 
                             if (string.IsNullOrWhiteSpace(channel.Link))
                             {
