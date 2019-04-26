@@ -99,7 +99,7 @@ namespace SimpleFeedly.Rss {
 
             buttons.unshift({
                 title: J.isMobile() ? '' : 'Mark as read',
-                cssClass: 'text-blue',
+                cssClass: 'text-green',
                 icon: 'fa fa-check',
                 hint: 'Mark as read',
                 onClick: () => {
@@ -130,8 +130,8 @@ namespace SimpleFeedly.Rss {
 
             buttons.splice(0, 0, {
                 title: J.isMobile() ? '' : 'Page as read',
-                cssClass: 'text-blue',
-                icon: 'fa fa-tags',
+                cssClass: 'text-green text-bold',
+                icon: 'fa fa-check-square-o',
                 separator: 'right',
                 hint: 'Mark this page as read',
                 onClick: () => {
@@ -141,7 +141,7 @@ namespace SimpleFeedly.Rss {
                         return Q.warning("Please select at least one item");
                     }
 
-                    return Q.confirm('Mark checked for all items int this page?',
+                    return Q.confirm('Mark checked for all items of this page?',
                         () => {
                             if (!this.onViewSubmit()) {
                                 return;

@@ -113,7 +113,7 @@
                                         if (!hasNew)
                                         {
                                             var randomExpiryTime =
-                                            cache.Add(channelSleepingCacheKey, true, DateTime.Now.Add(GenerateChannelSleepTime()));
+                                            cache.Add(channelSleepingCacheKey, true, DateTime.Now.Add(AppSettings.Crawler.ChannelFetchingDelay.GenerateRamdomValue()));
                                         }
                                     }
                                     else
@@ -186,17 +186,6 @@
 
             // or just log error into some error stores, it's up to you
             ErrorStore.LogExceptionWithoutContext(ex);
-        }
-
-        private static TimeSpan GenerateChannelSleepTime()
-        {
-            var min = AppSettings.Crawler.ChannelFetchingDelay.Start.TotalMinutes;
-            var max = AppSettings.Crawler.ChannelFetchingDelay.End.TotalMinutes;
-
-            Random random = new Random();
-            var ranMinutes = random.NextDouble() * (max - min) + min;
-
-            return TimeSpan.FromMinutes(ranMinutes);
         }
 
         public static SimpleFeedlyFeed GetFeedsFromChannel(string channelUrl, out RssFeedEngine engine, out Exception error)

@@ -6,14 +6,25 @@ namespace SimpleFeedly
 {
     public class RandomTimeSpan
     {
+        static Random _rand = new Random(Guid.NewGuid().GetHashCode());
+        private TimeSpan _start { get; }
+        private TimeSpan _end { get; }
+
         public RandomTimeSpan(TimeSpan start, TimeSpan end)
         {
-            Start = start;
-            End = end;
+            _start = start;
+            _end = end;
         }
 
-        public TimeSpan Start { get; }
-        public TimeSpan End { get; }
+        public TimeSpan GenerateRamdomValue()
+        {
+            var min = _start.TotalMinutes;
+            var max = _end.TotalMinutes;
+
+            var ranMinutes = _rand.NextDouble() * (max - min) + min;
+
+            return TimeSpan.FromMinutes(ranMinutes);
+        }
     }
 
     public class RandomTimeSpanParser : ITypeParser<RandomTimeSpan> // INT is numberTaskToRun

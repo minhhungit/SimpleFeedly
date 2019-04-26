@@ -3154,7 +3154,7 @@ var SimpleFeedly;
                 });
                 buttons.unshift({
                     title: J.isMobile() ? '' : 'Mark as read',
-                    cssClass: 'text-blue',
+                    cssClass: 'text-green',
                     icon: 'fa fa-check',
                     hint: 'Mark as read',
                     onClick: function () {
@@ -3178,8 +3178,8 @@ var SimpleFeedly;
                 });
                 buttons.splice(0, 0, {
                     title: J.isMobile() ? '' : 'Page as read',
-                    cssClass: 'text-blue',
-                    icon: 'fa fa-tags',
+                    cssClass: 'text-green text-bold',
+                    icon: 'fa fa-check-square-o',
                     separator: 'right',
                     hint: 'Mark this page as read',
                     onClick: function () {
@@ -3187,7 +3187,7 @@ var SimpleFeedly;
                         if (selectedItems === null || selectedItems === undefined || selectedItems.length === 0) {
                             return Q.warning("Please select at least one item");
                         }
-                        return Q.confirm('Mark checked for all items int this page?', function () {
+                        return Q.confirm('Mark checked for all items of this page?', function () {
                             if (!_this.onViewSubmit()) {
                                 return;
                             }
