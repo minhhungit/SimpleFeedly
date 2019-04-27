@@ -15,3 +15,7 @@
 /Src/SimpleFeedly.DbUpdater/obj/Debug
 /Legacy/SimpleFeedly.Crawler/obj/Debug
 /Src/SimpleFeedly.Web/Logs
+/Src/SimpleFeedly.Core/bin/Release
+/Src/SimpleFeedly.Core/obj/Release
+/Src/SimpleFeedly.DbUpdater/obj/Release
+/Src/SimpleFeedly.Web/obj/Release

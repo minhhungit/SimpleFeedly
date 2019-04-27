@@ -17,12 +17,24 @@ namespace SimpleFeedly.Membership.Pages
         [HttpGet, Authorize]
         public ActionResult ChangePassword()
         {
-            return View(MVC.Views.Membership.Account.ChangePassword.AccountChangePassword);
+            if (Authorization.Username.Equals("demo", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new Exception("This feature is disabled for demo user");
+            }
+            else
+            {
+                return View(MVC.Views.Membership.Account.ChangePassword.AccountChangePassword);
+            }            
         }
 
         [HttpPost, JsonFilter, ServiceAuthorize]
         public Result<ServiceResponse> ChangePassword(ChangePasswordRequest request)
         {
+            if (Authorization.Username.Equals("demo", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new Exception("This feature is disabled for demo user");
+            }
+
             return this.InTransaction("SimpleFeedlyConn", uow =>
             {
                 request.CheckNotNull();
