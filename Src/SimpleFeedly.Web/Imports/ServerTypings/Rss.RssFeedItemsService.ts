@@ -7,6 +7,7 @@
         export declare function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         export declare function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<RssFeedItemsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         export declare function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<RssFeedItemsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        export declare function Undelete(request: Serenity.UndeleteRequest, onSuccess?: (response: Serenity.UndeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         export declare function MarkCheckedFeedItem(request: MarkCheckedFeedItemRequest, onSuccess?: (response: Serenity.ServiceResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         export declare function MarkCheckedBatchFeedItems(request: MarkCheckedBatchFeedItemsRequest, onSuccess?: (response: Serenity.ServiceResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         export declare function GetFeedItemCheckedState(request: Serenity.ServiceRequest, onSuccess?: (response: FeedItemCheckedStateResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
@@ -17,6 +18,7 @@
             Delete = "Rss/RssFeedItems/Delete",
             Retrieve = "Rss/RssFeedItems/Retrieve",
             List = "Rss/RssFeedItems/List",
+            Undelete = "Rss/RssFeedItems/Undelete",
             MarkCheckedFeedItem = "Rss/RssFeedItems/MarkCheckedFeedItem",
             MarkCheckedBatchFeedItems = "Rss/RssFeedItems/MarkCheckedBatchFeedItems",
             GetFeedItemCheckedState = "Rss/RssFeedItems/GetFeedItemCheckedState"
@@ -28,6 +30,7 @@
             'Delete', 
             'Retrieve', 
             'List', 
+            'Undelete', 
             'MarkCheckedFeedItem', 
             'MarkCheckedBatchFeedItems', 
             'GetFeedItemCheckedState'

@@ -45,6 +45,12 @@ namespace SimpleFeedly.Rss.Endpoints
             return new MyRepository().List(connection, request);
         }
 
+        [HttpPost, AuthorizeDelete(typeof(MyRow))]
+        public UndeleteResponse Undelete(IUnitOfWork uow, UndeleteRequest request)
+        {
+            return new MyRepository().Undelete(uow, request);
+        }
+
         [HttpPost, JsonFilter]
         public Result<ServiceResponse> MarkCheckedFeedItem(MarkCheckedFeedItemRequest request)
         {

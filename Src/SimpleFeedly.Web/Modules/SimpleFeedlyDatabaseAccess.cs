@@ -52,13 +52,54 @@ namespace SimpleFeedly
             }
         }
 
-        public static List<RssChannelsRow> GetAllChannels()
+        public static List<RssChannelsRow> GetChannels()
         {
             var result = new List<RssChannelsRow>();
 
             using (var con = new SqlConnection(Settings.ConnectionString))
             {
                 using (var dr = con.ExecuteReader("GetAllChannels", null, commandType: CommandType.StoredProcedure, commandTimeout: 30))
+                {
+                    while (dr.Read())
+                    {
+                        var item = new RssChannelsRow
+                        {
+                            Id = long.Parse(dr["Id"].ToString()),
+
+                            Title = dr["Title"].ToString(),
+                            Link = dr["Link"].ToString(),
+                            Description = dr["Description"].ToString(),
+                            Language = dr["Language"].ToString(),
+                            Copyright = dr["Copyright"].ToString(),
+                            ImageUrl = dr["ImageUrl"].ToString(),
+                            OriginalDocument = dr["OriginalDocument"].ToString()
+                        };
+
+                        if (dr["Type"] != DBNull.Value)
+                        {
+                            item.Type = int.Parse(dr["Type"].ToString());
+                        }
+
+                        if (DateTime.TryParse(dr["LastUpdatedDate"].ToString(), out DateTime tmpLastUpdatedDate))
+                        {
+                            item.LastUpdatedDate = tmpLastUpdatedDate;
+                        }
+
+                        result.Add(item);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public static List<RssChannelsRow> GetActiveChannels()
+        {
+            var result = new List<RssChannelsRow>();
+
+            using (var con = new SqlConnection(Settings.ConnectionString))
+            {
+                using (var dr = con.ExecuteReader("GetActiveChannels", null, commandType: CommandType.StoredProcedure, commandTimeout: 30))
                 {
                     while (dr.Read())
                     {

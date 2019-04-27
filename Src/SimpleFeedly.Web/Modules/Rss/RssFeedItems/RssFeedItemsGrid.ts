@@ -6,6 +6,7 @@ namespace SimpleFeedly.Rss {
     @Serenity.Decorators.registerClass()
     export class RssFeedItemsGrid extends Serenity.EntityGrid<RssFeedItemsRow, any> {
         protected getColumnsKey() { return 'Rss.RssFeedItems'; }
+        protected getIsActiveProperty() { return RssFeedItemsRow.isActiveProperty; }
         protected getDialogType() { return RssFeedItemsDialog; }
         protected getIdProperty() { return RssFeedItemsRow.idProperty; }
         protected getLocalTextPrefix() { return RssFeedItemsRow.localTextPrefix; }

@@ -570,9 +570,11 @@ declare namespace SimpleFeedly.Rss {
         OriginalDocument?: string;
         IsError?: boolean;
         ErrorMessage?: string;
+        IsActive?: number;
     }
     namespace RssChannelsRow {
         const idProperty = "Id";
+        const isActiveProperty = "IsActive";
         const nameProperty = "Title";
         const localTextPrefix = "Rss.RssChannels";
         const lookupKey = "Rss.RssChannels";
@@ -589,7 +591,8 @@ declare namespace SimpleFeedly.Rss {
             ImageUrl = "ImageUrl",
             OriginalDocument = "OriginalDocument",
             IsError = "IsError",
-            ErrorMessage = "ErrorMessage"
+            ErrorMessage = "ErrorMessage",
+            IsActive = "IsActive"
         }
     }
 }
@@ -601,6 +604,7 @@ declare namespace SimpleFeedly.Rss {
         function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<RssChannelsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<RssChannelsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Undelete(request: Serenity.UndeleteRequest, onSuccess?: (response: Serenity.UndeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function TestChannel(request: TestChannelRequest, onSuccess?: (response: TestChannelResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         const enum Methods {
             Create = "Rss/RssChannels/Create",
@@ -608,6 +612,7 @@ declare namespace SimpleFeedly.Rss {
             Delete = "Rss/RssChannels/Delete",
             Retrieve = "Rss/RssChannels/Retrieve",
             List = "Rss/RssChannels/List",
+            Undelete = "Rss/RssChannels/Undelete",
             TestChannel = "Rss/RssChannels/TestChannel"
         }
     }
@@ -644,10 +649,12 @@ declare namespace SimpleFeedly.Rss {
         Author?: string;
         Content?: string;
         IsChecked?: boolean;
+        IsActive?: number;
         RssChannelTitle?: string;
     }
     namespace RssFeedItemsRow {
         const idProperty = "Id";
+        const isActiveProperty = "IsActive";
         const nameProperty = "FeedItemId";
         const localTextPrefix = "Rss.RssFeedItems";
         const enum Fields {
@@ -661,6 +668,7 @@ declare namespace SimpleFeedly.Rss {
             Author = "Author",
             Content = "Content",
             IsChecked = "IsChecked",
+            IsActive = "IsActive",
             RssChannelTitle = "RssChannelTitle"
         }
     }
@@ -673,6 +681,7 @@ declare namespace SimpleFeedly.Rss {
         function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<RssFeedItemsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<RssFeedItemsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Undelete(request: Serenity.UndeleteRequest, onSuccess?: (response: Serenity.UndeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function MarkCheckedFeedItem(request: MarkCheckedFeedItemRequest, onSuccess?: (response: Serenity.ServiceResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function MarkCheckedBatchFeedItems(request: MarkCheckedBatchFeedItemsRequest, onSuccess?: (response: Serenity.ServiceResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function GetFeedItemCheckedState(request: Serenity.ServiceRequest, onSuccess?: (response: FeedItemCheckedStateResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
@@ -682,6 +691,7 @@ declare namespace SimpleFeedly.Rss {
             Delete = "Rss/RssFeedItems/Delete",
             Retrieve = "Rss/RssFeedItems/Retrieve",
             List = "Rss/RssFeedItems/List",
+            Undelete = "Rss/RssFeedItems/Undelete",
             MarkCheckedFeedItem = "Rss/RssFeedItems/MarkCheckedFeedItem",
             MarkCheckedBatchFeedItems = "Rss/RssFeedItems/MarkCheckedBatchFeedItems",
             GetFeedItemCheckedState = "Rss/RssFeedItems/GetFeedItemCheckedState"
@@ -1178,6 +1188,7 @@ declare namespace SimpleFeedly.Rss {
 declare namespace SimpleFeedly.Rss {
     class RssChannelsGrid extends Serenity.EntityGrid<RssChannelsRow, any> {
         protected getColumnsKey(): string;
+        protected getIsActiveProperty(): string;
         protected getDialogType(): typeof RssChannelsDialog;
         protected getIdProperty(): string;
         protected getLocalTextPrefix(): string;
@@ -1207,6 +1218,7 @@ declare namespace SimpleFeedly.Rss {
 declare namespace SimpleFeedly.Rss {
     class RssFeedItemsGrid extends Serenity.EntityGrid<RssFeedItemsRow, any> {
         protected getColumnsKey(): string;
+        protected getIsActiveProperty(): string;
         protected getDialogType(): typeof RssFeedItemsDialog;
         protected getIdProperty(): string;
         protected getLocalTextPrefix(): string;

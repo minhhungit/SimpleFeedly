@@ -7,6 +7,7 @@
         export declare function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         export declare function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<RssChannelsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         export declare function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<RssChannelsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        export declare function Undelete(request: Serenity.UndeleteRequest, onSuccess?: (response: Serenity.UndeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         export declare function TestChannel(request: TestChannelRequest, onSuccess?: (response: TestChannelResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
 
         export declare const enum Methods {
@@ -15,6 +16,7 @@
             Delete = "Rss/RssChannels/Delete",
             Retrieve = "Rss/RssChannels/Retrieve",
             List = "Rss/RssChannels/List",
+            Undelete = "Rss/RssChannels/Undelete",
             TestChannel = "Rss/RssChannels/TestChannel"
         }
 
@@ -24,6 +26,7 @@
             'Delete', 
             'Retrieve', 
             'List', 
+            'Undelete', 
             'TestChannel'
         ].forEach(x => {
             (<any>RssChannelsService)[x] = function (r, s, o) {

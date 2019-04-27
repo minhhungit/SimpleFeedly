@@ -46,6 +46,12 @@ namespace SimpleFeedly.Rss.Endpoints
             return new MyRepository().List(connection, request);
         }
 
+        [HttpPost, AuthorizeDelete(typeof(MyRow))]
+        public UndeleteResponse Undelete(IUnitOfWork uow, UndeleteRequest request)
+        {
+            return new MyRepository().Undelete(uow, request);
+        }
+
         public TestChannelResponse TestChannel(IDbConnection connection, TestChannelRequest request)
         {
             try

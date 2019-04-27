@@ -39,7 +39,7 @@
 
                     try
                     {
-                        List<RssChannelsRow> channels = channels = SimpleFeedlyDatabaseAccess.GetAllChannels().OrderBy(x => x.Id).ToList();
+                        List<RssChannelsRow> channels = channels = SimpleFeedlyDatabaseAccess.GetActiveChannels().OrderBy(x => x.Id).ToList();
 
                         var count = 0;
 

@@ -10,11 +10,13 @@
         Author?: string;
         Content?: string;
         IsChecked?: boolean;
+        IsActive?: number;
         RssChannelTitle?: string;
     }
 
     export namespace RssFeedItemsRow {
         export const idProperty = 'Id';
+        export const isActiveProperty = 'IsActive';
         export const nameProperty = 'FeedItemId';
         export const localTextPrefix = 'Rss.RssFeedItems';
 
@@ -29,6 +31,7 @@
             Author = "Author",
             Content = "Content",
             IsChecked = "IsChecked",
+            IsActive = "IsActive",
             RssChannelTitle = "RssChannelTitle"
         }
     }

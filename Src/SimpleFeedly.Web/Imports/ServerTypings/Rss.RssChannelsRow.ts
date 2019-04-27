@@ -12,10 +12,12 @@
         OriginalDocument?: string;
         IsError?: boolean;
         ErrorMessage?: string;
+        IsActive?: number;
     }
 
     export namespace RssChannelsRow {
         export const idProperty = 'Id';
+        export const isActiveProperty = 'IsActive';
         export const nameProperty = 'Title';
         export const localTextPrefix = 'Rss.RssChannels';
         export const lookupKey = 'Rss.RssChannels';
@@ -36,7 +38,8 @@
             ImageUrl = "ImageUrl",
             OriginalDocument = "OriginalDocument",
             IsError = "IsError",
-            ErrorMessage = "ErrorMessage"
+            ErrorMessage = "ErrorMessage",
+            IsActive = "IsActive"
         }
     }
 }

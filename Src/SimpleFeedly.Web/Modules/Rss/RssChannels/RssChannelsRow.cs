@@ -16,7 +16,7 @@ namespace SimpleFeedly.Rss.Entities
     [UpdatePermission(PermissionKeys.Channels.Update)]
     [DeletePermission(PermissionKeys.Channels.Delete)]
     [LookupScript("Rss.RssChannels", Expiration = -1)]
-    public sealed class RssChannelsRow : Row, IIdRow, INameRow
+    public sealed class RssChannelsRow : Row, IIdRow, INameRow, IIsActiveRow, IIsActiveDeletedRow
     {
         [DisplayName("Id"), Identity]
         public Int64? Id
@@ -102,6 +102,13 @@ namespace SimpleFeedly.Rss.Entities
             set { Fields.ErrorMessage[this] = value; }
         }
 
+        [NotNull, Insertable(false), Updatable(true)]
+        public Int16? IsActive
+        {
+            get { return Fields.IsActive[this]; }
+            set { Fields.IsActive[this] = value; }
+        }
+
         IIdField IIdRow.IdField
         {
             get { return Fields.Id; }
@@ -110,6 +117,11 @@ namespace SimpleFeedly.Rss.Entities
         StringField INameRow.NameField
         {
             get { return Fields.Title; }
+        }
+
+        public Int16Field IsActiveField
+        {
+            get { return Fields.IsActive; }
         }
 
         public static readonly RowFields Fields = new RowFields().Init();
@@ -133,6 +145,7 @@ namespace SimpleFeedly.Rss.Entities
             public StringField OriginalDocument;
             public BooleanField IsError;
             public StringField ErrorMessage;
+            public Int16Field IsActive;
         }
     }
 }
