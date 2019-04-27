@@ -3092,6 +3092,7 @@ var SimpleFeedly;
             __extends(RssFeedItemsGrid, _super);
             function RssFeedItemsGrid(container) {
                 var _this = _super.call(this, container) || this;
+                _this.element.find('.s-IncludeDeletedToggle').hide();
                 if (J.isMobile()) {
                     if (_this.quickFiltersDiv) {
                         _this.quickFiltersDiv.hide();

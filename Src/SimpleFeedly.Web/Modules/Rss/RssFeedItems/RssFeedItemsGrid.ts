@@ -17,6 +17,8 @@ namespace SimpleFeedly.Rss {
         constructor(container: JQuery) {
             super(container);         
 
+            this.element.find('.s-IncludeDeletedToggle').hide();
+
             if (J.isMobile()) {
                 if (this.quickFiltersDiv) {
                     this.quickFiltersDiv.hide();
