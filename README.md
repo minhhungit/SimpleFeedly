@@ -12,10 +12,10 @@ Very simple Rss Reader Web Application using <a href="https://github.com/volkanc
 
 ## Demo
 ### DbUpdater
-<img src="https://github.com/minhhungit/SimpleFeedly/blob/master/wiki/Images/demo03.png" />
+<img src="https://raw.githubusercontent.com/minhhungit/SimpleFeedly/master/wiki/Images/demo03.png" />
 
 ### Rss Reader (Web App)
-<img src="https://github.com/minhhungit/SimpleFeedly/blob/master/wiki/Images/demo01.png" />
+<img src="https://raw.githubusercontent.com/minhhungit/SimpleFeedly/master/wiki/Images/demo01.png" />
 
 ```
 
