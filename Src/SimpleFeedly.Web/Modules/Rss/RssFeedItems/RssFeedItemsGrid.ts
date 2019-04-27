@@ -6,7 +6,6 @@ namespace SimpleFeedly.Rss {
     @Serenity.Decorators.registerClass()
     export class RssFeedItemsGrid extends Serenity.EntityGrid<RssFeedItemsRow, any> {
         protected getColumnsKey() { return 'Rss.RssFeedItems'; }
-        protected getIsActiveProperty() { return RssFeedItemsRow.isActiveProperty; }
         protected getDialogType() { return RssFeedItemsDialog; }
         protected getIdProperty() { return RssFeedItemsRow.idProperty; }
         protected getLocalTextPrefix() { return RssFeedItemsRow.localTextPrefix; }
@@ -16,9 +15,6 @@ namespace SimpleFeedly.Rss {
 
         constructor(container: JQuery) {
             super(container);         
-
-            this.element.find('.s-IncludeDeletedToggle').hide();
-
             if (J.isMobile()) {
                 if (this.quickFiltersDiv) {
                     this.quickFiltersDiv.hide();

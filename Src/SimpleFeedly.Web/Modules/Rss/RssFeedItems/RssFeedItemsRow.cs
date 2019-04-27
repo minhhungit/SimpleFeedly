@@ -15,7 +15,7 @@ namespace SimpleFeedly.Rss.Entities
     [InsertPermission(PermissionKeys.FeedItems.Insert)]
     [UpdatePermission(PermissionKeys.FeedItems.Update)]
     [DeletePermission(PermissionKeys.FeedItems.Delete)]
-    public sealed class RssFeedItemsRow : Row, IIdRow, INameRow, IIsActiveRow, IIsActiveDeletedRow
+    public sealed class RssFeedItemsRow : Row, IIdRow, INameRow
     {
         [DisplayName("Id"), Identity]
         public Int64? Id
@@ -98,13 +98,6 @@ namespace SimpleFeedly.Rss.Entities
             set { Fields.IsChecked[this] = value; }
         }
 
-        [NotNull, Insertable(false), Updatable(true)]
-        public Int16? IsActive
-        {
-            get { return Fields.IsActive[this]; }
-            set { Fields.IsActive[this] = value; }
-        }
-
         IIdField IIdRow.IdField
         {
             get { return Fields.Id; }
@@ -113,11 +106,6 @@ namespace SimpleFeedly.Rss.Entities
         StringField INameRow.NameField
         {
             get { return Fields.FeedItemId; }
-        }
-
-        public Int16Field IsActiveField
-        {
-            get { return Fields.IsActive; }
         }
 
         public static readonly RowFields Fields = new RowFields().Init();
@@ -139,7 +127,6 @@ namespace SimpleFeedly.Rss.Entities
             public StringField Author;
             public StringField Content;
             public BooleanField IsChecked;
-            public Int16Field IsActive;
 
             public StringField RssChannelTitle;
         }

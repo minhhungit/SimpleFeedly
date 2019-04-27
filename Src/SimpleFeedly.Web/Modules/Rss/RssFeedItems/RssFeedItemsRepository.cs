@@ -36,15 +36,10 @@ namespace SimpleFeedly.Rss.Repositories
         {
             return new MyListHandler().Process(connection, request);
         }
-        public UndeleteResponse Undelete(IUnitOfWork uow, UndeleteRequest request)
-        {
-            return new MyUndeleteHandler().Process(uow, request);
-        }        
 
         private class MySaveHandler : SaveRequestHandler<MyRow> { }
         private class MyDeleteHandler : DeleteRequestHandler<MyRow> { }
         private class MyRetrieveHandler : RetrieveRequestHandler<MyRow> { }
         private class MyListHandler : ListRequestHandler<MyRow> { }
-        private class MyUndeleteHandler : UndeleteRequestHandler<MyRow> { }
     }
 }
