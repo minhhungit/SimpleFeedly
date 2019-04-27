@@ -3008,7 +3008,16 @@ var SimpleFeedly;
             __extends(RssChannelsVerifierForm, _super);
             function RssChannelsVerifierForm(container) {
                 var _this = _super.call(this, container) || this;
+                // set focus on url textbox
+                _this.byId("txtChannelUrl").focus();
                 _this.templateHtml = _this.byId("templateItems")[0].innerHTML;
+                // enter event on url textbox
+                _this.byId("txtChannelUrl").keyup(function (event) {
+                    if (event.keyCode === 13) {
+                        _this.byId("btnCheck").click();
+                    }
+                });
+                // verify button
                 _this.byId("btnCheck").click(function () { return _this.CheckChannel(_this.byId("txtChannelUrl").val()); });
                 return _this;
             }
