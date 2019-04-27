@@ -75,11 +75,13 @@
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20160515_072600_UserPreferences.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20161029_130000_ExceptionLog.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20180323_080701_create_model.cs" />
+    <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20190427_164101_channel_crawlerengine.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20190427_083401_add_isactive_column.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20190425_035001_create_feeds_index.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20190425_031301_create_udt_type.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20180325_041701_update_index.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\Stored\SimpleFeedlyDb_20180324_025501_add_stored.cs" />
+    <Compile Include="Migrations\SimpleFeedlyDb\Stored\SimpleFeedlyDb_20190427_164501_crawler_engine.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\Stored\SimpleFeedlyDb_20190427_085901_get_active_channels.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\Stored\SimpleFeedlyDb_20190425_032201_markchecked_batch.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\Stored\SimpleFeedlyDb_20180408_210501_add_stored_newcolumn.cs" />
@@ -93,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <EmbeddedResource Include="Migrations\SimpleFeedlyDb\%40RefScript\Stored\dbo.UpdateChannelDefaultEngine.sql" />
     <EmbeddedResource Include="Migrations\SimpleFeedlyDb\%40RefScript\Stored\dbo.GetActiveChannels.sql" />
     <EmbeddedResource Include="Migrations\SimpleFeedlyDb\%40RefScript\Stored\dbo.MarkCheckedFeedItems.sql" />
     <EmbeddedResource Include="Migrations\SimpleFeedlyDb\%40RefScript\Stored\dbo.CheckExistFeedItem.sql" />

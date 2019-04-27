@@ -10,29 +10,29 @@ namespace SimpleFeedly.Rss {
             super(container);
 
             // set focus on url textbox
-            this.byId("txtChannelUrl").focus();
+            this.byId("txtFeedUrl").focus();
 
             this.templateHtml = this.byId("templateItems")[0].innerHTML;
 
             // enter event on url textbox
-            this.byId("txtChannelUrl").keyup((event) => {
+            this.byId("txtFeedUrl").keyup((event) => {
                 if (event.keyCode === 13) {
                     this.byId("btnCheck").click();
                 }
             });
 
             // verify button
-            this.byId("btnCheck").click(() => this.CheckChannel(this.byId("txtChannelUrl").val()));
+            this.byId("btnCheck").click(() => this.CheckChannel(this.byId("txtFeedUrl").val()));
         }
 
-        private CheckChannel(channelUrl: string) {
+        private CheckChannel(feedUrl: string) {
 
-            if (Q.trimToNull(channelUrl) == null) {
+            if (Q.trimToNull(feedUrl) == null) {
                 Q.warning("Please enter channel url");
                 return;
             }
 
-            RssChannelsService.TestChannel({ FeedUrl: channelUrl }, response => {
+            RssChannelsService.TestChannel({ FeedUrl: feedUrl }, response => {
                 console.log(response);
 
                 if (response.Error != null) {

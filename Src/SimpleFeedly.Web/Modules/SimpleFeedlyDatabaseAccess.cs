@@ -72,8 +72,17 @@ namespace SimpleFeedly
                             Language = dr["Language"].ToString(),
                             Copyright = dr["Copyright"].ToString(),
                             ImageUrl = dr["ImageUrl"].ToString(),
-                            OriginalDocument = dr["OriginalDocument"].ToString()
+                            OriginalDocument = dr["OriginalDocument"].ToString(),
                         };
+
+                        if (dr["RssCrawlerEngine"] != DBNull.Value && !string.IsNullOrWhiteSpace(dr["RssCrawlerEngine"].ToString()))
+                        {
+                            item.RssCrawlerEngine = (RssCrawlerEngine)int.Parse(dr["RssCrawlerEngine"].ToString());
+                        }
+                        else
+                        {
+                            item.RssCrawlerEngine = null;
+                        }
 
                         if (dr["Type"] != DBNull.Value)
                         {
@@ -116,6 +125,15 @@ namespace SimpleFeedly
                             OriginalDocument = dr["OriginalDocument"].ToString()
                         };
 
+                        if (dr["RssCrawlerEngine"] != DBNull.Value && !string.IsNullOrWhiteSpace(dr["RssCrawlerEngine"].ToString()))
+                        {
+                            item.RssCrawlerEngine = (RssCrawlerEngine)int.Parse(dr["RssCrawlerEngine"].ToString());
+                        }
+                        else
+                        {
+                            item.RssCrawlerEngine = null;
+                        }
+
                         if (dr["Type"] != DBNull.Value)
                         {
                             item.Type = int.Parse(dr["Type"].ToString());
@@ -144,7 +162,7 @@ namespace SimpleFeedly
                 parms.Add("@title", item.Title);
                 parms.Add("@link", item.Link);
                 parms.Add("@description", item.Description);
-                parms.Add("@publishingDate", item.PublishingDate);
+                parms.Add("@publishingDate", item.PublishingDate == null || item.PublishingDate == DateTime.MinValue ? DateTime.Now : item.PublishingDate);
                 parms.Add("@author", item.Author);
                 parms.Add("@content", item.Content);
 
@@ -204,6 +222,18 @@ namespace SimpleFeedly
                         parm,
                         commandType: CommandType.StoredProcedure,
                         commandTimeout: Settings.ConnectionTimeout);
+            }
+        }
+
+        public static void UpdateChannelDefaultEngine(long channelId, RssCrawlerEngine? engine)
+        {
+            using (var con = new SqlConnection(Settings.ConnectionString))
+            {
+                var parms = new DynamicParameters();
+                parms.Add("@channelId", channelId);
+                parms.Add("@engine", engine);
+
+                con.Execute("UpdateChannelDefaultEngine", parms, commandType: CommandType.StoredProcedure, commandTimeout: 30);
             }
         }
     }

@@ -571,6 +571,7 @@ declare namespace SimpleFeedly.Rss {
         IsError?: boolean;
         ErrorMessage?: string;
         IsActive?: number;
+        RssCrawlerEngine?: RssCrawlerEngine;
     }
     namespace RssChannelsRow {
         const idProperty = "Id";
@@ -592,7 +593,8 @@ declare namespace SimpleFeedly.Rss {
             OriginalDocument = "OriginalDocument",
             IsError = "IsError",
             ErrorMessage = "ErrorMessage",
-            IsActive = "IsActive"
+            IsActive = "IsActive",
+            RssCrawlerEngine = "RssCrawlerEngine"
         }
     }
 }
@@ -615,6 +617,13 @@ declare namespace SimpleFeedly.Rss {
             Undelete = "Rss/RssChannels/Undelete",
             TestChannel = "Rss/RssChannels/TestChannel"
         }
+    }
+}
+declare namespace SimpleFeedly.Rss {
+    enum RssCrawlerEngine {
+        SyndicationFeed = 1,
+        CodeHollowFeedReader = 2,
+        ParseRssByXml = 3
     }
 }
 declare namespace SimpleFeedly.Rss {

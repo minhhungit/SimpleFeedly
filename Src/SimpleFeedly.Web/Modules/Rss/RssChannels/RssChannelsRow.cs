@@ -109,6 +109,21 @@ namespace SimpleFeedly.Rss.Entities
             set { Fields.IsActive[this] = value; }
         }
 
+        [DisplayName("Crawler Engine")]
+        public RssCrawlerEngine? RssCrawlerEngine
+        {
+            get
+            {
+                if (Fields.RssCrawlerEngine[this] == null)
+                {
+                    return null;
+                }
+
+                return (RssCrawlerEngine?)Fields.RssCrawlerEngine[this];
+            }
+            set { Fields.RssCrawlerEngine[this] = (int?)value; }
+        }
+
         IIdField IIdRow.IdField
         {
             get { return Fields.Id; }
@@ -146,6 +161,7 @@ namespace SimpleFeedly.Rss.Entities
             public BooleanField IsError;
             public StringField ErrorMessage;
             public Int16Field IsActive;
+            public Int32Field RssCrawlerEngine;
         }
     }
 }

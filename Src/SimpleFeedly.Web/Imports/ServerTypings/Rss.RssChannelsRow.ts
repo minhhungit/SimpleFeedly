@@ -13,6 +13,7 @@
         IsError?: boolean;
         ErrorMessage?: string;
         IsActive?: number;
+        RssCrawlerEngine?: RssCrawlerEngine;
     }
 
     export namespace RssChannelsRow {
@@ -39,7 +40,8 @@
             OriginalDocument = "OriginalDocument",
             IsError = "IsError",
             ErrorMessage = "ErrorMessage",
-            IsActive = "IsActive"
+            IsActive = "IsActive",
+            RssCrawlerEngine = "RssCrawlerEngine"
         }
     }
 }

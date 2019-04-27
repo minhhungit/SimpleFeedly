@@ -1110,6 +1110,9 @@
     <TypeScriptCompile Include="Imports\ServerTypings\Rss.RssChannelsColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Rss.RssCrawlerEngine.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Rss.RssFeedItemsColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
@@ -1711,6 +1714,7 @@
     <Compile Include="App_Start\SiteInitialization.DataAccessHelpers.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Hubs\ChannelHub.cs" />
+    <Compile Include="Modules\Rss\RssChannels\RssCrawlerEngine.cs" />
     <Compile Include="Modules\Rss\RssChannels\ServiceModel\TestChannelRequest.cs" />
     <Compile Include="Modules\SimpleFeedlyPermissionKeys.cs" />
     <Compile Include="Settings\ConnectionStringSettings.cs" />

@@ -5,7 +5,9 @@ namespace SimpleFeedly.Rss.Endpoints
     using Serenity;
     using Serenity.Data;
     using Serenity.Services;
+    using StackExchange.Exceptional;
     using System;
+    using System.Collections.Generic;
     using System.Data;
     using System.Linq;
     using System.Web.Mvc;
@@ -58,10 +60,19 @@ namespace SimpleFeedly.Rss.Endpoints
             {
                 request.CheckNotNull();
 
-                var feed = SiteInitialization.GetFeedsFromChannel(request.FeedUrl, out RssFeedEngine usedEngine, out Exception fetchError);
+                var feed = SiteInitialization.GetFeedsFromChannel(request.FeedUrl, null, false, out RssCrawlerEngine usedEngine, out Exception fetchError);
 
                 if (feed == null || feed.Items == null || feed.Items.Count == 0)
                 {
+                    if (fetchError != null)
+                    {
+                        ErrorStore.LogExceptionWithoutContext(fetchError, false, false,
+                                       new Dictionary<string, string>
+                                       {
+                                           {"channelId", request.FeedUrl },
+                                           { "engine", usedEngine.ToString()}
+                                       });
+                    }
                     throw new Exception("Cannot fetch data");
                 }
                 else

@@ -4,6 +4,7 @@
     using Newtonsoft.Json;
     using NLog;
     using SimpleFeedly.Hubs;
+    using SimpleFeedly.Rss;
     using SimpleFeedly.Rss.Entities;
     using StackExchange.Exceptional;
     using System;
@@ -12,7 +13,7 @@
     using System.Net;
     using System.Runtime.Caching;
     using System.Text.RegularExpressions;
-    using System.Web;
+ 
     using System.Xml;
 
     public static partial class SiteInitialization
@@ -37,6 +38,7 @@
                         _currentDate = DateTime.Now.Day;
                     }
 
+                    var feedUrl = string.Empty;
                     try
                     {
                         List<RssChannelsRow> channels = channels = SimpleFeedlyDatabaseAccess.GetActiveChannels().OrderBy(x => x.Id).ToList();
@@ -45,12 +47,14 @@
 
                         foreach (var channel in channels)
                         {
+                            feedUrl = channel.Link;
+
                             count++;
 
-                            _logger.Info($"- [{count}/{channels.Count}] Working on channel: {channel.Id} | {channel.Link}");
+                            _logger.Info($"- [{count}/{channels.Count}] Working on channel: {channel.Id} | {feedUrl}");
                             channelHubCtx.Clients.All.updateChannelProgress(new { Message = $"<strong>Fetching</strong> <a href='{channel.Link}' target='_blank'>{channel.Link}</a>", IsSleeping = false });
 
-                            if (string.IsNullOrWhiteSpace(channel.Link))
+                            if (string.IsNullOrWhiteSpace(feedUrl))
                             {
                                 _logger.Warn($"=> Channel has empty link: {channel.Id}");
                                 continue;
@@ -63,12 +67,15 @@
                             {
                                 try
                                 {
-                                    RssFeedEngine usedEngine = RssFeedEngine.CodeHollowFeedReader;
+                                    RssCrawlerEngine usedEngine = RssCrawlerEngine.CodeHollowFeedReader;
                                     Exception fetchFeedError = null;
-                                    var feed = GetFeedsFromChannel(channel.Link, out usedEngine, out fetchFeedError);
+                                    var feed = GetFeedsFromChannel(feedUrl, channel.RssCrawlerEngine, false, out usedEngine, out fetchFeedError);
+
+                                    // update default engine for channel
+                                    SimpleFeedlyDatabaseAccess.UpdateChannelDefaultEngine((long)channel.Id, feed == null ? (RssCrawlerEngine?)null : usedEngine);
 
                                     if (feed != null)
-                                    {
+                                    {                                        
                                         _logger.Info($"  + Number of items: {feed.Items.Count}");
 
                                         var hasNew = false;
@@ -126,9 +133,9 @@
                                     SimpleFeedlyDatabaseAccess.UpdateChannelErrorStatus((long)channel.Id, true, JsonConvert.SerializeObject(err));
 
                                     cache.Add(channelSleepingCacheKey, true, DateTime.Now.Add(AppSettings.Crawler.ChannelErrorDelay));
-                                    _logger.Error(err, $"An error occurred on channel: {channel.Id} | {channel.Link}");
+                                    _logger.Error(err, $"An error occurred on channel: {channel.Id} | {feedUrl}");
 
-                                    ErrorHandle(err);
+                                    ErrorHandle(err, feedUrl);
                                 }
                             }
                             else
@@ -141,7 +148,7 @@
                     {
                         _logger.Error(ex, "An error occurred");
 
-                        ErrorHandle(ex);
+                        ErrorHandle(ex, feedUrl);
 
                         System.Threading.Thread.Sleep(AppSettings.Crawler.ErrorDelay);
                     }
@@ -180,176 +187,221 @@
             return Core.Utils.StringUtils.MD5Hash($"{channelId}>{feedItemId}");
         }
 
-        private static void ErrorHandle(Exception ex)
+        private static void ErrorHandle(Exception ex, string feedUrl)
         {
             // we can send an email for warning right here if needed
 
             // or just log error into some error stores, it's up to you
-            ErrorStore.LogExceptionWithoutContext(ex);
+            ErrorStore.LogExceptionWithoutContext(ex, false, false,
+                                       new Dictionary<string, string>
+                                       {
+                                           {"feedUrl", feedUrl }
+                                       });
         }
 
-        public static SimpleFeedlyFeed GetFeedsFromChannel(string channelUrl, out RssFeedEngine engine, out Exception error)
+        /// <summary>
+        /// GetFeedsFromChannel
+        /// </summary>
+        /// <param name="feedUrl">feed Url</param>
+        /// <param name="crawlerEngine">crawler engine</param>
+        /// <param name="isRest">
+        /// Normally we call this method two times, first times with 'default' channel's crawler engine, and the last times for the rest crawler engine
+        /// isRest = false: FIRST TIMES
+        /// isRest = true: LAST TIMES
+        /// </param>
+        /// <param name="engine"></param>
+        /// <param name="error"></param>
+        /// <returns></returns>
+        public static SimpleFeedlyFeed GetFeedsFromChannel(string feedUrl, RssCrawlerEngine? defaultCrawlerEngine, bool isRest, out RssCrawlerEngine engine, out Exception error)
         {
             error = null;
-            engine = RssFeedEngine.CodeHollowFeedReader;
+            engine = RssCrawlerEngine.CodeHollowFeedReader;
             SimpleFeedlyFeed result = new SimpleFeedlyFeed();
             var items = new List<SimpleFeedlyFeedItem>();
 
             var status = false;
 
-            // using CodeHollow.FeedReader
-            if (!status)
+            foreach (RssCrawlerEngine engineLoop in (RssCrawlerEngine[])Enum.GetValues(typeof(RssCrawlerEngine)))
             {
-                try
+                if (status)
                 {
-                    var feed = CodeHollow.FeedReader.FeedReader.ReadAsync(channelUrl).GetAwaiter().GetResult();
+                    break;
+                }
 
-                    foreach (var item in feed.Items)
+                var canRun = false;
+
+                if (defaultCrawlerEngine == null)
+                {
+                    canRun = true;
+                }
+                else
+                {
+                    if (!isRest) // first time
                     {
-                        var feedItem = new SimpleFeedlyFeedItem
-                        {
-                            Id = item.Id,
-                            Title = string.IsNullOrWhiteSpace(item.Title) ? item.Link : item.Title,
-                            Link = item.Link,
-                            Description = item.Description,
-                            PublishingDate = item.PublishingDate ?? DateTime.Now,
-                            Author = item.Author,
-                            Content = item.Content
-                        };
-
-                        items.Add(feedItem);
+                        canRun = engineLoop == defaultCrawlerEngine;
                     }
-
-                    engine = RssFeedEngine.CodeHollowFeedReader;
-                    status = true;
-                }
-                catch (Exception ex)
-                {
-                    error = ex;
-                    ErrorStore.LogException(ex, HttpContext.Current, false, false,
-                                       new Dictionary<string, string>
-                                       {
-                                           {"channelId",channelUrl },
-                                           { "engine", nameof(RssFeedEngine.CodeHollowFeedReader)}
-                                       });
-                }
-            }
-
-            // using SyndicationFeed
-            if (!status)
-            {
-                try
-                {
-                    XmlReaderSettings settings = new XmlReaderSettings();
-                    settings.DtdProcessing = DtdProcessing.Parse;
-
-                    using (var reader = XmlReader.Create(channelUrl, settings))
+                    else
                     {
-                        var feed = System.ServiceModel.Syndication.SyndicationFeed.Load(reader);
-                        reader.Close();
-
-                        foreach (System.ServiceModel.Syndication.SyndicationItem item in feed.Items)
-                        {
-                            var feedItem = new SimpleFeedlyFeedItem();
-
-                            var link = item.Links.FirstOrDefault()?.Uri.ToString();
-                            link = string.IsNullOrWhiteSpace(link) ? item.Id : link;
-
-                            feedItem.Id = item.Id;
-                            feedItem.Title = string.IsNullOrWhiteSpace(item.Title.Text) ? link : item.Title.Text;
-                            feedItem.Link = link;
-                            feedItem.Description = item.Summary.Text;
-                            feedItem.PublishingDate = item.PublishDate.UtcDateTime;
-                            feedItem.Author = item.Authors.FirstOrDefault()?.Name ?? string.Empty;
-                            feedItem.Content = item.Content.ToString();
-
-                            items.Add(feedItem);
-                        }
+                        canRun = engineLoop != defaultCrawlerEngine;
                     }
-
-                    engine = RssFeedEngine.SyndicationFeed;
-                    status = true;
                 }
-                catch (Exception ex)
+
+                if (!canRun)
                 {
-                    error = ex;
-                    ErrorStore.LogException(ex, HttpContext.Current, false, false,
-                                       new Dictionary<string, string>
-                                       {
-                                           { "channelId",channelUrl },
-                                           { "engine", nameof(RssFeedEngine.SyndicationFeed)}
-                                       });
+                    continue;
                 }
-            }
 
-            if (!status)
-            {
-                try
+                if (engineLoop == RssCrawlerEngine.CodeHollowFeedReader && canRun)
                 {
-                    var xmlString = string.Empty;
-                    using (WebClient client = new WebClient())
+                    if (!status)
                     {
-                        var htmlData = client.DownloadData(channelUrl);
-                        xmlString = System.Text.Encoding.UTF8.GetString(htmlData);
-
-                        // ReplaceHexadecimalSymbols
-                        string r = "[\x00-\x08\x0B\x0C\x0E-\x1F\x26]";
-                        xmlString = Regex.Replace(xmlString, r, "", RegexOptions.Compiled);
-                    }
-
-                    XmlDocument rssXmlDoc = new XmlDocument();
-                    rssXmlDoc.LoadXml(xmlString);
-
-                    // Parse the Items in the RSS file
-                    XmlNodeList rssNodes = rssXmlDoc.SelectNodes("rss/channel/item");
-
-                    // Iterate through the items in the RSS file
-                    foreach (XmlNode rssNode in rssNodes)
-                    {
-                        var feedItem = new SimpleFeedlyFeedItem();
-
-                        XmlNode rssSubNode = rssNode.SelectSingleNode("link");
-                        feedItem.Link = rssSubNode != null ? rssSubNode.InnerText : null;
-
-                        rssSubNode = rssNode.SelectSingleNode("title");
-                        feedItem.Title = rssSubNode != null ? rssSubNode.InnerText : null;
-                        feedItem.Title = string.IsNullOrWhiteSpace(feedItem.Title) ? feedItem.Link : feedItem.Title;
-
-                        rssSubNode = rssNode.SelectSingleNode("description");
-                        feedItem.Description = rssSubNode != null ? rssSubNode.InnerText : null;
-
-                        rssSubNode = rssNode.SelectSingleNode("pubDate");
-                        DateTime pubDate = DateTime.Now;
-
-                        if (rssSubNode != null)
+                        try
                         {
-                            if (DateTime.TryParse(rssSubNode.InnerText, out DateTime tmpDate))
+                            var feed = CodeHollow.FeedReader.FeedReader.ReadAsync(feedUrl).GetAwaiter().GetResult();
+
+                            foreach (var item in feed.Items)
                             {
-                                pubDate = tmpDate;
+                                var feedItem = new SimpleFeedlyFeedItem
+                                {
+                                    Id = item.Id,
+                                    Title = string.IsNullOrWhiteSpace(item.Title) ? item.Link : item.Title,
+                                    Link = item.Link,
+                                    Description = item.Description,
+                                    PublishingDate = item.PublishingDate ?? DateTime.Now,
+                                    Author = item.Author,
+                                    Content = item.Content
+                                };
+
+                                items.Add(feedItem);
                             }
+
+                            engine = RssCrawlerEngine.CodeHollowFeedReader;
+                            status = true;
                         }
-
-                        feedItem.PublishingDate = pubDate;
-
-                        if (!string.IsNullOrWhiteSpace(feedItem.Link))
+                        catch (Exception ex)
                         {
-                            items.Add(feedItem);
+                            error = ex;
                         }
                     }
+                }
 
-                    engine = RssFeedEngine.ParseRssByXml;
-                    status = true;
-                }
-                catch(Exception ex)
+                if (engineLoop == RssCrawlerEngine.SyndicationFeed && canRun)
                 {
-                    error = ex;
-                    ErrorStore.LogException(ex, HttpContext.Current, false, false,
-                                       new Dictionary<string, string>
-                                       {
-                                           { "channelId",channelUrl },
-                                           { "engine", nameof(RssFeedEngine.ParseRssByXml)}
-                                       });
+                    if (!status)
+                    {
+                        try
+                        {
+                            XmlReaderSettings settings = new XmlReaderSettings();
+                            settings.DtdProcessing = DtdProcessing.Parse;
+
+                            using (var reader = XmlReader.Create(feedUrl, settings))
+                            {
+                                var feed = System.ServiceModel.Syndication.SyndicationFeed.Load(reader);
+                                reader.Close();
+
+                                foreach (System.ServiceModel.Syndication.SyndicationItem item in feed.Items)
+                                {
+                                    var feedItem = new SimpleFeedlyFeedItem();
+
+                                    var link = item.Links.FirstOrDefault()?.Uri.ToString();
+                                    link = string.IsNullOrWhiteSpace(link) ? item.Id : link;
+
+                                    feedItem.Id = item.Id;
+                                    feedItem.Title = string.IsNullOrWhiteSpace(item.Title?.Text) ? link : item.Title.Text;
+                                    feedItem.Link = link;
+                                    feedItem.Description = item.Summary?.Text;
+                                    feedItem.PublishingDate = item.PublishDate.UtcDateTime;
+                                    feedItem.Author = item.Authors.FirstOrDefault()?.Name ?? string.Empty;
+                                    feedItem.Content = item.Content?.ToString();
+
+                                    items.Add(feedItem);
+                                }
+                            }
+
+                            engine = RssCrawlerEngine.SyndicationFeed;
+                            status = true;
+                        }
+                        catch (Exception ex)
+                        {
+                            error = ex;
+                        }
+                    }
                 }
+
+                if (engineLoop == RssCrawlerEngine.ParseRssByXml && canRun)
+                {
+                    if (!status)
+                    {
+                        try
+                        {
+                            var xmlString = string.Empty;
+                            using (WebClient client = new WebClient())
+                            {
+                                var htmlData = client.DownloadData(feedUrl);
+                                xmlString = System.Text.Encoding.UTF8.GetString(htmlData);
+
+                                // ReplaceHexadecimalSymbols
+                                string r = "[\x00-\x08\x0B\x0C\x0E-\x1F\x26]";
+                                xmlString = Regex.Replace(xmlString, r, "", RegexOptions.Compiled);
+                            }
+
+                            XmlDocument rssXmlDoc = new XmlDocument();
+                            rssXmlDoc.LoadXml(xmlString);
+
+                            // Parse the Items in the RSS file
+                            XmlNodeList rssNodes = rssXmlDoc.SelectNodes("rss/channel/item");
+
+                            // Iterate through the items in the RSS file
+                            foreach (XmlNode rssNode in rssNodes)
+                            {
+                                var feedItem = new SimpleFeedlyFeedItem();
+
+                                XmlNode rssSubNode = rssNode.SelectSingleNode("link");
+                                feedItem.Link = rssSubNode != null ? rssSubNode.InnerText : null;
+
+                                rssSubNode = rssNode.SelectSingleNode("title");
+                                feedItem.Title = rssSubNode != null ? rssSubNode.InnerText : null;
+                                feedItem.Title = string.IsNullOrWhiteSpace(feedItem.Title) ? feedItem.Link : feedItem.Title;
+
+                                rssSubNode = rssNode.SelectSingleNode("description");
+                                feedItem.Description = rssSubNode != null ? rssSubNode.InnerText : null;
+
+                                rssSubNode = rssNode.SelectSingleNode("pubDate");
+                                DateTime pubDate = DateTime.Now;
+
+                                if (rssSubNode != null)
+                                {
+                                    if (DateTime.TryParse(rssSubNode.InnerText, out DateTime tmpDate))
+                                    {
+                                        pubDate = tmpDate;
+                                    }
+                                }
+
+                                feedItem.PublishingDate = pubDate;
+
+                                if (!string.IsNullOrWhiteSpace(feedItem.Link))
+                                {
+                                    items.Add(feedItem);
+                                }
+                            }
+
+                            engine = RssCrawlerEngine.ParseRssByXml;
+                            status = true;
+                        }
+                        catch (Exception ex)
+                        {
+                            error = ex;
+                        }
+                    }
+                }
+            }
+
+            // isRest == false => if it's the first time, we maybe need to call 2nd times
+            // status == false => we maybe need to call 2nd times if current engines did not return anything
+            // defaultCrawlerEngine = null will process rss with all engines, therefor we don't need to call 2nd times
+            if (isRest == false && !status && defaultCrawlerEngine != null) 
+            {
+                return GetFeedsFromChannel(feedUrl, defaultCrawlerEngine, true, out engine, out error);
             }
 
             if (!status)
@@ -384,12 +436,5 @@
         public DateTime PublishingDate { get; set; }
         public string Author { get; set; }
         public string Content { get; set; }
-    }
-
-    public enum RssFeedEngine
-    {
-        SyndicationFeed = 1,
-        CodeHollowFeedReader = 2,
-        ParseRssByXml = 3
     }
 }

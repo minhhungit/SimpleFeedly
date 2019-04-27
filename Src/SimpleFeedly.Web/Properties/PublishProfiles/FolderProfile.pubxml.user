@@ -118,10 +118,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/27/2019 10:34:23</publishTime>
     </File>
     <File Include="bin/SimpleFeedly.Web.dll">
-      <publishTime>04/27/2019 10:34:24</publishTime>
+      <publishTime>04/28/2019 05:34:14</publishTime>
     </File>
     <File Include="bin/SimpleFeedly.Web.pdb">
-      <publishTime>04/27/2019 10:34:24</publishTime>
+      <publishTime>04/28/2019 05:34:14</publishTime>
     </File>
     <File Include="bin/StackExchange.Exceptional.dll">
       <publishTime>03/31/2017 08:00:42</publishTime>
@@ -2164,7 +2164,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/24/2019 22:08:52</publishTime>
     </File>
     <File Include="Imports/ClientTypes/ClientTypes.log">
-      <publishTime>04/27/2019 09:12:58</publishTime>
+      <publishTime>04/28/2019 05:33:13</publishTime>
     </File>
     <File Include="Imports/CodeGenerationHelpers.ttinclude">
       <publishTime>04/24/2019 22:08:48</publishTime>
@@ -2236,7 +2236,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/24/2019 22:46:54</publishTime>
     </File>
     <File Include="Modules/Rss/RssChannelsVerifier/RssChannelsVerifierForm.Template.html">
-      <publishTime>04/27/2019 09:02:21</publishTime>
+      <publishTime>04/28/2019 05:29:00</publishTime>
     </File>
     <File Include="Modules/Rss/RssChannelsVerifier/RssChannelsVerifierIndex.cshtml">
       <publishTime>04/26/2019 03:36:55</publishTime>
@@ -3769,7 +3769,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/25/2019 22:50:27</publishTime>
     </File>
     <File Include="Scripts/site/SimpleFeedly.Web.js">
-      <publishTime>04/27/2019 09:19:55</publishTime>
+      <publishTime>04/28/2019 05:33:21</publishTime>
     </File>
     <File Include="Scripts/site/texts/site.texts.de.json">
       <publishTime>04/24/2019 22:08:51</publishTime>
@@ -4183,7 +4183,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/24/2019 22:08:52</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/27/2019 10:34:25</publishTime>
+      <publishTime>04/27/2019 17:51:52</publishTime>
     </File>
     <File Include="Welcome.htm">
       <publishTime>04/24/2019 01:11:19</publishTime>

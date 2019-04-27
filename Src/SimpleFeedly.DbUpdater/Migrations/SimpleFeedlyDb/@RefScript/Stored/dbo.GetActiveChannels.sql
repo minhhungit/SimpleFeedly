@@ -38,7 +38,8 @@ BEGIN
         Copyright ,
         LastUpdatedDate ,
         ImageUrl ,
-        OriginalDocument 
+        OriginalDocument,
+		RssCrawlerEngine
 	FROM dbo.RssChannels
 	WHERE IsActive <> -1
 END
