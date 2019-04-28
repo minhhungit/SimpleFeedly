@@ -1,7 +1,7 @@
 # SimpleFeedly
 Very simple Rss Crawler & Rss Reader
 
-### Deploy
+## Deploy
 > Note: SimpleFeedly.Web is using <a href='https://github.com/volkanceylan/Serenity'>Serenity framework</a> so you may need to read <a href="https://serenity.is/docs/getting_started/README" target="_blank">its document</a> first
 
 - Create an empty database, update connectionstring for `SimpleFeedly.Crawler` project and `SimpleFeedly.Web` project
@@ -24,7 +24,7 @@ Very simple Rss Crawler & Rss Reader
    
 - Please feel free to ask me any questions!
 
-### Script (Only for demo)
+## Script (Only for demo)
 - <a href="https://github.com/minhhungit/SimpleFeedly/blob/master/wiki/Scripts/list-of-channels.sql" target="_blank">list-of-channels</a> (only channels, without feed items)
 
 - <a href="https://github.com/minhhungit/SimpleFeedly/releases/download/v1.0/bkSimpleFeedly-20190425-0352am-MSSM-2017.zip" target="_blank">MSSQL database backup file</a> - restore and run `SimpleFeedly.DbUpdater.exe` to update database
