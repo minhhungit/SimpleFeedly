@@ -118,10 +118,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/28/2019 19:29:59</publishTime>
     </File>
     <File Include="bin/SimpleFeedly.Web.dll">
-      <publishTime>04/28/2019 19:30:28</publishTime>
+      <publishTime>04/28/2019 21:42:55</publishTime>
     </File>
     <File Include="bin/SimpleFeedly.Web.pdb">
-      <publishTime>04/28/2019 19:30:28</publishTime>
+      <publishTime>04/28/2019 21:42:55</publishTime>
     </File>
     <File Include="bin/StackExchange.Exceptional.dll">
       <publishTime>03/31/2017 08:00:42</publishTime>
@@ -2164,7 +2164,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/24/2019 22:08:52</publishTime>
     </File>
     <File Include="Imports/ClientTypes/ClientTypes.log">
-      <publishTime>04/28/2019 07:57:42</publishTime>
+      <publishTime>04/28/2019 21:34:00</publishTime>
     </File>
     <File Include="Imports/CodeGenerationHelpers.ttinclude">
       <publishTime>04/24/2019 22:08:48</publishTime>
@@ -3772,7 +3772,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/25/2019 22:50:27</publishTime>
     </File>
     <File Include="Scripts/site/SimpleFeedly.Web.js">
-      <publishTime>04/28/2019 07:56:14</publishTime>
+      <publishTime>04/28/2019 21:28:10</publishTime>
     </File>
     <File Include="Scripts/site/texts/site.texts.de.json">
       <publishTime>04/24/2019 22:08:51</publishTime>
@@ -4159,7 +4159,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/24/2019 22:08:52</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>04/26/2019 06:16:46</publishTime>
+      <publishTime>04/28/2019 21:42:43</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutHead.cshtml">
       <publishTime>04/24/2019 22:08:52</publishTime>

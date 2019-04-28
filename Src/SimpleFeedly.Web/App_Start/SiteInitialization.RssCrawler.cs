@@ -27,7 +27,7 @@
         {
             System.Threading.Tasks.Task.Run(() =>
             {
-                var channelHubCtx = GlobalHost.ConnectionManager.GetHubContext<ChannelHub>();
+                //var channelHubCtx = GlobalHost.ConnectionManager.GetHubContext<ChannelHub>();
                 ObjectCache cache = MemoryCache.Default;
 
                 while (true)
@@ -52,7 +52,7 @@
                             count++;
 
                             logger.Info($"- [{count}/{channels.Count}] Working on channel: {channel.Id} | {feedUrl}");
-                            channelHubCtx.Clients.All.updateChannelProgress(new { Message = $"<strong>Fetching</strong> <a href='{channel.Link}' target='_blank'>{channel.Link}</a>", IsSleeping = false });
+                            //channelHubCtx.Clients.All.updateChannelProgress(new { Message = $"<strong>Fetching</strong> <a href='{channel.Link}' target='_blank'>{channel.Link}</a>", IsSleeping = false });
 
                             if (string.IsNullOrWhiteSpace(feedUrl))
                             {
@@ -152,7 +152,7 @@
                         System.Threading.Thread.Sleep(errorDelay);
                     }
 
-                    channelHubCtx.Clients.All.updateChannelProgress(new { Message = "<span class='link-muted'>Crawler's sleeping...</span>", IsSleeping = true });
+                    //channelHubCtx.Clients.All.updateChannelProgress(new { Message = "<span class='link-muted'>Crawler's sleeping...</span>", IsSleeping = true });
 
                     _currentDate = DateTime.Now.Day;
 
