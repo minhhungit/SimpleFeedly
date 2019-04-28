@@ -3369,7 +3369,7 @@ var SimpleFeedly;
                         });
                     }
                 });
-                if (SimpleFeedly.Authorization.hasPermission("Blacklists:Insert")) {
+                if (SimpleFeedly.Authorization.hasPermission("Blacklists:InsertBatch")) {
                     buttons.splice(1, 0, {
                         title: J.isMobile() ? '' : 'Block',
                         cssClass: 'text-red text-bold',
@@ -3422,14 +3422,16 @@ var SimpleFeedly;
                     minWidth: 24,
                     maxWidth: 24
                 });
-                columns.splice(2, 0, {
-                    field: 'Block Feed Item',
-                    name: '',
-                    format: function (ctx) { return '<a class="inline-action block-feed-item" title="block feed item"><i class="fa fa-ban link-muted"></i></a>'; },
-                    width: 24,
-                    minWidth: 24,
-                    maxWidth: 24
-                });
+                if (SimpleFeedly.Authorization.hasPermission("Blacklists:Insert")) {
+                    columns.splice(2, 0, {
+                        field: 'Block Feed Item',
+                        name: '',
+                        format: function (ctx) { return '<a class="inline-action block-feed-item" title="block feed item"><i class="fa fa-ban link-muted"></i></a>'; },
+                        width: 24,
+                        minWidth: 24,
+                        maxWidth: 24
+                    });
+                }
                 Q.first(columns, function (x) { return x.field == "Title" /* Title */; }).format = function (ctx) {
                     var currentItem = ctx.item;
                     return "<a href=\"" + currentItem.Link + ("\" class=\"open-feed-item\" target=\"_blank\">" + Q.htmlEncode(ctx.value) + "</a>");
@@ -3456,6 +3458,10 @@ var SimpleFeedly;
                         this.editItem(item.Id);
                     }
                     else if (target.hasClass('block-feed-item')) {
+                        if (!SimpleFeedly.Authorization.hasPermission("Blacklists:Insert")) {
+                            Q.alert("You have no permission for this action");
+                            return;
+                        }
                         Q.confirm('You want to block:\n   - Title: ' + J.escapeHtml(item.Title) + '\n   - Channel: ' + J.escapeHtml(item.RssChannelTitle) + ' ?', function () {
                             if (!_this.onViewSubmit()) {
                                 return;

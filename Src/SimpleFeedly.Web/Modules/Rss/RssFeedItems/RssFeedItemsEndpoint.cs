@@ -93,7 +93,11 @@ namespace SimpleFeedly.Rss.Endpoints
         [HttpPost, JsonFilter]
         public ServiceResponse AddBlacklistItem(AddBlacklistItemRequest request)
         {
-            request.CheckNotNull();
+            if (!Authorization.HasPermission( PermissionKeys.Blacklists.Insert))
+            {
+                throw new System.Exception("You have no permission for this action");
+            }
+                
             SimpleFeedlyDatabaseAccess.AddBlacklistItem(request.ChannelId, request.FeedItemId, request.Title, request.IsDeleteFeedItem);
 
             return new ServiceResponse();
@@ -102,7 +106,7 @@ namespace SimpleFeedly.Rss.Endpoints
         [HttpPost, JsonFilter]
         public Result<ServiceResponse> AddBlacklistItems(AddBlacklistItemsRequest request)
         {
-            if (!Authorization.HasPermission(PermissionKeys.Blacklists.Insert))
+            if (!Authorization.HasPermission(PermissionKeys.Blacklists.InsertBatch))
             {
                 throw new System.Exception("You have no permission for this action");
             }

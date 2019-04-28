@@ -56,6 +56,9 @@ namespace SimpleFeedly
             [Description("Insert")]
             public const string Insert = "Blacklists:Insert";
 
+            [Description("Insert Batch")]
+            public const string InsertBatch = "Blacklists:InsertBatch";
+
             [Description("Update")]
             public const string Update = "Blacklists:Update";
 

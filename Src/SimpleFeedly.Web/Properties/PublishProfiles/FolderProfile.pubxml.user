@@ -118,10 +118,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/28/2019 19:29:59</publishTime>
     </File>
     <File Include="bin/SimpleFeedly.Web.dll">
-      <publishTime>04/28/2019 21:42:55</publishTime>
+      <publishTime>04/28/2019 22:00:33</publishTime>
     </File>
     <File Include="bin/SimpleFeedly.Web.pdb">
-      <publishTime>04/28/2019 21:42:55</publishTime>
+      <publishTime>04/28/2019 22:00:33</publishTime>
     </File>
     <File Include="bin/StackExchange.Exceptional.dll">
       <publishTime>03/31/2017 08:00:42</publishTime>
@@ -3772,7 +3772,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/25/2019 22:50:27</publishTime>
     </File>
     <File Include="Scripts/site/SimpleFeedly.Web.js">
-      <publishTime>04/28/2019 21:28:10</publishTime>
+      <publishTime>04/28/2019 22:00:21</publishTime>
     </File>
     <File Include="Scripts/site/texts/site.texts.de.json">
       <publishTime>04/24/2019 22:08:51</publishTime>

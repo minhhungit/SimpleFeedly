@@ -157,7 +157,7 @@ namespace SimpleFeedly.Rss {
                 }
             });
 
-            if (Authorization.hasPermission("Blacklists:Insert")) {
+            if (Authorization.hasPermission("Blacklists:InsertBatch")) {
                 buttons.splice(1, 0, {
                     title: J.isMobile() ? '' : 'Block',
                     cssClass: 'text-red text-bold',
@@ -220,14 +220,16 @@ namespace SimpleFeedly.Rss {
                 maxWidth: 24
             });
 
-            columns.splice(2, 0, {
-                field: 'Block Feed Item',
-                name: '',
-                format: ctx => '<a class="inline-action block-feed-item" title="block feed item"><i class="fa fa-ban link-muted"></i></a>',
-                width: 24,
-                minWidth: 24,
-                maxWidth: 24
-            });
+            if (Authorization.hasPermission("Blacklists:Insert")) {
+                columns.splice(2, 0, {
+                    field: 'Block Feed Item',
+                    name: '',
+                    format: ctx => '<a class="inline-action block-feed-item" title="block feed item"><i class="fa fa-ban link-muted"></i></a>',
+                    width: 24,
+                    minWidth: 24,
+                    maxWidth: 24
+                });
+            }            
 
             Q.first(columns, x => x.field == fld.Title).format = function (ctx: Slick.FormatterContext) {
                 var currentItem: RssFeedItemsRow = ctx.item;
@@ -262,6 +264,12 @@ namespace SimpleFeedly.Rss {
                     this.editItem(item.Id);
                 }
                 else if (target.hasClass('block-feed-item')) {
+
+                    if (!Authorization.hasPermission("Blacklists:Insert")) {
+                        Q.alert("You have no permission for this action");
+                        return;
+                    }
+
                     Q.confirm('You want to block:\n   - Title: ' + J.escapeHtml(item.Title) + '\n   - Channel: ' + J.escapeHtml(item.RssChannelTitle) + ' ?',
                         () => {
                             if (!this.onViewSubmit()) {
