@@ -5,9 +5,11 @@
     using Serenity.Abstractions;
     using Serenity.Data;
     using Serenity.Web;
+    using StackExchange.Exceptional;
     using System;
     using System.Configuration;
     using System.Net;
+    using System.Threading.Tasks;
 
     public static partial class SiteInitialization
     {
@@ -36,6 +38,20 @@
                 InitializeExceptionLog();
                 InitializeAppCfg();
                 InitializeDataAccessHelpers();
+
+                // clean up FeedItems (for duplicate title in chanel)
+                Task.Run(() =>
+                {
+                    try
+                    {
+                        SimpleFeedlyDatabaseAccess.CleanupFeedItemsData();
+                    }
+                    catch (Exception ex)
+                    {
+                        ErrorStore.LogExceptionWithoutContext(ex);
+                    }
+                });
+                    
 
                 // we don't run RssCrawler in web application
                 // we will use a Windows Service: SimpleFeedly.Crawler

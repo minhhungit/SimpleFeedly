@@ -84,6 +84,7 @@
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20190425_031301_create_udt_type.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20180325_041701_update_index.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\Stored\SimpleFeedlyDb_20180324_025501_add_stored.cs" />
+    <Compile Include="Migrations\SimpleFeedlyDb\Stored\SimpleFeedlyDb_20190429_034101_cleanup_feeditems.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\Stored\SimpleFeedlyDb_20190428_213101_rename_column_feeditemid.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\Stored\SimpleFeedlyDb_20190428_200101_blacklist_batch.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\Stored\SimpleFeedlyDb_20190428_065001_blacklist.cs" />
@@ -101,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <EmbeddedResource Include="Migrations\SimpleFeedlyDb\%40RefScript\Stored\dbo.CleanupFeedItemsData.sql" />
     <EmbeddedResource Include="Migrations\SimpleFeedlyDb\%40RefScript\Stored\dbo.AddBlacklistItems.sql" />
     <EmbeddedResource Include="Migrations\SimpleFeedlyDb\%40RefScript\Stored\dbo.AddBlacklistItem.sql" />
     <EmbeddedResource Include="Migrations\SimpleFeedlyDb\%40RefScript\Stored\dbo.UpdateChannelDefaultEngine.sql" />

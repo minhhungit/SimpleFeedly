@@ -280,5 +280,17 @@ namespace SimpleFeedly
                         commandTimeout: Settings.ConnectionTimeout);
             }
         }
+
+        public static void CleanupFeedItemsData()
+        {
+            using (var con = new SqlConnection(Settings.ConnectionString))
+            {
+                con.Execute(
+                        "CleanupFeedItemsData",
+                        null,
+                        commandType: CommandType.StoredProcedure,
+                        commandTimeout: Settings.ConnectionTimeout);
+            }
+        }
     }
 }
