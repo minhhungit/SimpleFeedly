@@ -125,6 +125,11 @@
                                     else
                                     {
                                         SimpleFeedlyDatabaseAccess.UpdateChannelErrorStatus((long)channel.Id, true, fetchFeedError == null ? null : JsonConvert.SerializeObject(fetchFeedError));
+
+                                        if (fetchFeedError != null)
+                                        {
+                                            ErrorHandle(fetchFeedError, feedUrl);
+                                        }
                                     }
                                 }
                                 catch (Exception err)
