@@ -157,7 +157,7 @@ namespace SimpleFeedly.Rss {
                 }
             });
 
-            if (Authorization.hasPermission("Blacklists:InsertBatch")) {
+            if (Authorization.hasPermission("Blacklists:InsertBatch") && !J.isMobile()) {
                 buttons.splice(1, 0, {
                     title: J.isMobile() ? '' : 'Block',
                     cssClass: 'text-red text-bold',
