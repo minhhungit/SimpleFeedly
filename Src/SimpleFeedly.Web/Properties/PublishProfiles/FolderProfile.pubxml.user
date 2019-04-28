@@ -6,7 +6,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>K:\My Projects\SimpleFeedlyDeploy</_PublishTargetUrl>
+    <_PublishTargetUrl>K:\My Projects\SimpleFeedlyDeploy\web</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/AppCfg.dll">
@@ -112,16 +112,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/16/2019 09:03:20</publishTime>
     </File>
     <File Include="bin/SimpleFeedly.Core.dll">
-      <publishTime>04/27/2019 10:34:23</publishTime>
+      <publishTime>04/28/2019 19:29:59</publishTime>
     </File>
     <File Include="bin/SimpleFeedly.Core.pdb">
-      <publishTime>04/27/2019 10:34:23</publishTime>
+      <publishTime>04/28/2019 19:29:59</publishTime>
     </File>
     <File Include="bin/SimpleFeedly.Web.dll">
-      <publishTime>04/28/2019 05:34:14</publishTime>
+      <publishTime>04/28/2019 19:30:28</publishTime>
     </File>
     <File Include="bin/SimpleFeedly.Web.pdb">
-      <publishTime>04/28/2019 05:34:14</publishTime>
+      <publishTime>04/28/2019 19:30:28</publishTime>
     </File>
     <File Include="bin/StackExchange.Exceptional.dll">
       <publishTime>03/31/2017 08:00:42</publishTime>
@@ -1897,7 +1897,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/24/2019 22:08:47</publishTime>
     </File>
     <File Include="Content/site/site.css">
-      <publishTime>04/26/2019 01:08:00</publishTime>
+      <publishTime>04/28/2019 07:20:00</publishTime>
     </File>
     <File Include="Content/site/site.htmlcontent.css">
       <publishTime>04/24/2019 22:08:47</publishTime>
@@ -1912,7 +1912,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/24/2019 22:08:47</publishTime>
     </File>
     <File Include="Content/site/site.rss.less">
-      <publishTime>04/25/2019 00:16:06</publishTime>
+      <publishTime>04/28/2019 07:12:00</publishTime>
     </File>
     <File Include="Content/site/site.rtl.css">
       <publishTime>04/24/2019 22:08:47</publishTime>
@@ -2164,7 +2164,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/24/2019 22:08:52</publishTime>
     </File>
     <File Include="Imports/ClientTypes/ClientTypes.log">
-      <publishTime>04/28/2019 05:33:13</publishTime>
+      <publishTime>04/28/2019 07:57:42</publishTime>
     </File>
     <File Include="Imports/CodeGenerationHelpers.ttinclude">
       <publishTime>04/24/2019 22:08:48</publishTime>
@@ -2232,6 +2232,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Modules/Membership/_ViewStart.cshtml">
       <publishTime>04/24/2019 22:08:50</publishTime>
     </File>
+    <File Include="Modules/Rss/Blacklists/BlacklistsIndex.cshtml">
+      <publishTime>04/28/2019 06:54:11</publishTime>
+    </File>
     <File Include="Modules/Rss/RssChannels/RssChannelsIndex.cshtml">
       <publishTime>04/24/2019 22:46:54</publishTime>
     </File>
@@ -2254,7 +2257,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/25/2019 19:29:58</publishTime>
     </File>
     <File Include="node_modules/%40types/jquery.blockui/package.json">
-      <publishTime>04/24/2019 22:12:23</publishTime>
+      <publishTime>04/28/2019 17:52:46</publishTime>
     </File>
     <File Include="node_modules/%40types/jquery.blockui/README.md">
       <publishTime>09/20/2016 00:28:59</publishTime>
@@ -2266,7 +2269,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/18/2017 21:13:55</publishTime>
     </File>
     <File Include="node_modules/%40types/jquery.cookie/package.json">
-      <publishTime>04/24/2019 22:12:23</publishTime>
+      <publishTime>04/28/2019 17:52:46</publishTime>
     </File>
     <File Include="node_modules/%40types/jquery.cookie/README.md">
       <publishTime>09/18/2017 21:13:55</publishTime>
@@ -2275,7 +2278,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/14/2019 23:52:06</publishTime>
     </File>
     <File Include="node_modules/%40types/jquery.validation/package.json">
-      <publishTime>04/24/2019 22:12:23</publishTime>
+      <publishTime>04/28/2019 17:52:46</publishTime>
     </File>
     <File Include="node_modules/%40types/jquery.validation/README.md">
       <publishTime>02/14/2019 23:52:06</publishTime>
@@ -2284,7 +2287,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/16/2019 06:23:07</publishTime>
     </File>
     <File Include="node_modules/%40types/jquery/package.json">
-      <publishTime>04/24/2019 22:12:23</publishTime>
+      <publishTime>04/28/2019 17:52:46</publishTime>
     </File>
     <File Include="node_modules/%40types/jquery/README.md">
       <publishTime>01/16/2019 06:23:07</publishTime>
@@ -2293,7 +2296,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/25/2019 05:18:55</publishTime>
     </File>
     <File Include="node_modules/%40types/jqueryui/package.json">
-      <publishTime>04/24/2019 22:12:23</publishTime>
+      <publishTime>04/28/2019 17:52:46</publishTime>
     </File>
     <File Include="node_modules/%40types/jqueryui/README.md">
       <publishTime>01/25/2019 05:18:55</publishTime>
@@ -2302,7 +2305,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/08/2019 08:15:14</publishTime>
     </File>
     <File Include="node_modules/%40types/jspdf/package.json">
-      <publishTime>04/24/2019 22:12:23</publishTime>
+      <publishTime>04/28/2019 17:52:46</publishTime>
     </File>
     <File Include="node_modules/%40types/jspdf/README.md">
       <publishTime>04/08/2019 08:15:14</publishTime>
@@ -2311,7 +2314,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/18/2019 04:01:19</publishTime>
     </File>
     <File Include="node_modules/%40types/prop-types/package.json">
-      <publishTime>04/24/2019 22:12:23</publishTime>
+      <publishTime>04/28/2019 17:52:46</publishTime>
     </File>
     <File Include="node_modules/%40types/prop-types/README.md">
       <publishTime>04/18/2019 04:01:19</publishTime>
@@ -2320,7 +2323,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/19/2019 23:47:25</publishTime>
     </File>
     <File Include="node_modules/%40types/react/package.json">
-      <publishTime>04/24/2019 22:12:23</publishTime>
+      <publishTime>04/28/2019 17:52:46</publishTime>
     </File>
     <File Include="node_modules/%40types/react/README.md">
       <publishTime>04/19/2019 23:47:25</publishTime>
@@ -2329,7 +2332,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/26/2018 04:10:48</publishTime>
     </File>
     <File Include="node_modules/%40types/sortablejs/package.json">
-      <publishTime>04/24/2019 22:12:23</publishTime>
+      <publishTime>04/28/2019 17:52:46</publishTime>
     </File>
     <File Include="node_modules/%40types/sortablejs/README.md">
       <publishTime>12/26/2018 04:10:48</publishTime>
@@ -2338,7 +2341,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/03/2019 23:50:27</publishTime>
     </File>
     <File Include="node_modules/%40types/toastr/package.json">
-      <publishTime>04/24/2019 22:12:23</publishTime>
+      <publishTime>04/28/2019 17:52:46</publishTime>
     </File>
     <File Include="node_modules/%40types/toastr/README.md">
       <publishTime>04/03/2019 23:50:27</publishTime>
@@ -3769,7 +3772,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/25/2019 22:50:27</publishTime>
     </File>
     <File Include="Scripts/site/SimpleFeedly.Web.js">
-      <publishTime>04/28/2019 05:33:21</publishTime>
+      <publishTime>04/28/2019 07:56:14</publishTime>
     </File>
     <File Include="Scripts/site/texts/site.texts.de.json">
       <publishTime>04/24/2019 22:08:51</publishTime>
@@ -4183,7 +4186,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/24/2019 22:08:52</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/27/2019 17:51:52</publishTime>
+      <publishTime>04/28/2019 19:30:00</publishTime>
     </File>
     <File Include="Welcome.htm">
       <publishTime>04/24/2019 01:11:19</publishTime>
