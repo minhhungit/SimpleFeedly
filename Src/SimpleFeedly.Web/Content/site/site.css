@@ -7420,6 +7420,12 @@ section.content > .s-DataGrid {
 .inline-action.view-details {
   background-image: url(../serenity/images/magnifier-left.png);
 }
+.s-Rss-BlacklistsDialog > .size {
+  width: 650px;
+}
+.s-Rss-BlacklistsDialog .caption {
+  width: 150px;
+}
 @media (max-width: 767px) {
   .main-header .logo {
     display: none;
@@ -7433,15 +7439,13 @@ section.content > .s-DataGrid {
     padding-top: 50px;
   }
 }
-
 .dot {
-    border-radius: 50%;
-    display: inline-block;
-    height: 11px;
-    width: 11px;
+  border-radius: 50%;
+  display: inline-block;
+  height: 11px;
+  width: 11px;
 }
-
 .dot-sm {
-    height: 11px;
-    width: 11px;
+  height: 11px;
+  width: 11px;
 }

@@ -89,5 +89,14 @@ namespace SimpleFeedly.Rss.Endpoints
                 UnCheckedItems = unCheckedItems
             };
         }
+
+        [HttpPost, JsonFilter]
+        public ServiceResponse AddBlacklistItem(AddBlacklistItemRequest request)
+        {
+            request.CheckNotNull();
+            SimpleFeedlyDatabaseAccess.AddBlacklistItem(request.ChannelId, request.Title);
+
+            return new ServiceResponse();
+        }
     }
 }

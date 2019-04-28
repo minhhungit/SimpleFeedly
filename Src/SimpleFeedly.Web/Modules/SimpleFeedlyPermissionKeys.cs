@@ -45,5 +45,22 @@ namespace SimpleFeedly
             [Description("Delete")]
             public const string Delete = "FeedItems:Delete";
         }
+
+        [NestedPermissionKeys]
+        [DisplayName("Blacklists")]
+        public class Blacklists
+        {
+            [Description("Read")]
+            public const string Read = "Blacklists:Read";
+
+            [Description("Insert")]
+            public const string Insert = "Blacklists:Insert";
+
+            [Description("Update")]
+            public const string Update = "Blacklists:Update";
+
+            [Description("Delete")]
+            public const string Delete = "Blacklists:Delete";
+        }
     }
 }

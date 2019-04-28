@@ -1098,6 +1098,12 @@
     <Content Include="tools\Node\less\lib\less\visitor.js" />
     <Content Include="tools\Node\node.exe" />
     <Content Include="tsconfig.json" />
+    <TypeScriptCompile Include="Imports\ServerTypings\Rss.AddBlacklistItemRequest.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Rss.BlacklistsColumns.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Rss.FeedItemCheckedStateResponse.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
@@ -1474,6 +1480,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ClientTypes.tt</DependentUpon>
     </Content>
+    <TypeScriptCompile Include="Modules\Common\Formatters\CustomLookupFormatter.ts" />
     <TypeScriptCompile Include="Modules\Common\Helpers\J.ts" />
     <TypeScriptCompile Include="Modules\Common\Helpers\StaticTextBlock.ts" />
     <TypeScriptCompile Include="Modules\Administration\Language\LanguageDialog.ts" />
@@ -1703,6 +1710,18 @@
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Scripts\typings\serenity\Serenity.CoreLib.d.ts" />
+    <TypeScriptCompile Include="Imports\ServerTypings\Rss.BlacklistsRow.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Rss.BlacklistsService.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <Content Include="Modules\Rss\Blacklists\BlacklistsIndex.cshtml" />
+    <TypeScriptCompile Include="Modules\Rss\Blacklists\BlacklistsDialog.ts" />
+    <TypeScriptCompile Include="Modules\Rss\Blacklists\BlacklistsGrid.ts" />
+    <TypeScriptCompile Include="Imports\ServerTypings\Rss.BlacklistsForm.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -1714,8 +1733,13 @@
     <Compile Include="App_Start\SiteInitialization.DataAccessHelpers.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Hubs\ChannelHub.cs" />
+    <Compile Include="Imports\ClientTypes\Common.CustomLookupFormatterAttribute.cs">
+      <DependentUpon>ClientTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Common\Formatters\CustomLookupFormatterAttribute.cs" />
     <Compile Include="Modules\Rss\RssChannels\RssCrawlerEngine.cs" />
     <Compile Include="Modules\Rss\RssChannels\ServiceModel\TestChannelRequest.cs" />
+    <Compile Include="Modules\Rss\RssFeedItems\ServiceModel\AddBlacklistItemRequest.cs" />
     <Compile Include="Modules\SimpleFeedlyPermissionKeys.cs" />
     <Compile Include="Settings\ConnectionStringSettings.cs" />
     <Compile Include="Settings\CrawlerSettings.cs" />
@@ -1861,6 +1885,12 @@
     <Compile Include="Modules\Rss\RssFeedItems\RssFeedItemsPage.cs" />
     <Compile Include="Modules\Rss\RssFeedItems\RssFeedItemsColumns.cs" />
     <Compile Include="Modules\Rss\RssFeedItems\RssFeedItemsForm.cs" />
+    <Compile Include="Modules\Rss\Blacklists\BlacklistsRow.cs" />
+    <Compile Include="Modules\Rss\Blacklists\BlacklistsRepository.cs" />
+    <Compile Include="Modules\Rss\Blacklists\BlacklistsEndpoint.cs" />
+    <Compile Include="Modules\Rss\Blacklists\BlacklistsPage.cs" />
+    <Compile Include="Modules\Rss\Blacklists\BlacklistsColumns.cs" />
+    <Compile Include="Modules\Rss\Blacklists\BlacklistsForm.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

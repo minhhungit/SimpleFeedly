@@ -524,6 +524,59 @@ declare namespace SimpleFeedly.Membership {
     }
 }
 declare namespace SimpleFeedly.Rss {
+    interface AddBlacklistItemRequest extends Serenity.ServiceRequest {
+        ChannelId?: number;
+        Title?: string;
+    }
+}
+declare namespace SimpleFeedly.Rss {
+}
+declare namespace SimpleFeedly.Rss {
+    interface BlacklistsForm {
+        ChannelId: Serenity.LookupEditor;
+        Title: Serenity.StringEditor;
+    }
+    class BlacklistsForm extends Serenity.PrefixedContext {
+        static formKey: string;
+        private static init;
+        constructor(prefix: string);
+    }
+}
+declare namespace SimpleFeedly.Rss {
+    interface BlacklistsRow {
+        Id?: number;
+        ChannelId?: number;
+        Title?: string;
+    }
+    namespace BlacklistsRow {
+        const idProperty = "Id";
+        const nameProperty = "Title";
+        const localTextPrefix = "Rss.Blacklists";
+        const enum Fields {
+            Id = "Id",
+            ChannelId = "ChannelId",
+            Title = "Title"
+        }
+    }
+}
+declare namespace SimpleFeedly.Rss {
+    namespace BlacklistsService {
+        const baseUrl = "Rss/Blacklists";
+        function Create(request: Serenity.SaveRequest<BlacklistsRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Update(request: Serenity.SaveRequest<BlacklistsRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<BlacklistsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<BlacklistsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        const enum Methods {
+            Create = "Rss/Blacklists/Create",
+            Update = "Rss/Blacklists/Update",
+            Delete = "Rss/Blacklists/Delete",
+            Retrieve = "Rss/Blacklists/Retrieve",
+            List = "Rss/Blacklists/List"
+        }
+    }
+}
+declare namespace SimpleFeedly.Rss {
     interface FeedItemCheckedStateResponse extends Serenity.ServiceResponse {
         UnCheckedItems?: number;
     }
@@ -690,6 +743,7 @@ declare namespace SimpleFeedly.Rss {
         function MarkCheckedFeedItem(request: MarkCheckedFeedItemRequest, onSuccess?: (response: Serenity.ServiceResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function MarkCheckedBatchFeedItems(request: MarkCheckedBatchFeedItemsRequest, onSuccess?: (response: Serenity.ServiceResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function GetFeedItemCheckedState(request: Serenity.ServiceRequest, onSuccess?: (response: FeedItemCheckedStateResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function AddBlacklistItem(request: AddBlacklistItemRequest, onSuccess?: (response: Serenity.ServiceResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         const enum Methods {
             Create = "Rss/RssFeedItems/Create",
             Update = "Rss/RssFeedItems/Update",
@@ -698,7 +752,8 @@ declare namespace SimpleFeedly.Rss {
             List = "Rss/RssFeedItems/List",
             MarkCheckedFeedItem = "Rss/RssFeedItems/MarkCheckedFeedItem",
             MarkCheckedBatchFeedItems = "Rss/RssFeedItems/MarkCheckedBatchFeedItems",
-            GetFeedItemCheckedState = "Rss/RssFeedItems/GetFeedItemCheckedState"
+            GetFeedItemCheckedState = "Rss/RssFeedItems/GetFeedItemCheckedState",
+            AddBlacklistItem = "Rss/RssFeedItems/AddBlacklistItem"
         }
     }
 }
@@ -910,6 +965,12 @@ declare namespace SimpleFeedly.LanguageList {
 }
 declare namespace SimpleFeedly.ScriptInitialization {
 }
+declare namespace SimpleFeedly.Common {
+    class CustomLookupFormatter implements Slick.Formatter {
+        format(ctx: Slick.FormatterContext): string;
+        lookupKey: string;
+    }
+}
 declare namespace SimpleFeedly {
     class BasicProgressDialog extends Serenity.TemplatedDialog<any> {
         constructor();
@@ -1023,6 +1084,7 @@ declare namespace SimpleFeedly.Common {
 }
 declare namespace J {
     function isMobile(): boolean;
+    function escapeHtml(value: string): string;
 }
 declare namespace SimpleFeedly {
     /**
@@ -1175,6 +1237,26 @@ declare namespace SimpleFeedly.Membership {
     class SignUpPanel extends Serenity.PropertyPanel<SignUpRequest, any> {
         protected getFormKey(): string;
         private form;
+        constructor(container: JQuery);
+    }
+}
+declare namespace SimpleFeedly.Rss {
+    class BlacklistsDialog extends Serenity.EntityDialog<BlacklistsRow, any> {
+        protected getFormKey(): string;
+        protected getIdProperty(): string;
+        protected getLocalTextPrefix(): string;
+        protected getNameProperty(): string;
+        protected getService(): string;
+        protected form: BlacklistsForm;
+    }
+}
+declare namespace SimpleFeedly.Rss {
+    class BlacklistsGrid extends Serenity.EntityGrid<BlacklistsRow, any> {
+        protected getColumnsKey(): string;
+        protected getDialogType(): typeof BlacklistsDialog;
+        protected getIdProperty(): string;
+        protected getLocalTextPrefix(): string;
+        protected getService(): string;
         constructor(container: JQuery);
     }
 }

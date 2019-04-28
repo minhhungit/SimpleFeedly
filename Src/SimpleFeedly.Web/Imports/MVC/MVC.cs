@@ -83,6 +83,11 @@ namespace MVC
 
         public static class Rss
         {
+            public static class Blacklists
+            {
+                public const string BlacklistsIndex = "~/Modules/Rss/Blacklists/BlacklistsIndex.cshtml";
+            }
+
             public static class RssChannels
             {
                 public const string RssChannelsIndex = "~/Modules/Rss/RssChannels/RssChannelsIndex.cshtml";

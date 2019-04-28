@@ -10,6 +10,7 @@
         export declare function MarkCheckedFeedItem(request: MarkCheckedFeedItemRequest, onSuccess?: (response: Serenity.ServiceResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         export declare function MarkCheckedBatchFeedItems(request: MarkCheckedBatchFeedItemsRequest, onSuccess?: (response: Serenity.ServiceResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         export declare function GetFeedItemCheckedState(request: Serenity.ServiceRequest, onSuccess?: (response: FeedItemCheckedStateResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        export declare function AddBlacklistItem(request: AddBlacklistItemRequest, onSuccess?: (response: Serenity.ServiceResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
 
         export declare const enum Methods {
             Create = "Rss/RssFeedItems/Create",
@@ -19,7 +20,8 @@
             List = "Rss/RssFeedItems/List",
             MarkCheckedFeedItem = "Rss/RssFeedItems/MarkCheckedFeedItem",
             MarkCheckedBatchFeedItems = "Rss/RssFeedItems/MarkCheckedBatchFeedItems",
-            GetFeedItemCheckedState = "Rss/RssFeedItems/GetFeedItemCheckedState"
+            GetFeedItemCheckedState = "Rss/RssFeedItems/GetFeedItemCheckedState",
+            AddBlacklistItem = "Rss/RssFeedItems/AddBlacklistItem"
         }
 
         [
@@ -30,7 +32,8 @@
             'List', 
             'MarkCheckedFeedItem', 
             'MarkCheckedBatchFeedItems', 
-            'GetFeedItemCheckedState'
+            'GetFeedItemCheckedState', 
+            'AddBlacklistItem'
         ].forEach(x => {
             (<any>RssFeedItemsService)[x] = function (r, s, o) {
                 return Q.serviceRequest(baseUrl + '/' + x, r, s, o);

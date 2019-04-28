@@ -470,6 +470,65 @@ var SimpleFeedly;
 (function (SimpleFeedly) {
     var Rss;
     (function (Rss) {
+        var BlacklistsForm = /** @class */ (function (_super) {
+            __extends(BlacklistsForm, _super);
+            function BlacklistsForm(prefix) {
+                var _this = _super.call(this, prefix) || this;
+                if (!BlacklistsForm.init) {
+                    BlacklistsForm.init = true;
+                    var s = Serenity;
+                    var w0 = s.LookupEditor;
+                    var w1 = s.StringEditor;
+                    Q.initFormType(BlacklistsForm, [
+                        'ChannelId', w0,
+                        'Title', w1
+                    ]);
+                }
+                return _this;
+            }
+            BlacklistsForm.formKey = 'Rss.Blacklists';
+            return BlacklistsForm;
+        }(Serenity.PrefixedContext));
+        Rss.BlacklistsForm = BlacklistsForm;
+    })(Rss = SimpleFeedly.Rss || (SimpleFeedly.Rss = {}));
+})(SimpleFeedly || (SimpleFeedly = {}));
+var SimpleFeedly;
+(function (SimpleFeedly) {
+    var Rss;
+    (function (Rss) {
+        var BlacklistsRow;
+        (function (BlacklistsRow) {
+            BlacklistsRow.idProperty = 'Id';
+            BlacklistsRow.nameProperty = 'Title';
+            BlacklistsRow.localTextPrefix = 'Rss.Blacklists';
+        })(BlacklistsRow = Rss.BlacklistsRow || (Rss.BlacklistsRow = {}));
+    })(Rss = SimpleFeedly.Rss || (SimpleFeedly.Rss = {}));
+})(SimpleFeedly || (SimpleFeedly = {}));
+var SimpleFeedly;
+(function (SimpleFeedly) {
+    var Rss;
+    (function (Rss) {
+        var BlacklistsService;
+        (function (BlacklistsService) {
+            BlacklistsService.baseUrl = 'Rss/Blacklists';
+            [
+                'Create',
+                'Update',
+                'Delete',
+                'Retrieve',
+                'List'
+            ].forEach(function (x) {
+                BlacklistsService[x] = function (r, s, o) {
+                    return Q.serviceRequest(BlacklistsService.baseUrl + '/' + x, r, s, o);
+                };
+            });
+        })(BlacklistsService = Rss.BlacklistsService || (Rss.BlacklistsService = {}));
+    })(Rss = SimpleFeedly.Rss || (SimpleFeedly.Rss = {}));
+})(SimpleFeedly || (SimpleFeedly = {}));
+var SimpleFeedly;
+(function (SimpleFeedly) {
+    var Rss;
+    (function (Rss) {
         var RssChannelsForm = /** @class */ (function (_super) {
             __extends(RssChannelsForm, _super);
             function RssChannelsForm(prefix) {
@@ -614,7 +673,8 @@ var SimpleFeedly;
                 'List',
                 'MarkCheckedFeedItem',
                 'MarkCheckedBatchFeedItems',
-                'GetFeedItemCheckedState'
+                'GetFeedItemCheckedState',
+                'AddBlacklistItem'
             ].forEach(function (x) {
                 RssFeedItemsService[x] = function (r, s, o) {
                     return Q.serviceRequest(RssFeedItemsService.baseUrl + '/' + x, r, s, o);
@@ -627,7 +687,7 @@ var SimpleFeedly;
 (function (SimpleFeedly) {
     var Texts;
     (function (Texts) {
-        SimpleFeedly['Texts'] = Q.proxyTexts(Texts, '', { Db: { Administration: { Language: { Id: 1, LanguageId: 1, LanguageName: 1 }, Role: { RoleId: 1, RoleName: 1 }, RolePermission: { PermissionKey: 1, RoleId: 1, RolePermissionId: 1, RoleRoleName: 1 }, Translation: { CustomText: 1, EntityPlural: 1, Key: 1, OverrideConfirmation: 1, SaveChangesButton: 1, SourceLanguage: 1, SourceText: 1, TargetLanguage: 1, TargetText: 1 }, User: { DisplayName: 1, Email: 1, InsertDate: 1, InsertUserId: 1, IsActive: 1, LastDirectoryUpdate: 1, Password: 1, PasswordConfirm: 1, PasswordHash: 1, PasswordSalt: 1, Source: 1, UpdateDate: 1, UpdateUserId: 1, UserId: 1, UserImage: 1, Username: 1 }, UserPermission: { Granted: 1, PermissionKey: 1, User: 1, UserId: 1, UserPermissionId: 1, Username: 1 }, UserRole: { RoleId: 1, User: 1, UserId: 1, UserRoleId: 1, Username: 1 } }, Common: { UserPreference: { Name: 1, PreferenceType: 1, UserId: 1, UserPreferenceId: 1, Value: 1 } }, Rss: { RssChannels: { Copyright: 1, Description: 1, ErrorMessage: 1, Id: 1, ImageUrl: 1, IsActive: 1, IsError: 1, Language: 1, LastUpdatedDate: 1, Link: 1, OriginalDocument: 1, RssCrawlerEngine: 1, Title: 1, Type: 1 }, RssFeedItems: { Author: 1, ChannelId: 1, Content: 1, Description: 1, FeedItemId: 1, Id: 1, IsChecked: 1, Link: 1, PublishingDate: 1, RssChannelTitle: 1, Title: 1 } } }, Forms: { Membership: { ChangePassword: { FormTitle: 1, SubmitButton: 1, Success: 1 }, ForgotPassword: { BackToLogin: 1, FormInfo: 1, FormTitle: 1, SubmitButton: 1, Success: 1 }, Login: { FacebookButton: 1, ForgotPassword: 1, FormTitle: 1, GoogleButton: 1, OR: 1, RememberMe: 1, SignInButton: 1, SignUpButton: 1 }, ResetPassword: { BackToLogin: 1, EmailSubject: 1, FormTitle: 1, SubmitButton: 1, Success: 1 }, SignUp: { AcceptTerms: 1, ActivateEmailSubject: 1, ActivationCompleteMessage: 1, BackToLogin: 1, ConfirmEmail: 1, ConfirmPassword: 1, DisplayName: 1, Email: 1, FormInfo: 1, FormTitle: 1, Password: 1, SubmitButton: 1, Success: 1 } } }, Site: { AccessDenied: { ClickToChangeUser: 1, ClickToLogin: 1, LackPermissions: 1, NotLoggedIn: 1, PageTitle: 1 }, BasicProgressDialog: { CancelTitle: 1, PleaseWait: 1 }, BulkServiceAction: { AllHadErrorsFormat: 1, AllSuccessFormat: 1, ConfirmationFormat: 1, ErrorCount: 1, NothingToProcess: 1, SomeHadErrorsFormat: 1, SuccessCount: 1 }, Dashboard: { ContentDescription: 1 }, Layout: { FooterCopyright: 1, FooterInfo: 1, FooterRights: 1, GeneralSettings: 1, Language: 1, Theme: 1, ThemeBlack: 1, ThemeBlackLight: 1, ThemeBlue: 1, ThemeBlueLight: 1, ThemeGreen: 1, ThemeGreenLight: 1, ThemePurple: 1, ThemePurpleLight: 1, ThemeRed: 1, ThemeRedLight: 1, ThemeYellow: 1, ThemeYellowLight: 1 }, RolePermissionDialog: { DialogTitle: 1, EditButton: 1, SaveSuccess: 1 }, UserDialog: { EditPermissionsButton: 1, EditRolesButton: 1 }, UserPermissionDialog: { DialogTitle: 1, Grant: 1, Permission: 1, Revoke: 1, SaveSuccess: 1 }, UserRoleDialog: { DialogTitle: 1, SaveSuccess: 1 }, ValidationError: { Title: 1 } }, Validation: { AuthenticationError: 1, CantFindUserWithEmail: 1, CurrentPasswordMismatch: 1, DeleteForeignKeyError: 1, EmailConfirm: 1, EmailInUse: 1, InvalidActivateToken: 1, InvalidResetToken: 1, MinRequiredPasswordLength: 1, SavePrimaryKeyError: 1 } });
+        SimpleFeedly['Texts'] = Q.proxyTexts(Texts, '', { Db: { Administration: { Language: { Id: 1, LanguageId: 1, LanguageName: 1 }, Role: { RoleId: 1, RoleName: 1 }, RolePermission: { PermissionKey: 1, RoleId: 1, RolePermissionId: 1, RoleRoleName: 1 }, Translation: { CustomText: 1, EntityPlural: 1, Key: 1, OverrideConfirmation: 1, SaveChangesButton: 1, SourceLanguage: 1, SourceText: 1, TargetLanguage: 1, TargetText: 1 }, User: { DisplayName: 1, Email: 1, InsertDate: 1, InsertUserId: 1, IsActive: 1, LastDirectoryUpdate: 1, Password: 1, PasswordConfirm: 1, PasswordHash: 1, PasswordSalt: 1, Source: 1, UpdateDate: 1, UpdateUserId: 1, UserId: 1, UserImage: 1, Username: 1 }, UserPermission: { Granted: 1, PermissionKey: 1, User: 1, UserId: 1, UserPermissionId: 1, Username: 1 }, UserRole: { RoleId: 1, User: 1, UserId: 1, UserRoleId: 1, Username: 1 } }, Common: { UserPreference: { Name: 1, PreferenceType: 1, UserId: 1, UserPreferenceId: 1, Value: 1 } }, Rss: { Blacklists: { ChannelId: 1, Id: 1, Title: 1 }, RssChannels: { Copyright: 1, Description: 1, ErrorMessage: 1, Id: 1, ImageUrl: 1, IsActive: 1, IsError: 1, Language: 1, LastUpdatedDate: 1, Link: 1, OriginalDocument: 1, RssCrawlerEngine: 1, Title: 1, Type: 1 }, RssFeedItems: { Author: 1, ChannelId: 1, Content: 1, Description: 1, FeedItemId: 1, Id: 1, IsChecked: 1, Link: 1, PublishingDate: 1, RssChannelTitle: 1, Title: 1 } } }, Forms: { Membership: { ChangePassword: { FormTitle: 1, SubmitButton: 1, Success: 1 }, ForgotPassword: { BackToLogin: 1, FormInfo: 1, FormTitle: 1, SubmitButton: 1, Success: 1 }, Login: { FacebookButton: 1, ForgotPassword: 1, FormTitle: 1, GoogleButton: 1, OR: 1, RememberMe: 1, SignInButton: 1, SignUpButton: 1 }, ResetPassword: { BackToLogin: 1, EmailSubject: 1, FormTitle: 1, SubmitButton: 1, Success: 1 }, SignUp: { AcceptTerms: 1, ActivateEmailSubject: 1, ActivationCompleteMessage: 1, BackToLogin: 1, ConfirmEmail: 1, ConfirmPassword: 1, DisplayName: 1, Email: 1, FormInfo: 1, FormTitle: 1, Password: 1, SubmitButton: 1, Success: 1 } } }, Site: { AccessDenied: { ClickToChangeUser: 1, ClickToLogin: 1, LackPermissions: 1, NotLoggedIn: 1, PageTitle: 1 }, BasicProgressDialog: { CancelTitle: 1, PleaseWait: 1 }, BulkServiceAction: { AllHadErrorsFormat: 1, AllSuccessFormat: 1, ConfirmationFormat: 1, ErrorCount: 1, NothingToProcess: 1, SomeHadErrorsFormat: 1, SuccessCount: 1 }, Dashboard: { ContentDescription: 1 }, Layout: { FooterCopyright: 1, FooterInfo: 1, FooterRights: 1, GeneralSettings: 1, Language: 1, Theme: 1, ThemeBlack: 1, ThemeBlackLight: 1, ThemeBlue: 1, ThemeBlueLight: 1, ThemeGreen: 1, ThemeGreenLight: 1, ThemePurple: 1, ThemePurpleLight: 1, ThemeRed: 1, ThemeRedLight: 1, ThemeYellow: 1, ThemeYellowLight: 1 }, RolePermissionDialog: { DialogTitle: 1, EditButton: 1, SaveSuccess: 1 }, UserDialog: { EditPermissionsButton: 1, EditRolesButton: 1 }, UserPermissionDialog: { DialogTitle: 1, Grant: 1, Permission: 1, Revoke: 1, SaveSuccess: 1 }, UserRoleDialog: { DialogTitle: 1, SaveSuccess: 1 }, ValidationError: { Title: 1 } }, Validation: { AuthenticationError: 1, CantFindUserWithEmail: 1, CurrentPasswordMismatch: 1, DeleteForeignKeyError: 1, EmailConfirm: 1, EmailInUse: 1, InvalidActivateToken: 1, InvalidResetToken: 1, MinRequiredPasswordLength: 1, SavePrimaryKeyError: 1 } });
     })(Texts = SimpleFeedly.Texts || (SimpleFeedly.Texts = {}));
 })(SimpleFeedly || (SimpleFeedly = {}));
 var SimpleFeedly;
@@ -1623,6 +1683,40 @@ var SimpleFeedly;
 })(SimpleFeedly || (SimpleFeedly = {}));
 var SimpleFeedly;
 (function (SimpleFeedly) {
+    var Common;
+    (function (Common) {
+        var CustomLookupFormatter = /** @class */ (function () {
+            function CustomLookupFormatter() {
+            }
+            CustomLookupFormatter.prototype.format = function (ctx) {
+                var result = ctx.value;
+                var lookup = Q.getLookup(this.lookupKey);
+                lookup.items.some(function (item, idx) {
+                    var textValue = item[lookup.textField];
+                    var text = (ss.isNullOrUndefined(textValue) ? '' : textValue.toString());
+                    var idValue = item[lookup.idField];
+                    var id = (ss.isNullOrUndefined(idValue) ? '' : idValue.toString());
+                    if (id == ctx.value) {
+                        result = text;
+                        return true;
+                    }
+                    return false;
+                });
+                return result;
+            };
+            __decorate([
+                Serenity.Decorators.option()
+            ], CustomLookupFormatter.prototype, "lookupKey", void 0);
+            CustomLookupFormatter = __decorate([
+                Serenity.Decorators.registerFormatter()
+            ], CustomLookupFormatter);
+            return CustomLookupFormatter;
+        }());
+        Common.CustomLookupFormatter = CustomLookupFormatter;
+    })(Common = SimpleFeedly.Common || (SimpleFeedly.Common = {}));
+})(SimpleFeedly || (SimpleFeedly = {}));
+var SimpleFeedly;
+(function (SimpleFeedly) {
     var BasicProgressDialog = /** @class */ (function (_super) {
         __extends(BasicProgressDialog, _super);
         function BasicProgressDialog() {
@@ -2151,6 +2245,10 @@ var J;
         return isMobile;
     }
     J.isMobile = isMobile;
+    function escapeHtml(value) {
+        return $("<div />").text(value).html();
+    }
+    J.escapeHtml = escapeHtml;
 })(J || (J = {}));
 var SimpleFeedly;
 (function (SimpleFeedly) {
@@ -2958,6 +3056,52 @@ var SimpleFeedly;
 (function (SimpleFeedly) {
     var Rss;
     (function (Rss) {
+        var BlacklistsDialog = /** @class */ (function (_super) {
+            __extends(BlacklistsDialog, _super);
+            function BlacklistsDialog() {
+                var _this = _super !== null && _super.apply(this, arguments) || this;
+                _this.form = new Rss.BlacklistsForm(_this.idPrefix);
+                return _this;
+            }
+            BlacklistsDialog.prototype.getFormKey = function () { return Rss.BlacklistsForm.formKey; };
+            BlacklistsDialog.prototype.getIdProperty = function () { return Rss.BlacklistsRow.idProperty; };
+            BlacklistsDialog.prototype.getLocalTextPrefix = function () { return Rss.BlacklistsRow.localTextPrefix; };
+            BlacklistsDialog.prototype.getNameProperty = function () { return Rss.BlacklistsRow.nameProperty; };
+            BlacklistsDialog.prototype.getService = function () { return Rss.BlacklistsService.baseUrl; };
+            BlacklistsDialog = __decorate([
+                Serenity.Decorators.registerClass()
+            ], BlacklistsDialog);
+            return BlacklistsDialog;
+        }(Serenity.EntityDialog));
+        Rss.BlacklistsDialog = BlacklistsDialog;
+    })(Rss = SimpleFeedly.Rss || (SimpleFeedly.Rss = {}));
+})(SimpleFeedly || (SimpleFeedly = {}));
+var SimpleFeedly;
+(function (SimpleFeedly) {
+    var Rss;
+    (function (Rss) {
+        var BlacklistsGrid = /** @class */ (function (_super) {
+            __extends(BlacklistsGrid, _super);
+            function BlacklistsGrid(container) {
+                return _super.call(this, container) || this;
+            }
+            BlacklistsGrid.prototype.getColumnsKey = function () { return 'Rss.Blacklists'; };
+            BlacklistsGrid.prototype.getDialogType = function () { return Rss.BlacklistsDialog; };
+            BlacklistsGrid.prototype.getIdProperty = function () { return Rss.BlacklistsRow.idProperty; };
+            BlacklistsGrid.prototype.getLocalTextPrefix = function () { return Rss.BlacklistsRow.localTextPrefix; };
+            BlacklistsGrid.prototype.getService = function () { return Rss.BlacklistsService.baseUrl; };
+            BlacklistsGrid = __decorate([
+                Serenity.Decorators.registerClass()
+            ], BlacklistsGrid);
+            return BlacklistsGrid;
+        }(Serenity.EntityGrid));
+        Rss.BlacklistsGrid = BlacklistsGrid;
+    })(Rss = SimpleFeedly.Rss || (SimpleFeedly.Rss = {}));
+})(SimpleFeedly || (SimpleFeedly = {}));
+var SimpleFeedly;
+(function (SimpleFeedly) {
+    var Rss;
+    (function (Rss) {
         var RssChannelsDialog = /** @class */ (function (_super) {
             __extends(RssChannelsDialog, _super);
             function RssChannelsDialog() {
@@ -3248,9 +3392,17 @@ var SimpleFeedly;
                     minWidth: 24,
                     maxWidth: 24
                 });
+                columns.splice(2, 0, {
+                    field: 'Block Feed Item',
+                    name: '',
+                    format: function (ctx) { return '<a class="inline-action block-feed-item" title="block feed item"><i class="fa fa-ban link-muted"></i></a>'; },
+                    width: 24,
+                    minWidth: 24,
+                    maxWidth: 24
+                });
                 Q.first(columns, function (x) { return x.field == "Title" /* Title */; }).format = function (ctx) {
                     var currentItem = ctx.item;
-                    return "<a href=\"" + currentItem.Link + ("\" class=\"customer-link\" target=\"_blank\">" + Q.htmlEncode(ctx.value) + "</a>");
+                    return "<a href=\"" + currentItem.Link + ("\" class=\"open-feed-item\" target=\"_blank\">" + Q.htmlEncode(ctx.value) + "</a>");
                 };
                 return columns;
             };
@@ -3266,15 +3418,36 @@ var SimpleFeedly;
                 var item = this.itemAt(row);
                 // get reference to clicked element
                 var target = $(e.target);
-                if (target.hasClass("customer-link")) {
-                    //e.preventDefault();
-                    Rss.RssFeedItemsService.MarkCheckedFeedItem({ FeedItemId: item.Id, IsChecked: true }, function (response) {
-                        // console.log("marked");
-                        _this.refresh();
-                    });
+                if (target.parent().hasClass('inline-action'))
+                    target = target.parent();
+                if (target.hasClass('inline-action')) {
+                    e.preventDefault();
+                    if (target.hasClass('view-details')) {
+                        this.editItem(item.Id);
+                    }
+                    else if (target.hasClass('block-feed-item')) {
+                        Q.confirm('You want to block:\n   - Title: ' + J.escapeHtml(item.Title) + '\n   - Channel: ' + J.escapeHtml(item.RssChannelTitle) + ' ?', function () {
+                            if (!_this.onViewSubmit()) {
+                                return;
+                            }
+                            Rss.RssFeedItemsService.AddBlacklistItem({ ChannelId: item.ChannelId, Title: item.Title }, function (response) {
+                                Rss.RssFeedItemsService.Delete({ EntityId: item.Id }, function (resp) {
+                                    _this.refresh();
+                                });
+                            });
+                        }, {
+                            title: 'Confirm',
+                        });
+                    }
                 }
-                else if (target.hasClass('view-details')) {
-                    this.editItem(item.Id);
+                else {
+                    if (target.hasClass("open-feed-item")) {
+                        //e.preventDefault();
+                        Rss.RssFeedItemsService.MarkCheckedFeedItem({ FeedItemId: item.Id, IsChecked: true }, function (response) {
+                            // console.log("marked");
+                            _this.refresh();
+                        });
+                    }
                 }
             };
             RssFeedItemsGrid.prototype.onViewProcessData = function (response) {

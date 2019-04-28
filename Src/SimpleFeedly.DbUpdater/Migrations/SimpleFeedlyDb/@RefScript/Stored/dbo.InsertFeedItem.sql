@@ -35,28 +35,32 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-    IF NOT EXISTS (SELECT 1 FROM dbo.RssChannels AS c JOIN dbo.RssFeedItems i ON i.ChannelId = c.Id WHERE c.Id = @channelId AND i.FeedItemId = @feedItemId)
+	IF NOT EXISTS (SELECT TOP (1) 1 FROM dbo.Blacklist AS b WHERE b.ChannelId = @channelId AND b.Title = @title)
 	BEGIN
-		INSERT INTO dbo.RssFeedItems ( ChannelId ,
-		                               FeedItemId ,
-		                               Title ,
-		                               Link ,
-		                               Description ,
-		                               PublishingDate ,
-		                               Author ,
-		                               [Content ] ,
-		                               IsChecked )
-		VALUES ( @channelId ,
-		         @feedItemId ,
-		         @title ,     
-		         @link ,      
-		         @description ,
-		         @publishingDate ,
-		         @author,
-		         @content,
-		         0
-		    )
+		IF NOT EXISTS (SELECT 1 FROM dbo.RssChannels AS c JOIN dbo.RssFeedItems i ON i.ChannelId = c.Id WHERE c.Id = @channelId AND i.FeedItemId = @feedItemId)
+		BEGIN
+			INSERT INTO dbo.RssFeedItems ( ChannelId ,
+										   FeedItemId ,
+										   Title ,
+										   Link ,
+										   Description ,
+										   PublishingDate ,
+										   Author ,
+										   [Content ] ,
+										   IsChecked )
+			VALUES ( @channelId ,
+					 @feedItemId ,
+					 @title ,     
+					 @link ,      
+					 @description ,
+					 @publishingDate ,
+					 @author,
+					 @content,
+					 0
+				)
+		END
 	END
+    
 END
 GO
 

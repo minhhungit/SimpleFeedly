@@ -11,4 +11,8 @@
 
         return isMobile;
     }
+
+    export function escapeHtml(value: string) {
+        return $("<div />").text(value).html();
+    }
 }

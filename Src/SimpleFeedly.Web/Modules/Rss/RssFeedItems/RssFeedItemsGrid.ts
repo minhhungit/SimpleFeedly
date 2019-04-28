@@ -119,7 +119,7 @@ namespace SimpleFeedly.Rss {
                                 RssFeedItemsService.MarkCheckedFeedItem({ FeedItemId: item.Id, IsChecked: true }, response => {
                                     this.rowSelection.resetCheckedAndRefresh();
                                 });
-                            })
+                            });
                         },
                         {
                             title: 'Confirm',
@@ -184,9 +184,18 @@ namespace SimpleFeedly.Rss {
                 maxWidth: 24
             });
 
+            columns.splice(2, 0, {
+                field: 'Block Feed Item',
+                name: '',
+                format: ctx => '<a class="inline-action block-feed-item" title="block feed item"><i class="fa fa-ban link-muted"></i></a>',
+                width: 24,
+                minWidth: 24,
+                maxWidth: 24
+            });
+
             Q.first(columns, x => x.field == fld.Title).format = function (ctx: Slick.FormatterContext) {
                 var currentItem: RssFeedItemsRow = ctx.item;
-                return `<a href="` + currentItem.Link + `" class="customer-link" target="_blank">${Q.htmlEncode(ctx.value)}</a>`;
+                return `<a href="` + currentItem.Link + `" class="open-feed-item" target="_blank">${Q.htmlEncode(ctx.value)}</a>`;
             }
 
             return columns;
@@ -207,17 +216,43 @@ namespace SimpleFeedly.Rss {
             // get reference to clicked element
             var target = $(e.target);
 
-            if (target.hasClass("customer-link")) {
-                //e.preventDefault();
+            if (target.parent().hasClass('inline-action'))
+                target = target.parent();
 
-                RssFeedItemsService.MarkCheckedFeedItem({ FeedItemId: item.Id, IsChecked: true }, response => {
-                    // console.log("marked");
+            if (target.hasClass('inline-action')) {
+                e.preventDefault();
 
-                    this.refresh();
-                });
+                if (target.hasClass('view-details')) {
+                    this.editItem(item.Id);
+                }
+                else if (target.hasClass('block-feed-item')) {
+                    Q.confirm('You want to block:\n   - Title: ' + J.escapeHtml(item.Title) + '\n   - Channel: ' + J.escapeHtml(item.RssChannelTitle) + ' ?',
+                        () => {
+                            if (!this.onViewSubmit()) {
+                                return;
+                            }
+
+                            RssFeedItemsService.AddBlacklistItem({ ChannelId: item.ChannelId, Title: item.Title }, response => {
+                                RssFeedItemsService.Delete({ EntityId: item.Id }, resp => {
+                                    this.refresh();
+                                });
+                            });
+                        },
+                        {
+                            title: 'Confirm',
+                        });
+                } 
             }
-            else if (target.hasClass('view-details')) {
-                this.editItem(item.Id);
+            else {
+                if (target.hasClass("open-feed-item")) {
+                    //e.preventDefault();
+
+                    RssFeedItemsService.MarkCheckedFeedItem({ FeedItemId: item.Id, IsChecked: true }, response => {
+                        // console.log("marked");
+
+                        this.refresh();
+                    });
+                }
             }
         }
 

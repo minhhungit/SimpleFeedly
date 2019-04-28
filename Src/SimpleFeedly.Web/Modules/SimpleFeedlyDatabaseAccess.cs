@@ -236,5 +236,17 @@ namespace SimpleFeedly
                 con.Execute("UpdateChannelDefaultEngine", parms, commandType: CommandType.StoredProcedure, commandTimeout: 30);
             }
         }
+
+        public static void AddBlacklistItem(long channelId, string title)
+        {
+            using (var con = new SqlConnection(Settings.ConnectionString))
+            {
+                var parms = new DynamicParameters();
+                parms.Add("@channelId", channelId);
+                parms.Add("@title", title);
+
+                con.Execute("AddBlacklistItem", parms, commandType: CommandType.StoredProcedure, commandTimeout: 30);
+            }
+        }
     }
 }
