@@ -1098,7 +1098,13 @@
     <Content Include="tools\Node\less\lib\less\visitor.js" />
     <Content Include="tools\Node\node.exe" />
     <Content Include="tsconfig.json" />
+    <TypeScriptCompile Include="Imports\ServerTypings\Models.BlacklistItem.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Rss.AddBlacklistItemRequest.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Rss.AddBlacklistItemsRequest.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Rss.BlacklistsColumns.ts">
@@ -1732,14 +1738,18 @@
   <ItemGroup>
     <Compile Include="App_Start\SiteInitialization.DataAccessHelpers.cs" />
     <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="Collections\BlacklistItemsCollection.cs" />
     <Compile Include="Hubs\ChannelHub.cs" />
     <Compile Include="Imports\ClientTypes\Common.CustomLookupFormatterAttribute.cs">
       <DependentUpon>ClientTypes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BlacklistItem.cs" />
     <Compile Include="Modules\Common\Formatters\CustomLookupFormatterAttribute.cs" />
     <Compile Include="Modules\Rss\RssChannels\RssCrawlerEngine.cs" />
     <Compile Include="Modules\Rss\RssChannels\ServiceModel\TestChannelRequest.cs" />
     <Compile Include="Modules\Rss\RssFeedItems\ServiceModel\AddBlacklistItemRequest.cs" />
+    <Compile Include="Collections\ListBigIntNumbersCollection.cs" />
+    <Compile Include="Modules\Rss\RssFeedItems\ServiceModel\AddBlacklistItemsRequest.cs" />
     <Compile Include="Modules\SimpleFeedlyPermissionKeys.cs" />
     <Compile Include="Settings\IAppSettings.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />

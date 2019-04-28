@@ -16,7 +16,7 @@ namespace SimpleFeedly.Rss.Columns
         [EditLink, DisplayName("Db.Shared.RecordId"), AlignRight, SortOrder(2), Hidden]
         public Int64 Id { get; set; }
 
-        //public String FeedItemId { get; set; }
+        //public String FeedItemKey { get; set; }
         [Width(1000)]
         public String Title { get; set; }
 

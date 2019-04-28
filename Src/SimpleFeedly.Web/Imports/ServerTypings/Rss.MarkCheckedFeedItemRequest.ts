@@ -1,6 +1,6 @@
 ﻿namespace SimpleFeedly.Rss {
     export interface MarkCheckedFeedItemRequest extends Serenity.ServiceRequest {
-        FeedItemId?: number;
+        Id?: number;
         IsChecked?: boolean;
     }
 }

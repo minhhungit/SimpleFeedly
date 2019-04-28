@@ -1,4 +1,6 @@
 ﻿using Dapper;
+using SimpleFeedly.Collections;
+using SimpleFeedly.Models;
 using SimpleFeedly.Rss;
 using SimpleFeedly.Rss.Entities;
 using System;
@@ -30,7 +32,7 @@ namespace SimpleFeedly
             Settings = buildSettingFunc();
         }
 
-        public static bool CheckExistFeedItem(long channelId, string feedItemId)
+        public static bool CheckExistFeedItem(long channelId, string feedItemKey)
         {
             if (channelId <= 0)
             {
@@ -41,7 +43,7 @@ namespace SimpleFeedly
             {
                 var parm = new DynamicParameters();
                 parm.Add("@channelId", channelId);
-                parm.Add("@feedItemId", feedItemId);
+                parm.Add("@feedItemKey", feedItemKey);
 
                 var result = (int?)con.ExecuteScalar("CheckExistFeedItem", parm, commandType: CommandType.StoredProcedure, commandTimeout: 30);
                 if ((result ?? 0) > 0)
@@ -158,7 +160,7 @@ namespace SimpleFeedly
             {
                 var parms = new DynamicParameters();
                 parms.Add("@channelId", item.ChannelId);
-                parms.Add("@feedItemId", item.FeedItemId);
+                parms.Add("@feedItemKey", item.FeedItemKey);
                 parms.Add("@title", item.Title);
                 parms.Add("@link", item.Link);
                 parms.Add("@description", item.Description);
@@ -237,15 +239,45 @@ namespace SimpleFeedly
             }
         }
 
-        public static void AddBlacklistItem(long channelId, string title)
+        public static void AddBlacklistItem(long channelId, long feedItemId, string title, bool isDeleteFeedItem)
         {
             using (var con = new SqlConnection(Settings.ConnectionString))
             {
                 var parms = new DynamicParameters();
                 parms.Add("@channelId", channelId);
+                parms.Add("@feedItemId", feedItemId);
                 parms.Add("@title", title);
+                parms.Add("@isDeleteFeedItem", isDeleteFeedItem);
 
                 con.Execute("AddBlacklistItem", parms, commandType: CommandType.StoredProcedure, commandTimeout: 30);
+            }
+        }
+
+        public static void AddBlacklistItems(List<BlacklistItem> items, bool isDeleteFeedItem)
+        {
+            using (var con = new SqlConnection(Settings.ConnectionString))
+            {
+                var data = new BlacklistItemsCollection();
+                if (items.Any())
+                {
+                    data.AddRange(items
+                        .Where(x => x.ChannelId > 0 && x.FeedItemId > 0 && !string.IsNullOrWhiteSpace(x.Title))
+                        .Select(x => new BlacklistItem(x.ChannelId, x.FeedItemId, x.Title)));
+                }
+
+                var parm = new DynamicParameters();
+                parm.Add("@isDeleteFeedItem", isDeleteFeedItem);
+
+                if (data.Count > 0)
+                {
+                    parm.Add("@blacklist", data.AsTableValuedParameter());
+                }
+
+                con.Execute(
+                        "AddBlacklistItems",
+                        parm,
+                        commandType: CommandType.StoredProcedure,
+                        commandTimeout: Settings.ConnectionTimeout);
             }
         }
     }

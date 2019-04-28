@@ -52,7 +52,7 @@ namespace SimpleFeedly.Rss.Endpoints
             {
                 request.CheckNotNull();
 
-                SimpleFeedlyDatabaseAccess.MarkCheckedFeedItem(request.FeedItemId, request.IsChecked);
+                SimpleFeedlyDatabaseAccess.MarkCheckedFeedItem(request.Id, request.IsChecked);
 
                 return new ServiceResponse();
             });
@@ -61,7 +61,7 @@ namespace SimpleFeedly.Rss.Endpoints
         [HttpPost, JsonFilter]
         public Result<ServiceResponse> MarkCheckedBatchFeedItems(MarkCheckedBatchFeedItemsRequest request)
         {
-            if (request.FeedItemIds == null || !request.FeedItemIds.Any())
+            if (request.Ids == null || !request.Ids.Any())
             {
                 throw new System.Exception("Please choose at least one feed item");
             }
@@ -70,7 +70,7 @@ namespace SimpleFeedly.Rss.Endpoints
             {
                 request.CheckNotNull();
 
-                var ids = request.FeedItemIds.Distinct().ToList();
+                var ids = request.Ids.Distinct().ToList();
 
                 SimpleFeedlyDatabaseAccess.MarkCheckedFeedItems(ids, request.IsChecked);
 
@@ -94,9 +94,36 @@ namespace SimpleFeedly.Rss.Endpoints
         public ServiceResponse AddBlacklistItem(AddBlacklistItemRequest request)
         {
             request.CheckNotNull();
-            SimpleFeedlyDatabaseAccess.AddBlacklistItem(request.ChannelId, request.Title);
+            SimpleFeedlyDatabaseAccess.AddBlacklistItem(request.ChannelId, request.FeedItemId, request.Title, request.IsDeleteFeedItem);
 
             return new ServiceResponse();
+        }
+
+        [HttpPost, JsonFilter]
+        public Result<ServiceResponse> AddBlacklistItems(AddBlacklistItemsRequest request)
+        {
+            if (!Authorization.HasPermission(PermissionKeys.Blacklists.Insert))
+            {
+                throw new System.Exception("You have no permission for this action");
+            }
+
+            if (request.FeedItems == null || !request.FeedItems.Any())
+            {
+                throw new System.Exception("Please choose at least one feed item");
+            }
+
+            return this.ExecuteMethod(() =>
+            {
+                request.CheckNotNull();
+
+                var blacklist = request.FeedItems
+                    .Where(x => x.ChannelId > 0 && x.FeedItemId > 0 && !string.IsNullOrWhiteSpace(x.Title))
+                    .Select(x => new Models.BlacklistItem(x.ChannelId, x.FeedItemId, x.Title)).ToList();
+
+                SimpleFeedlyDatabaseAccess.AddBlacklistItems(blacklist, request.IsDeleteFeedItem);
+
+                return new ServiceResponse();
+            });
         }
     }
 }

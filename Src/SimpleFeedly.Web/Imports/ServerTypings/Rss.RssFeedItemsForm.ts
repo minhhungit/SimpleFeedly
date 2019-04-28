@@ -2,7 +2,7 @@
     export interface RssFeedItemsForm {
         ChannelId: Serenity.LookupEditor;
         IsChecked: Serenity.BooleanEditor;
-        FeedItemId: Serenity.StringEditor;
+        FeedItemKey: Serenity.StringEditor;
         Title: Serenity.StringEditor;
         Link: Serenity.StringEditor;
         Description: Serenity.TextAreaEditor;
@@ -32,7 +32,7 @@
                 Q.initFormType(RssFeedItemsForm, [
                     'ChannelId', w0,
                     'IsChecked', w1,
-                    'FeedItemId', w2,
+                    'FeedItemKey', w2,
                     'Title', w2,
                     'Link', w2,
                     'Description', w3,

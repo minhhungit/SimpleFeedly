@@ -15,17 +15,36 @@ GO
 -- =============================================
 ALTER PROCEDURE [dbo].[AddBlacklistItem]
 	@channelId BIGINT,
-	@title NVARCHAR(300)
+	@feedItemId BIGINT,
+	@title NVARCHAR(300),
+	@isDeleteFeedItem BIT
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-    IF NOT EXISTS (SELECT TOP (1) 1 FROM dbo.Blacklist AS b WHERE b.ChannelId = @channelId AND b.Title = @title)
-	BEGIN
-		INSERT INTO dbo.Blacklist ( ChannelId , Title )
-		VALUES ( @channelId, @title )
-	END
+	SET XACT_ABORT ON
+	BEGIN TRAN
+	BEGIN TRY
+		IF NOT EXISTS (SELECT TOP (1) 1 FROM dbo.Blacklist AS b WHERE b.ChannelId = @channelId AND b.Title = @title)
+		BEGIN
+			INSERT INTO dbo.Blacklist ( ChannelId , Title )
+			VALUES ( @channelId, @title )
+		END
+
+		IF (@isDeleteFeedItem = 1)
+		BEGIN
+			DELETE dbo.RssFeedItems WHERE Id = @feedItemId
+		END
+	COMMIT
+	END TRY
+	BEGIN CATCH
+	   ROLLBACK
+	   DECLARE @ErrorMessage VARCHAR(2000)
+	   SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()
+	   RAISERROR(@ErrorMessage, 16, 1)
+	END CATCH
+
 END
 GO

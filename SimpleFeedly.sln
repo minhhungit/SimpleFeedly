@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFeedly.DbUpdater", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFeedly.Core", "Src\SimpleFeedly.Core\SimpleFeedly.Core.csproj", "{609AF0C3-68FF-463A-B103-CA448D2EE6E8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3A34698D-D5D9-494E-911A-1232D2101E95}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Solution Items", "1. Solution Items", "{3A34698D-D5D9-494E-911A-1232D2101E95}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
@@ -20,6 +20,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{E0B8
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFeedly.Crawler", "Src\SimpleFeedly.Crawler\SimpleFeedly.Crawler.csproj", "{5C67D3CD-A2F7-4236-AC74-4C283D7F8D9A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. DatabaseUpdater", "2. DatabaseUpdater", "{AC4B4E52-783D-493E-BF29-0005E38F3625}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +50,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{0D630322-9BB7-4C55-B216-6E7EB719587B} = {AC4B4E52-783D-493E-BF29-0005E38F3625}
 		{E0B8D847-FA7C-4C02-BE7F-1370D4C7A789} = {3A34698D-D5D9-494E-911A-1232D2101E95}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

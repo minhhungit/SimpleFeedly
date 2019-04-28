@@ -22,7 +22,7 @@ GO
 -- =============================================
 ALTER PROCEDURE [dbo].[InsertFeedItem]
 	@channelId BIGINT,
-	@feedItemId NVARCHAR(500),
+	@feedItemKey NVARCHAR(500),
 	@title NVARCHAR(300),
 	@link  NVARCHAR(500),
 	@description NVARCHAR(MAX),
@@ -37,10 +37,10 @@ BEGIN
 
 	IF NOT EXISTS (SELECT TOP (1) 1 FROM dbo.Blacklist AS b WHERE b.ChannelId = @channelId AND b.Title = @title)
 	BEGIN
-		IF NOT EXISTS (SELECT 1 FROM dbo.RssChannels AS c JOIN dbo.RssFeedItems i ON i.ChannelId = c.Id WHERE c.Id = @channelId AND i.FeedItemId = @feedItemId)
+		IF NOT EXISTS (SELECT 1 FROM dbo.RssChannels AS c JOIN dbo.RssFeedItems i ON i.ChannelId = c.Id WHERE c.Id = @channelId AND i.FeedItemKey = @feedItemKey)
 		BEGIN
 			INSERT INTO dbo.RssFeedItems ( ChannelId ,
-										   FeedItemId ,
+										   FeedItemKey ,
 										   Title ,
 										   Link ,
 										   Description ,
@@ -49,7 +49,7 @@ BEGIN
 										   [Content ] ,
 										   IsChecked )
 			VALUES ( @channelId ,
-					 @feedItemId ,
+					 @feedItemKey ,
 					 @title ,     
 					 @link ,      
 					 @description ,

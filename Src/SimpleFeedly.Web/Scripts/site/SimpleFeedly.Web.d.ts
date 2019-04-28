@@ -523,10 +523,25 @@ declare namespace SimpleFeedly.Membership {
         Password?: string;
     }
 }
+declare namespace SimpleFeedly.Models {
+    interface BlacklistItem {
+        ChannelId?: number;
+        FeedItemId?: number;
+        Title?: string;
+    }
+}
 declare namespace SimpleFeedly.Rss {
     interface AddBlacklistItemRequest extends Serenity.ServiceRequest {
         ChannelId?: number;
+        FeedItemId?: number;
         Title?: string;
+        IsDeleteFeedItem?: boolean;
+    }
+}
+declare namespace SimpleFeedly.Rss {
+    interface AddBlacklistItemsRequest extends Serenity.ServiceRequest {
+        FeedItems?: Models.BlacklistItem[];
+        IsDeleteFeedItem?: boolean;
     }
 }
 declare namespace SimpleFeedly.Rss {
@@ -583,13 +598,13 @@ declare namespace SimpleFeedly.Rss {
 }
 declare namespace SimpleFeedly.Rss {
     interface MarkCheckedBatchFeedItemsRequest extends Serenity.ServiceRequest {
-        FeedItemIds?: number[];
+        Ids?: number[];
         IsChecked?: boolean;
     }
 }
 declare namespace SimpleFeedly.Rss {
     interface MarkCheckedFeedItemRequest extends Serenity.ServiceRequest {
-        FeedItemId?: number;
+        Id?: number;
         IsChecked?: boolean;
     }
 }
@@ -685,7 +700,7 @@ declare namespace SimpleFeedly.Rss {
     interface RssFeedItemsForm {
         ChannelId: Serenity.LookupEditor;
         IsChecked: Serenity.BooleanEditor;
-        FeedItemId: Serenity.StringEditor;
+        FeedItemKey: Serenity.StringEditor;
         Title: Serenity.StringEditor;
         Link: Serenity.StringEditor;
         Description: Serenity.TextAreaEditor;
@@ -703,7 +718,7 @@ declare namespace SimpleFeedly.Rss {
     interface RssFeedItemsRow {
         Id?: number;
         ChannelId?: number;
-        FeedItemId?: string;
+        FeedItemKey?: string;
         Title?: string;
         Link?: string;
         Description?: string;
@@ -715,12 +730,12 @@ declare namespace SimpleFeedly.Rss {
     }
     namespace RssFeedItemsRow {
         const idProperty = "Id";
-        const nameProperty = "FeedItemId";
+        const nameProperty = "FeedItemKey";
         const localTextPrefix = "Rss.RssFeedItems";
         const enum Fields {
             Id = "Id",
             ChannelId = "ChannelId",
-            FeedItemId = "FeedItemId",
+            FeedItemKey = "FeedItemKey",
             Title = "Title",
             Link = "Link",
             Description = "Description",
@@ -744,6 +759,7 @@ declare namespace SimpleFeedly.Rss {
         function MarkCheckedBatchFeedItems(request: MarkCheckedBatchFeedItemsRequest, onSuccess?: (response: Serenity.ServiceResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function GetFeedItemCheckedState(request: Serenity.ServiceRequest, onSuccess?: (response: FeedItemCheckedStateResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function AddBlacklistItem(request: AddBlacklistItemRequest, onSuccess?: (response: Serenity.ServiceResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function AddBlacklistItems(request: AddBlacklistItemsRequest, onSuccess?: (response: Serenity.ServiceResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         const enum Methods {
             Create = "Rss/RssFeedItems/Create",
             Update = "Rss/RssFeedItems/Update",
@@ -753,7 +769,8 @@ declare namespace SimpleFeedly.Rss {
             MarkCheckedFeedItem = "Rss/RssFeedItems/MarkCheckedFeedItem",
             MarkCheckedBatchFeedItems = "Rss/RssFeedItems/MarkCheckedBatchFeedItems",
             GetFeedItemCheckedState = "Rss/RssFeedItems/GetFeedItemCheckedState",
-            AddBlacklistItem = "Rss/RssFeedItems/AddBlacklistItem"
+            AddBlacklistItem = "Rss/RssFeedItems/AddBlacklistItem",
+            AddBlacklistItems = "Rss/RssFeedItems/AddBlacklistItems"
         }
     }
 }

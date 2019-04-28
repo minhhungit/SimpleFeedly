@@ -80,10 +80,10 @@
                                         var hasNew = false;
                                         foreach (var fItem in feed.Items)
                                         {
-                                            var feedItemId = GenerateFeedItemId(fItem);
-                                            var feedCacheKey = GenerateFeedCacheKey((long)channel.Id, feedItemId);
+                                            var feedItemKey = GenerateFeedItemKey(fItem);
+                                            var feedCacheKey = GenerateFeedCacheKey((long)channel.Id, feedItemKey);
 
-                                            if (string.IsNullOrWhiteSpace(feedItemId) || string.IsNullOrWhiteSpace(fItem.Link))
+                                            if (string.IsNullOrWhiteSpace(feedItemKey) || string.IsNullOrWhiteSpace(fItem.Link))
                                             {
                                                 logger.Info($"  + Skipped item: {JsonConvert.SerializeObject(fItem)}");
                                                 continue;
@@ -91,12 +91,12 @@
 
                                             if (!_feedCache.Contains(feedCacheKey))
                                             {
-                                                if (!SimpleFeedlyDatabaseAccess.CheckExistFeedItem((long)channel.Id, feedItemId))
+                                                if (!SimpleFeedlyDatabaseAccess.CheckExistFeedItem((long)channel.Id, feedItemKey))
                                                 {
                                                     var feedItem = new RssFeedItemsRow
                                                     {
                                                         ChannelId = channel.Id,
-                                                        FeedItemId = feedItemId,
+                                                        FeedItemKey = feedItemKey,
                                                         Title = string.IsNullOrWhiteSpace(fItem.Title) ? fItem.Link : fItem.Title,
                                                         Link = fItem.Link,
                                                         Description = fItem.Description,
@@ -162,7 +162,7 @@
             });
         }
 
-        private static string GenerateFeedItemId(SimpleFeedlyFeedItem item)
+        private static string GenerateFeedItemKey(SimpleFeedlyFeedItem item)
         {
             if (string.IsNullOrWhiteSpace(item.Id))
             {
@@ -181,9 +181,9 @@
             }
         }
 
-        private static string GenerateFeedCacheKey(long channelId, string feedItemId)
+        private static string GenerateFeedCacheKey(long channelId, string feedItemKey)
         {
-            return Core.Utils.StringUtils.MD5Hash($"{channelId}>{feedItemId}");
+            return Core.Utils.StringUtils.MD5Hash($"{channelId}>{feedItemKey}");
         }
 
         private static void ErrorHandle(Exception ex, string feedUrl)

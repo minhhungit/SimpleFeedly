@@ -9,7 +9,13 @@ namespace SimpleFeedly.Rss
         [Required(true), DisplayName("ChannelId")]
         public long ChannelId { get; set; }
 
+        [Required(true), DisplayName("Feed Item Id")]
+        public long FeedItemId { get; set; }
+
         [Required(true), DisplayName("Title")]
         public string Title { get; set; }
+
+        [Required(true), DisplayName("Is Delete Feed Item")]
+        public bool IsDeleteFeedItem { get; set; }
     }
 }

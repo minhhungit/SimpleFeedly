@@ -22,14 +22,14 @@ GO
 -- =============================================
 ALTER PROCEDURE [dbo].[CheckExistFeedItem]
 	@channelId NVARCHAR(500),
-	@feedItemId NVARCHAR(500)
+	@feedItemKey NVARCHAR(500)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
     SELECT 1 FROM dbo.RssFeedItems AS i 
-	WHERE i.ChannelId = @channelId AND i.FeedItemId = @feedItemId
+	WHERE i.ChannelId = @channelId AND i.FeedItemKey = @feedItemKey
 END
 
 GO

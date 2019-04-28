@@ -41,11 +41,11 @@ namespace SimpleFeedly.Rss.Entities
             set { Fields.RssChannelTitle[this] = value; }
         }
 
-        [DisplayName("Feed Item Id"), Size(500), NotNull, QuickSearch]
-        public String FeedItemId
+        [DisplayName("Feed Item Key"), Size(500), NotNull, QuickSearch]
+        public String FeedItemKey
         {
-            get { return Fields.FeedItemId[this]; }
-            set { Fields.FeedItemId[this] = value; }
+            get { return Fields.FeedItemKey[this]; }
+            set { Fields.FeedItemKey[this] = value; }
         }
 
         [DisplayName("Title"), Size(300)]
@@ -105,7 +105,7 @@ namespace SimpleFeedly.Rss.Entities
 
         StringField INameRow.NameField
         {
-            get { return Fields.FeedItemId; }
+            get { return Fields.FeedItemKey; }
         }
 
         public static readonly RowFields Fields = new RowFields().Init();
@@ -119,7 +119,7 @@ namespace SimpleFeedly.Rss.Entities
         {
             public Int64Field Id;
             public Int64Field ChannelId;
-            public StringField FeedItemId;
+            public StringField FeedItemKey;
             public StringField Title;
             public StringField Link;
             public StringField Description;

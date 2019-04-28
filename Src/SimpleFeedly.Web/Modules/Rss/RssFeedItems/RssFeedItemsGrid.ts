@@ -14,7 +14,8 @@ namespace SimpleFeedly.Rss {
         private rowSelection: Serenity.GridRowSelectionMixin;
 
         constructor(container: JQuery) {
-            super(container);         
+            super(container);   
+            
             if (J.isMobile()) {
                 if (this.quickFiltersDiv) {
                     this.quickFiltersDiv.hide();
@@ -85,7 +86,7 @@ namespace SimpleFeedly.Rss {
                             }
 
                             $.each(selectedItems, (idx, item: RssFeedItemsRow) => {
-                                RssFeedItemsService.MarkCheckedFeedItem({ FeedItemId: item.Id, IsChecked: false }, response => {
+                                RssFeedItemsService.MarkCheckedFeedItem({ Id: item.Id, IsChecked: false }, response => {
                                     this.rowSelection.resetCheckedAndRefresh();
                                 });
                             })
@@ -116,7 +117,7 @@ namespace SimpleFeedly.Rss {
                             }
 
                             $.each(selectedItems, (idx, item: RssFeedItemsRow) => {
-                                RssFeedItemsService.MarkCheckedFeedItem({ FeedItemId: item.Id, IsChecked: true }, response => {
+                                RssFeedItemsService.MarkCheckedFeedItem({ Id: item.Id, IsChecked: true }, response => {
                                     this.rowSelection.resetCheckedAndRefresh();
                                 });
                             });
@@ -146,7 +147,7 @@ namespace SimpleFeedly.Rss {
                                 return;
                             }
 
-                            RssFeedItemsService.MarkCheckedBatchFeedItems({ FeedItemIds: selectedItems.map(x => x.Id), IsChecked: true }, response => {
+                            RssFeedItemsService.MarkCheckedBatchFeedItems({ Ids: selectedItems.map(x => x.Id), IsChecked: true }, response => {
                                 this.rowSelection.resetCheckedAndRefresh();
                             });
                         },
@@ -155,6 +156,41 @@ namespace SimpleFeedly.Rss {
                         });
                 }
             });
+
+            if (Authorization.hasPermission("Blacklists:Insert")) {
+                buttons.splice(1, 0, {
+                    title: J.isMobile() ? '' : 'Block',
+                    cssClass: 'text-red text-bold',
+                    icon: 'fa fa-ban',
+                    separator: 'right',
+                    hint: 'Block feed items',
+                    onClick: () => {
+                        var selectedItems = this.getSelectedItems();
+
+                        if (selectedItems === null || selectedItems === undefined || selectedItems.length === 0) {
+                            return Q.warning("Please select at least one item");
+                        }
+
+                        return Q.confirm('Are you sure you want to block these items?',
+                            () => {
+                                if (!this.onViewSubmit()) {
+                                    return;
+                                }
+                                var data: Models.BlacklistItem[] = [];
+                                selectedItems.forEach((item, idx) => {
+                                    data.push({ ChannelId: item.ChannelId, FeedItemId: item.Id, Title: item.Title });
+                                });
+
+                                RssFeedItemsService.AddBlacklistItems({ FeedItems: data, IsDeleteFeedItem: true }, response => {
+                                    this.rowSelection.resetCheckedAndRefresh();
+                                });
+                            },
+                            {
+                                title: 'Confirm',
+                            });
+                    }
+                });              
+            }
 
             if (J.isMobile()) {
                 buttons.push({
@@ -232,10 +268,8 @@ namespace SimpleFeedly.Rss {
                                 return;
                             }
 
-                            RssFeedItemsService.AddBlacklistItem({ ChannelId: item.ChannelId, Title: item.Title }, response => {
-                                RssFeedItemsService.Delete({ EntityId: item.Id }, resp => {
-                                    this.refresh();
-                                });
+                            RssFeedItemsService.AddBlacklistItem({ ChannelId: item.ChannelId, FeedItemId: item.Id, Title: item.Title, IsDeleteFeedItem: true }, response => {
+                                this.refresh();
                             });
                         },
                         {
@@ -247,7 +281,7 @@ namespace SimpleFeedly.Rss {
                 if (target.hasClass("open-feed-item")) {
                     //e.preventDefault();
 
-                    RssFeedItemsService.MarkCheckedFeedItem({ FeedItemId: item.Id, IsChecked: true }, response => {
+                    RssFeedItemsService.MarkCheckedFeedItem({ Id: item.Id, IsChecked: true }, response => {
                         // console.log("marked");
 
                         this.refresh();
