@@ -1,14 +1,12 @@
 ﻿namespace SimpleFeedly
 {
     using AppCfg;
+    using SimpleFeedly.Settings;
 
     public static partial class SiteInitialization
     {
         private static void InitializeAppCfg()
         {
-            MyAppCfg.TypeParsers.Register(new TimeToRunParser());
-            MyAppCfg.TypeParsers.Register(new RandomTimeSpanParser());
-
             new AppSettings().Init();
         }        
     }
@@ -17,11 +15,9 @@
     {
         public void Init()
         {
-            Crawler = MyAppCfg.Get<ICrawlerSettings>();
-            Connections = MyAppCfg.Get<IConnectionStringSettings>();
+            Base = MyAppCfg.Get<IAppSettings>();
         }
 
-        public static ICrawlerSettings Crawler { get; private set; }
-        public static IConnectionStringSettings Connections { get; set; }
+        public static IAppSettings Base { get; set; }
     }
 }

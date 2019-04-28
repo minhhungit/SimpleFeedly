@@ -6,6 +6,7 @@
     using SimpleFeedly.Hubs;
     using SimpleFeedly.Rss;
     using SimpleFeedly.Rss.Entities;
+    using SimpleFeedly.SettingParsers;
     using StackExchange.Exceptional;
     using System;
     using System.Collections.Generic;
@@ -18,12 +19,11 @@
 
     public static partial class SiteInitialization
     {
-        private static readonly ILogger _logger = LogManager.GetLogger("CrawlerService", typeof(SiteInitialization));
         private static HashSet<string> _feedCache = new HashSet<string>();
         private static int _currentDate = DateTime.Now.Day;
         private static readonly Random _ran = new Random();
 
-        private static void InitializeRssCrawler()
+        public static void InitializeRssCrawler(ILogger logger, RandomTimeSpan channelFetchingDelay, TimeSpan channelErrorDelay, TimeSpan errorDelay, TimeSpan loopDelay)
         {
             System.Threading.Tasks.Task.Run(() =>
             {
@@ -51,12 +51,12 @@
 
                             count++;
 
-                            _logger.Info($"- [{count}/{channels.Count}] Working on channel: {channel.Id} | {feedUrl}");
+                            logger.Info($"- [{count}/{channels.Count}] Working on channel: {channel.Id} | {feedUrl}");
                             channelHubCtx.Clients.All.updateChannelProgress(new { Message = $"<strong>Fetching</strong> <a href='{channel.Link}' target='_blank'>{channel.Link}</a>", IsSleeping = false });
 
                             if (string.IsNullOrWhiteSpace(feedUrl))
                             {
-                                _logger.Warn($"=> Channel has empty link: {channel.Id}");
+                                logger.Warn($"=> Channel has empty link: {channel.Id}");
                                 continue;
                             }
 
@@ -68,15 +68,14 @@
                                 try
                                 {
                                     RssCrawlerEngine usedEngine = RssCrawlerEngine.CodeHollowFeedReader;
-                                    Exception fetchFeedError = null;
-                                    var feed = GetFeedsFromChannel(feedUrl, channel.RssCrawlerEngine, false, out usedEngine, out fetchFeedError);
+                                    var feed = RssCrawler.GetFeedsFromChannel(feedUrl, channel.RssCrawlerEngine, false, out usedEngine, out Exception fetchFeedError);
 
                                     // update default engine for channel
                                     SimpleFeedlyDatabaseAccess.UpdateChannelDefaultEngine((long)channel.Id, feed == null ? (RssCrawlerEngine?)null : usedEngine);
 
                                     if (feed != null)
-                                    {                                        
-                                        _logger.Info($"  + Number of items: {feed.Items.Count}");
+                                    {
+                                        logger.Info($"  + Number of items: {feed.Items.Count}");
 
                                         var hasNew = false;
                                         foreach (var fItem in feed.Items)
@@ -86,7 +85,7 @@
 
                                             if (string.IsNullOrWhiteSpace(feedItemId) || string.IsNullOrWhiteSpace(fItem.Link))
                                             {
-                                                _logger.Info($"  + Skipped item: {JsonConvert.SerializeObject(fItem)}");
+                                                logger.Info($"  + Skipped item: {JsonConvert.SerializeObject(fItem)}");
                                                 continue;
                                             }
 
@@ -120,7 +119,7 @@
                                         if (!hasNew)
                                         {
                                             var randomExpiryTime =
-                                            cache.Add(channelSleepingCacheKey, true, DateTime.Now.Add(AppSettings.Crawler.ChannelFetchingDelay.GenerateRamdomValue()));
+                                            cache.Add(channelSleepingCacheKey, true, DateTime.Now.Add(channelFetchingDelay.GenerateRamdomValue()));
                                         }
                                     }
                                     else
@@ -132,25 +131,25 @@
                                 {
                                     SimpleFeedlyDatabaseAccess.UpdateChannelErrorStatus((long)channel.Id, true, JsonConvert.SerializeObject(err));
 
-                                    cache.Add(channelSleepingCacheKey, true, DateTime.Now.Add(AppSettings.Crawler.ChannelErrorDelay));
-                                    _logger.Error(err, $"An error occurred on channel: {channel.Id} | {feedUrl}");
+                                    cache.Add(channelSleepingCacheKey, true, DateTime.Now.Add(channelErrorDelay));
+                                    logger.Error(err, $"An error occurred on channel: {channel.Id} | {feedUrl}");
 
                                     ErrorHandle(err, feedUrl);
                                 }
                             }
                             else
                             {
-                                _logger.Info($"  + sleeping...");
+                                logger.Info($"  + sleeping...");
                             }
                         }
                     }
                     catch (Exception ex)
                     {
-                        _logger.Error(ex, "An error occurred");
+                        logger.Error(ex, "An error occurred");
 
                         ErrorHandle(ex, feedUrl);
 
-                        System.Threading.Thread.Sleep(AppSettings.Crawler.ErrorDelay);
+                        System.Threading.Thread.Sleep(errorDelay);
                     }
 
                     channelHubCtx.Clients.All.updateChannelProgress(new { Message = "<span class='link-muted'>Crawler's sleeping...</span>", IsSleeping = true });
@@ -158,7 +157,7 @@
                     _currentDate = DateTime.Now.Day;
 
                     // we should delay a little bit, some seconds maybe
-                    System.Threading.Thread.Sleep(AppSettings.Crawler.LoopDelay);
+                    System.Threading.Thread.Sleep(loopDelay);
                 }
             });
         }
@@ -198,7 +197,10 @@
                                            {"feedUrl", feedUrl }
                                        });
         }
+    }
 
+    public class RssCrawler
+    {
         /// <summary>
         /// GetFeedsFromChannel
         /// </summary>
@@ -399,7 +401,7 @@
             // isRest == false => if it's the first time, we maybe need to call 2nd times
             // status == false => we maybe need to call 2nd times if current engines did not return anything
             // defaultCrawlerEngine = null will process rss with all engines, therefor we don't need to call 2nd times
-            if (isRest == false && !status && defaultCrawlerEngine != null) 
+            if (isRest == false && !status && defaultCrawlerEngine != null)
             {
                 return GetFeedsFromChannel(feedUrl, defaultCrawlerEngine, true, out engine, out error);
             }
@@ -416,6 +418,7 @@
             }
         }
     }
+
 
     public class SimpleFeedlyFeed
     {

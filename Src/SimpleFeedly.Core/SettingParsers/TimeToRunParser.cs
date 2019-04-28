@@ -1,9 +1,8 @@
 ﻿using AppCfg;
 using AppCfg.TypeParsers;
 using System;
-using System.Collections.Generic;
 
-namespace SimpleFeedly
+namespace SimpleFeedly.SettingParsers
 {
     public class TimeToRunItem
     {
@@ -22,7 +21,7 @@ namespace SimpleFeedly
         // FORMAT: 20:30:01,23:59:02|20:30:01,23:59:02
         public TimeToRunItem[] Parse(string rawValue, ITypeParserOptions options)
         {
-            var result = new List<TimeToRunItem>();
+            var result = new System.Collections.Generic.List<TimeToRunItem>();
             var tsRange = rawValue.Split('|');
             foreach (var item in tsRange)
             {

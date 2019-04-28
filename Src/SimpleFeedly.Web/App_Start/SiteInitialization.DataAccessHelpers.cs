@@ -6,7 +6,7 @@
         {
             new SimpleFeedlyDatabaseAccess().Setup(() =>
             {
-                return new DatabaseAccessSettings(AppSettings.Connections.SimpleFeedly.ConnectionString, 200);
+                return new DatabaseAccessSettings(AppSettings.Base.Connections.SimpleFeedly.ConnectionString, 200);
             });
         }
     }

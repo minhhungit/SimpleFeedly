@@ -60,7 +60,7 @@ namespace SimpleFeedly.Rss.Endpoints
             {
                 request.CheckNotNull();
 
-                var feed = SiteInitialization.GetFeedsFromChannel(request.FeedUrl, null, false, out RssCrawlerEngine usedEngine, out Exception fetchError);
+                var feed = RssCrawler.GetFeedsFromChannel(request.FeedUrl, null, false, out RssCrawlerEngine usedEngine, out Exception fetchError);
 
                 if (feed == null || feed.Items == null || feed.Items.Count == 0)
                 {

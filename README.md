@@ -1,21 +1,46 @@
 # SimpleFeedly
-Very simple Rss Reader Web Application using <a href="https://github.com/volkanceylan/Serenity" target="_blank">Serenity Framework</a> 
+Very simple Rss Crawler & Rss Reader
 
 ### Deploy
-1. Create an empty database, update connectionstring in <a href="https://github.com/minhhungit/SimpleFeedly/blob/master/Src/SimpleFeedly.DbUpdater/App.config">App.config</a> file then run `SimpleFeedly.DbUpdater.exe` to setup your database
-2. Update <a href='https://github.com/minhhungit/SimpleFeedly/blob/master/Src/SimpleFeedly.Web/Web.config'>web.config</a> and deploy `SimpleFeedly.Web` as normal MVC web application, it used Serenity framework so you might need to read Serenity document at <a href="https://serenity.is/docs/getting_started/README" target="_blank">here</a>  
+> Note: SimpleFeedly.Web is using <a href='https://github.com/volkanceylan/Serenity'>Serenity framework</a> so you may need to read <a href="https://serenity.is/docs/getting_started/README" target="_blank">its document</a> first
 
-### Script 
-<a href="https://github.com/minhhungit/SimpleFeedly/blob/master/wiki/Scripts/list-of-channels.sql" target="_blank">list-of-channels</a> (only channels, without feed items)
+- Create an empty database, update connectionstring for `SimpleFeedly.Crawler` project and `SimpleFeedly.Web` project
+- Build solution, you maybe need to install NodeJS first (for web application)
+- Run `SimpleFeedly.DbUpdater.exe` to setup your database, it will create tables & stored...
+- Deploy `SimpleFeedly.Web` as normal MVC web application
+- Install `SimpleFeedly.Crawler` - a <a href='https://github.com/Topshelf/Topshelf'>Topshelf</a> application as windows service (**run CMD as Administrator**)
 
-<a href="https://github.com/minhhungit/SimpleFeedly/releases/download/v1.0/bkSimpleFeedly-20190425-0352am-MSSM-2017.zip" target="_blank">MSSQL database backup file</a> (for demo)
+  - **Install**
+   ```
+   SimpleFeedly.Crawler INSTALL --autostart
+   SimpleFeedly.Crawler START
+   ```
+   
+  - **Uninstall**
+   ```cmd
+   SimpleFeedly.Crawler STOP
+   SimpleFeedly.Crawler UNINSTALL
+   ```
+   
+- Please feel free to ask me any questions!
+
+### Script (Only for demo)
+- <a href="https://github.com/minhhungit/SimpleFeedly/blob/master/wiki/Scripts/list-of-channels.sql" target="_blank">list-of-channels</a> (only channels, without feed items)
+
+- <a href="https://github.com/minhhungit/SimpleFeedly/releases/download/v1.0/bkSimpleFeedly-20190425-0352am-MSSM-2017.zip" target="_blank">MSSQL database backup file</a> - restore and run `SimpleFeedly.DbUpdater.exe` to update database
 
 ## Demo
 ### DbUpdater
 <img src="https://raw.githubusercontent.com/minhhungit/SimpleFeedly/master/wiki/Images/demo03.png" />
 
+### Crawler
+<img src="https://raw.githubusercontent.com/minhhungit/SimpleFeedly/master/wiki/Images/demo02.png" />
+
 ### Rss Reader (Web App)
 <img src="https://raw.githubusercontent.com/minhhungit/SimpleFeedly/master/wiki/Images/demo01.png" />
+
+### Rss Reader (Web App) - Mobile version
+<img src="https://raw.githubusercontent.com/minhhungit/SimpleFeedly/master/wiki/Images/demo04.png" />
 
 ```
 

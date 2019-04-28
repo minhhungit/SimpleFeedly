@@ -2,7 +2,7 @@
 using AppCfg.TypeParsers;
 using System;
 
-namespace SimpleFeedly
+namespace SimpleFeedly.SettingParsers
 {
     public class RandomTimeSpan
     {

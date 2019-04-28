@@ -1741,10 +1741,7 @@
     <Compile Include="Modules\Rss\RssChannels\ServiceModel\TestChannelRequest.cs" />
     <Compile Include="Modules\Rss\RssFeedItems\ServiceModel\AddBlacklistItemRequest.cs" />
     <Compile Include="Modules\SimpleFeedlyPermissionKeys.cs" />
-    <Compile Include="Settings\ConnectionStringSettings.cs" />
-    <Compile Include="Settings\CrawlerSettings.cs" />
-    <Compile Include="Settings\SettingParsers\SettingParser.RandomTimeSpanParser.cs" />
-    <Compile Include="Settings\SettingParsers\SettingParser.TimeToRunParser.cs" />
+    <Compile Include="Settings\IAppSettings.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SiteInitialization.AppCfg.cs" />

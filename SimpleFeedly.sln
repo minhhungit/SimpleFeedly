@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{E0B8
 		wiki\Scripts\list-of-channels.sql = wiki\Scripts\list-of-channels.sql
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFeedly.Crawler", "Src\SimpleFeedly.Crawler\SimpleFeedly.Crawler.csproj", "{5C67D3CD-A2F7-4236-AC74-4C283D7F8D9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{609AF0C3-68FF-463A-B103-CA448D2EE6E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{609AF0C3-68FF-463A-B103-CA448D2EE6E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{609AF0C3-68FF-463A-B103-CA448D2EE6E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C67D3CD-A2F7-4236-AC74-4C283D7F8D9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C67D3CD-A2F7-4236-AC74-4C283D7F8D9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C67D3CD-A2F7-4236-AC74-4C283D7F8D9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C67D3CD-A2F7-4236-AC74-4C283D7F8D9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
