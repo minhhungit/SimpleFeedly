@@ -1,11 +1,12 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace SimpleFeedly.Core.Utils
 {
     public static class StringUtils
     {
-        public static string MD5Hash(string input)
+        public static string MD5Hash(this string input)
         {
             StringBuilder hash = new StringBuilder();
             MD5CryptoServiceProvider md5provider = new MD5CryptoServiceProvider();
@@ -16,6 +17,12 @@ namespace SimpleFeedly.Core.Utils
                 hash.Append(bytes[i].ToString("x2"));
             }
             return hash.ToString();
+        }
+
+        public static bool IsUrl(this string urlText)
+        {
+            return Uri.TryCreate(urlText, UriKind.Absolute, out Uri uriResult)
+                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
         }
     }
 }

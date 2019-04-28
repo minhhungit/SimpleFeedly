@@ -3,6 +3,7 @@
     using Microsoft.AspNet.SignalR;
     using Newtonsoft.Json;
     using NLog;
+    using SimpleFeedly.Core.Utils;
     using SimpleFeedly.Hubs;
     using SimpleFeedly.Rss;
     using SimpleFeedly.Rss.Entities;
@@ -80,6 +81,11 @@
                                         var hasNew = false;
                                         foreach (var fItem in feed.Items)
                                         {
+                                            if (!fItem.Link.IsUrl())
+                                            {
+                                                continue;
+                                            }
+
                                             var feedItemKey = GenerateFeedItemKey(fItem);
                                             var feedCacheKey = GenerateFeedCacheKey((long)channel.Id, feedItemKey);
 
@@ -188,7 +194,7 @@
 
         private static string GenerateFeedCacheKey(long channelId, string feedItemKey)
         {
-            return Core.Utils.StringUtils.MD5Hash($"{channelId}>{feedItemKey}");
+            return $"{channelId}>{feedItemKey}".MD5Hash();
         }
 
         private static void ErrorHandle(Exception ex, string feedUrl)

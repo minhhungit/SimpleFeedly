@@ -5,6 +5,7 @@ namespace SimpleFeedly.Rss.Endpoints
     using Serenity;
     using Serenity.Data;
     using Serenity.Services;
+    using SimpleFeedly.Core.Utils;
     using StackExchange.Exceptional;
     using System;
     using System.Collections.Generic;
@@ -59,6 +60,11 @@ namespace SimpleFeedly.Rss.Endpoints
             try
             {
                 request.CheckNotNull();
+
+                if (!request.FeedUrl.IsUrl())
+                {
+                    throw new ValidationError($"Url '{request.FeedUrl}' is invalid");
+                }
 
                 var feed = RssCrawler.GetFeedsFromChannel(request.FeedUrl, null, false, out RssCrawlerEngine usedEngine, out Exception fetchError);
 

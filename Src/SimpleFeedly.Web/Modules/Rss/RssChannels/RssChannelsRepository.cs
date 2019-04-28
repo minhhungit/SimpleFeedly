@@ -4,6 +4,7 @@ namespace SimpleFeedly.Rss.Repositories
     using Serenity;
     using Serenity.Data;
     using Serenity.Services;
+    using SimpleFeedly.Core.Utils;
     using System;
     using System.Data;
     using MyRow = Entities.RssChannelsRow;
@@ -42,7 +43,17 @@ namespace SimpleFeedly.Rss.Repositories
             return new MyUndeleteHandler().Process(uow, request);
         }       
 
-        private class MySaveHandler : SaveRequestHandler<MyRow> { }
+        private class MySaveHandler : SaveRequestHandler<MyRow> {
+            protected override void ValidateRequest()
+            {
+                base.ValidateRequest();
+
+                if (!Row.Link.IsUrl())
+                {
+                    throw new ValidationError($"Url '{Row.Link}' is invalid");
+                }
+            }
+        }
         private class MyDeleteHandler : DeleteRequestHandler<MyRow> { }
         private class MyRetrieveHandler : RetrieveRequestHandler<MyRow> { }
         private class MyListHandler : ListRequestHandler<MyRow> { }
