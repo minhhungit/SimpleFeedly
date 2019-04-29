@@ -27,7 +27,7 @@ Very simple Rss Crawler & Rss Reader
 ## Script (Only for demo)
 - <a href="https://github.com/minhhungit/SimpleFeedly/blob/master/wiki/Scripts/list-of-channels.sql" target="_blank">list-of-channels</a> (only channels, without feed items)
 
-- <a href="https://github.com/minhhungit/SimpleFeedly/releases/download/v2.6/bkSimpleFeedlyFullLatest20190429.zip" target="_blank">MSSQL database backup file</a> - restore and run `SimpleFeedly.DbUpdater.exe` to update database
+- <a href="https://github.com/minhhungit/SimpleFeedly/releases/download/v1.0/bkSimpleFeedly-20190425-0352am-MSSM-2017.zip" target="_blank">MSSQL database backup file</a> - restore and run `SimpleFeedly.DbUpdater.exe` to update database
 
 ## Demo
 ### DbUpdater
