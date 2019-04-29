@@ -35,7 +35,7 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	IF NOT EXISTS (SELECT TOP (1) 1 FROM dbo.Blacklist AS b WHERE b.ChannelId = @channelId AND b.Title = @title)
+	IF NOT EXISTS (SELECT TOP (1) 1 FROM dbo.Blacklist AS b WHERE b.Title = @title)
 	BEGIN
 		IF NOT EXISTS (SELECT 1 FROM dbo.RssChannels AS c JOIN dbo.RssFeedItems i ON i.ChannelId = c.Id WHERE c.Id = @channelId AND i.FeedItemKey = @feedItemKey)
 		BEGIN
