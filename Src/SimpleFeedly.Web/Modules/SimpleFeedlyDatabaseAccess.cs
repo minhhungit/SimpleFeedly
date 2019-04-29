@@ -239,12 +239,11 @@ namespace SimpleFeedly
             }
         }
 
-        public static void AddBlacklistItem(long channelId, long feedItemId, string title, bool isDeleteFeedItem)
+        public static void AddBlacklistItem(long feedItemId, string title, bool isDeleteFeedItem)
         {
             using (var con = new SqlConnection(Settings.ConnectionString))
             {
                 var parms = new DynamicParameters();
-                parms.Add("@channelId", channelId);
                 parms.Add("@feedItemId", feedItemId);
                 parms.Add("@title", title);
                 parms.Add("@isDeleteFeedItem", isDeleteFeedItem);
@@ -261,8 +260,8 @@ namespace SimpleFeedly
                 if (items.Any())
                 {
                     data.AddRange(items
-                        .Where(x => x.ChannelId > 0 && x.FeedItemId > 0 && !string.IsNullOrWhiteSpace(x.Title))
-                        .Select(x => new BlacklistItem(x.ChannelId, x.FeedItemId, x.Title)));
+                        .Where(x => x.FeedItemId > 0 && !string.IsNullOrWhiteSpace(x.Title))
+                        .Select(x => new BlacklistItem(x.FeedItemId, x.Title)));
                 }
 
                 var parm = new DynamicParameters();

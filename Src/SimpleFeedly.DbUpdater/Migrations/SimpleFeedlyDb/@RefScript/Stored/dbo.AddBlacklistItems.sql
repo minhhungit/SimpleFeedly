@@ -32,10 +32,10 @@ BEGIN
 	SET XACT_ABORT ON
 	BEGIN TRAN
 	BEGIN TRY
-		INSERT dbo.Blacklist (ChannelId, Title)
-		SELECT DISTINCT ChannelId, Title
+		INSERT dbo.Blacklist (Title)
+		SELECT DISTINCT Title
 		FROM @blacklist bl
-		WHERE NOT EXISTS (SELECT TOP (1) 1 FROM dbo.Blacklist c WHERE bl.ChannelId = c.ChannelId AND bl.Title = c.Title)
+		WHERE NOT EXISTS (SELECT TOP (1) 1 FROM dbo.Blacklist c WHERE bl.Title = c.Title)
 
 		IF (@isDeleteFeedItem = 1)
 		BEGIN

@@ -1,8 +1,6 @@
 ﻿
 namespace SimpleFeedly.Rss.Endpoints
 {
-    using CodeHollow.FeedReader;
-    using Serenity;
     using Serenity.Data;
     using Serenity.Services;
     using SimpleFeedly.Core.Utils;
@@ -61,7 +59,7 @@ namespace SimpleFeedly.Rss.Endpoints
             {
                 request.CheckNotNull();
 
-                if (!request.FeedUrl.IsUrl())
+                if (!StringUtils.IsUrl(request.FeedUrl))
                 {
                     throw new Exception($"Url '{request.FeedUrl}' is invalid");
                 }

@@ -48,7 +48,7 @@ namespace SimpleFeedly.Rss.Repositories
             {
                 base.ValidateRequest();
 
-                if (!Row.Link.IsUrl())
+                if (!StringUtils.IsUrl(Row.Link))
                 {
                     throw new ValidationError($"Url '{Row.Link}' is invalid");
                 }

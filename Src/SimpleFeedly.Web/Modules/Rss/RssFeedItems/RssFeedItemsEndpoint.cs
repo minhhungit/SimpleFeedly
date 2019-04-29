@@ -97,8 +97,16 @@ namespace SimpleFeedly.Rss.Endpoints
             {
                 throw new System.Exception("You have no permission for this action");
             }
-                
-            SimpleFeedlyDatabaseAccess.AddBlacklistItem(request.ChannelId, request.FeedItemId, request.Title, request.IsDeleteFeedItem);
+
+            using (var connection = SqlConnections.NewFor<Entities.RssChannelsRow>())
+            {
+                var channelEntity = connection.TryById<Entities.RssChannelsRow>(request.ChannelId);
+
+                if (channelEntity != null)
+                {
+                    SimpleFeedlyDatabaseAccess.AddBlacklistItem(request.FeedItemId, request.Title, request.IsDeleteFeedItem);
+                }                
+            }
 
             return new ServiceResponse();
         }
@@ -121,8 +129,8 @@ namespace SimpleFeedly.Rss.Endpoints
                 request.CheckNotNull();
 
                 var blacklist = request.FeedItems
-                    .Where(x => x.ChannelId > 0 && x.FeedItemId > 0 && !string.IsNullOrWhiteSpace(x.Title))
-                    .Select(x => new Models.BlacklistItem(x.ChannelId, x.FeedItemId, x.Title)).ToList();
+                    .Where(x => x.FeedItemId > 0 && !string.IsNullOrWhiteSpace(x.Title))
+                    .Select(x => new Models.BlacklistItem(x.FeedItemId, x.Title)).ToList();
 
                 SimpleFeedlyDatabaseAccess.AddBlacklistItems(blacklist, request.IsDeleteFeedItem);
 

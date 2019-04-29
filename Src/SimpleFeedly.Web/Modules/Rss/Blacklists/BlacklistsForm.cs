@@ -13,7 +13,6 @@ namespace SimpleFeedly.Rss.Forms
     [BasedOnRow(typeof(Entities.BlacklistsRow), CheckNames = true)]
     public class BlacklistsForm
     {
-        public Int64 ChannelId { get; set; }
         public String Title { get; set; }
     }
 }

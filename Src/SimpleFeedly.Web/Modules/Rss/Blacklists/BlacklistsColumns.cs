@@ -13,11 +13,8 @@ namespace SimpleFeedly.Rss.Columns
     [BasedOnRow(typeof(Entities.BlacklistsRow), CheckNames = true)]
     public class BlacklistsColumns
     {
-        [EditLink, DisplayName("Db.Shared.RecordId"), AlignRight]
-        public Int64 Id { get; set; }
-
-        [EditLink, Width(300)]
-        public Int64 ChannelId { get; set; }
+        //[EditLink, DisplayName("Db.Shared.RecordId"), AlignRight]
+        //public Int64 Id { get; set; }
 
         [EditLink, Width(700)]
         public String Title { get; set; }

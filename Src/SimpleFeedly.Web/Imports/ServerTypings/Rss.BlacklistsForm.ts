@@ -1,6 +1,5 @@
 ﻿namespace SimpleFeedly.Rss {
     export interface BlacklistsForm {
-        ChannelId: Serenity.LookupEditor;
         Title: Serenity.StringEditor;
     }
 
@@ -15,12 +14,10 @@
                 BlacklistsForm.init = true;
 
                 var s = Serenity;
-                var w0 = s.LookupEditor;
-                var w1 = s.StringEditor;
+                var w0 = s.StringEditor;
 
                 Q.initFormType(BlacklistsForm, [
-                    'ChannelId', w0,
-                    'Title', w1
+                    'Title', w0
                 ]);
             }
         }

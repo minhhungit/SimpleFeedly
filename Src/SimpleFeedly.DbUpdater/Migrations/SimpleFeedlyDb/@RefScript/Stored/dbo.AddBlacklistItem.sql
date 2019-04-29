@@ -14,7 +14,6 @@ GO
 -- Description:	AddBlacklistItem
 -- =============================================
 ALTER PROCEDURE [dbo].[AddBlacklistItem]
-	@channelId BIGINT,
 	@feedItemId BIGINT,
 	@title NVARCHAR(300),
 	@isDeleteFeedItem BIT
@@ -27,10 +26,10 @@ BEGIN
 	SET XACT_ABORT ON
 	BEGIN TRAN
 	BEGIN TRY
-		IF NOT EXISTS (SELECT TOP (1) 1 FROM dbo.Blacklist AS b WHERE b.ChannelId = @channelId AND b.Title = @title)
+		IF NOT EXISTS (SELECT TOP (1) 1 FROM dbo.Blacklist AS b WHERE b.Title = @title)
 		BEGIN
-			INSERT INTO dbo.Blacklist ( ChannelId , Title )
-			VALUES ( @channelId, @title )
+			INSERT INTO dbo.Blacklist ( Title )
+			VALUES ( @title )
 		END
 
 		IF (@isDeleteFeedItem = 1)

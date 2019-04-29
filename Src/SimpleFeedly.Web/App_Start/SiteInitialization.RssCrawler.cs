@@ -1,10 +1,8 @@
 ﻿namespace SimpleFeedly
 {
-    using Microsoft.AspNet.SignalR;
     using Newtonsoft.Json;
     using NLog;
     using SimpleFeedly.Core.Utils;
-    using SimpleFeedly.Hubs;
     using SimpleFeedly.Rss;
     using SimpleFeedly.Rss.Entities;
     using SimpleFeedly.SettingParsers;
@@ -15,7 +13,7 @@
     using System.Net;
     using System.Runtime.Caching;
     using System.Text.RegularExpressions;
- 
+
     using System.Xml;
 
     public static partial class SiteInitialization
@@ -81,7 +79,7 @@
                                         var hasNew = false;
                                         foreach (var fItem in feed.Items)
                                         {
-                                            if (!fItem.Link.IsUrl())
+                                            if (!StringUtils.IsUrl(fItem.Link))
                                             {
                                                 continue;
                                             }
@@ -194,7 +192,7 @@
 
         private static string GenerateFeedCacheKey(long channelId, string feedItemKey)
         {
-            return $"{channelId}>{feedItemKey}".MD5Hash();
+            return StringUtils.MD5Hash($"{channelId}>{feedItemKey}");
         }
 
         private static void ErrorHandle(Exception ex, string feedUrl)

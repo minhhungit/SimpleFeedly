@@ -1,7 +1,6 @@
 ﻿namespace SimpleFeedly.Rss {
     export interface BlacklistsRow {
         Id?: number;
-        ChannelId?: number;
         Title?: string;
     }
 
@@ -12,7 +11,6 @@
 
         export declare const enum Fields {
             Id = "Id",
-            ChannelId = "ChannelId",
             Title = "Title"
         }
     }

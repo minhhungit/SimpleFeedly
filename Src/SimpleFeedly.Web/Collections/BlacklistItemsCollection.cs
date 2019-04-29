@@ -14,15 +14,13 @@ namespace SimpleFeedly.Collections
         IEnumerator<SqlDataRecord> IEnumerable<SqlDataRecord>.GetEnumerator()
         {
             var sqlRow = new SqlDataRecord(
-                new SqlMetaData("ChannelId", SqlDbType.BigInt),
                 new SqlMetaData("FeedItemId", SqlDbType.BigInt),
                 new SqlMetaData("Title", SqlDbType.NVarChar, 300));
 
             for (int i = 0; i < this.Count; i++)
             {
-                sqlRow.SetInt64(0, this[i].ChannelId);
-                sqlRow.SetInt64(1, this[i].FeedItemId);
-                sqlRow.SetString(2, this[i].Title ?? string.Empty);
+                sqlRow.SetInt64(0, this[i].FeedItemId);
+                sqlRow.SetString(1, this[i].Title ?? string.Empty);
                 yield return sqlRow;
             }
         }

@@ -525,7 +525,6 @@ declare namespace SimpleFeedly.Membership {
 }
 declare namespace SimpleFeedly.Models {
     interface BlacklistItem {
-        ChannelId?: number;
         FeedItemId?: number;
         Title?: string;
     }
@@ -548,7 +547,6 @@ declare namespace SimpleFeedly.Rss {
 }
 declare namespace SimpleFeedly.Rss {
     interface BlacklistsForm {
-        ChannelId: Serenity.LookupEditor;
         Title: Serenity.StringEditor;
     }
     class BlacklistsForm extends Serenity.PrefixedContext {
@@ -560,7 +558,6 @@ declare namespace SimpleFeedly.Rss {
 declare namespace SimpleFeedly.Rss {
     interface BlacklistsRow {
         Id?: number;
-        ChannelId?: number;
         Title?: string;
     }
     namespace BlacklistsRow {
@@ -569,7 +566,6 @@ declare namespace SimpleFeedly.Rss {
         const localTextPrefix = "Rss.Blacklists";
         const enum Fields {
             Id = "Id",
-            ChannelId = "ChannelId",
             Title = "Title"
         }
     }

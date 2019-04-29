@@ -24,14 +24,6 @@ namespace SimpleFeedly.Rss.Entities
             set { Fields.Id[this] = value; }
         }
 
-        [DisplayName("Channel"), QuickFilter]
-        [LookupEditor(typeof(RssChannelsRow)), Common.CustomLookupFormatter(typeof(RssChannelsRow))]
-        public Int64? ChannelId
-        {
-            get { return Fields.ChannelId[this]; }
-            set { Fields.ChannelId[this] = value; }
-        }
-
         [DisplayName("Title"), Size(300), QuickSearch]
         public String Title
         {
@@ -59,7 +51,6 @@ namespace SimpleFeedly.Rss.Entities
         public class RowFields : RowFieldsBase
         {
             public Int64Field Id;
-            public Int64Field ChannelId;
             public StringField Title;
         }
     }
