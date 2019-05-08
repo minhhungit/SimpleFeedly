@@ -178,7 +178,7 @@ namespace SimpleFeedly.Rss {
                                 }
                                 var data: Models.BlacklistItem[] = [];
                                 selectedItems.forEach((item, idx) => {
-                                    data.push({ ChannelId: item.ChannelId, FeedItemId: item.Id, Title: item.Title });
+                                    data.push({ FeedItemId: item.Id, Title: item.Title });
                                 });
 
                                 RssFeedItemsService.AddBlacklistItems({ FeedItems: data, IsDeleteFeedItem: true }, response => {

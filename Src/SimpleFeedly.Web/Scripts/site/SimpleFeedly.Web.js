@@ -3385,7 +3385,7 @@ var SimpleFeedly;
                                 }
                                 var data = [];
                                 selectedItems.forEach(function (item, idx) {
-                                    data.push({ ChannelId: item.ChannelId, FeedItemId: item.Id, Title: item.Title });
+                                    data.push({ FeedItemId: item.Id, Title: item.Title });
                                 });
                                 Rss.RssFeedItemsService.AddBlacklistItems({ FeedItems: data, IsDeleteFeedItem: true }, function (response) {
                                     _this.rowSelection.resetCheckedAndRefresh();
