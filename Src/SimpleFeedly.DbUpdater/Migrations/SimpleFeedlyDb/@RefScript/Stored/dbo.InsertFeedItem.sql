@@ -1,5 +1,6 @@
 ﻿/****** Object:  StoredProcedure [dbo].[InsertFeedItem]    Script Date: 3/24/2018 2:45:48 AM ******/
-DROP PROCEDURE IF EXISTS [dbo].[InsertFeedItem]
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[InsertFeedItem]') AND type IN (N'P', N'PC'))
+DROP PROCEDURE [dbo].[InsertFeedItem]
 GO
 
 /****** Object:  StoredProcedure [dbo].[InsertFeedItem]    Script Date: 3/24/2018 2:45:48 AM ******/

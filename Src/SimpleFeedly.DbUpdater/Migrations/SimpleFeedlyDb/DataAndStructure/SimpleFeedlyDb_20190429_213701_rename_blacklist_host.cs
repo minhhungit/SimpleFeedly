@@ -10,7 +10,11 @@ namespace SimpleFeedly.DbUpdater.Migrations.SimpleFeedlyDb
         {
             if (Schema.Schema("dbo").Table("Blacklist").Column("ChannelId").Exists())
             {
-                Execute.Sql(@"DROP INDEX IF EXISTS [idx_Blacklist_unique] ON [dbo].[Blacklist]");
+                Execute.Sql(@"
+                    IF EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[Blacklist]') AND name = N'idx_Blacklist_unique')
+                    DROP INDEX [idx_Blacklist_unique] ON [dbo].[Blacklist]
+                    GO
+                ");
 
                 Delete.Column("ChannelId").FromTable("Blacklist").InSchema("dbo");
 
@@ -34,8 +38,10 @@ namespace SimpleFeedly.DbUpdater.Migrations.SimpleFeedlyDb
             }
 
             Execute.Sql(@"
-                DROP PROCEDURE IF EXISTS [dbo].[AddBlacklistItems]
-                GO                
+                IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[AddBlacklistItems]') AND type IN (N'P', N'PC'))
+                DROP PROCEDURE [dbo].[AddBlacklistItems]
+                GO
+
                 DROP TYPE IF EXISTS [dbo].[BlacklistItems]
                 GO
                 CREATE TYPE [dbo].[BlacklistItems] AS TABLE(

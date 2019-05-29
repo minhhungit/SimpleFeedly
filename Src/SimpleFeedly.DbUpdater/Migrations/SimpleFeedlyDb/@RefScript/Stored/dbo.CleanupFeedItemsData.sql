@@ -1,5 +1,6 @@
 ﻿/****** Object:  StoredProcedure [dbo].[CleanupFeedItemsData]    Script Date: 4/29/2019 3:39:54 AM ******/
-DROP PROCEDURE IF EXISTS [dbo].[CleanupFeedItemsData]
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CleanupFeedItemsData]') AND type IN (N'P', N'PC'))
+DROP PROCEDURE [dbo].[CleanupFeedItemsData]
 GO
 
 /****** Object:  StoredProcedure [dbo].[CleanupFeedItemsData]    Script Date: 4/29/2019 3:39:54 AM ******/

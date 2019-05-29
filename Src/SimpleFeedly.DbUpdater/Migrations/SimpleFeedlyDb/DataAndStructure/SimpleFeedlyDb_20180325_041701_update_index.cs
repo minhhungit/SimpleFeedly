@@ -9,8 +9,10 @@ namespace SimpleFeedly.DbUpdater.Migrations.SimpleFeedlyDb
         public override void Up()
         {
             Execute.Sql(@"
-                DROP INDEX IF EXISTS [idx_RssFeedItems_ChannelId] ON [dbo].[RssFeedItems]
+                IF  EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[RssFeedItems]') AND name = N'idx_RssFeedItems_ChannelId')
+                DROP INDEX [idx_RssFeedItems_ChannelId] ON [dbo].[RssFeedItems]
                 GO
+
                 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[RssFeedItems]') AND name = N'idx_RssFeedItems_ChannelId')
                 CREATE NONCLUSTERED INDEX [idx_RssFeedItems_ChannelId] ON [dbo].[RssFeedItems]
                 (

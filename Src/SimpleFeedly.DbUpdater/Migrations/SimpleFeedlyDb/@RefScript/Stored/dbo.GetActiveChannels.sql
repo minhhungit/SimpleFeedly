@@ -1,5 +1,6 @@
 ﻿/****** Object:  StoredProcedure [dbo].[GetActiveChannels]    Script Date: 4/27/2019 8:45:39 AM ******/
-DROP PROCEDURE IF EXISTS [dbo].[GetActiveChannels]
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[GetActiveChannels]') AND type IN (N'P', N'PC'))
+DROP PROCEDURE [dbo].[GetActiveChannels]
 GO
 
 /****** Object:  StoredProcedure [dbo].[GetActiveChannels]    Script Date: 4/27/2019 8:45:39 AM ******/

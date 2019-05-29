@@ -61,7 +61,8 @@ namespace SimpleFeedly.DbUpdater.Migrations.SimpleFeedlyDb
         public override void Up()
         {
             Execute.Sql(@"
-                DROP INDEX IF EXISTS [idx_RssFeedItems_ChannelId] ON [dbo].[RssFeedItems]
+                IF  EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[RssFeedItems]') AND name = N'idx_RssFeedItems_ChannelId')
+                DROP INDEX [idx_RssFeedItems_ChannelId] ON [dbo].[RssFeedItems]
                 GO
 
                 SET ANSI_PADDING ON
@@ -84,7 +85,8 @@ namespace SimpleFeedly.DbUpdater.Migrations.SimpleFeedlyDb
             ");
 
             Execute.Sql(@"
-                DROP INDEX IF EXISTS [idx_RssFeedItemCategories_FeedItemId] ON [dbo].[RssFeedItemCategories]
+                IF  EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[RssFeedItemCategories]') AND name = N'idx_RssFeedItemCategories_FeedItemId')
+                DROP INDEX [idx_RssFeedItemCategories_FeedItemId] ON [dbo].[RssFeedItemCategories]
                 GO
 
                 SET ANSI_PADDING ON
@@ -100,7 +102,8 @@ namespace SimpleFeedly.DbUpdater.Migrations.SimpleFeedlyDb
             ");
 
             Execute.Sql(@"
-                DROP INDEX IF EXISTS [idx_RssFeedItems_Title] ON [dbo].[RssFeedItems]
+                IF  EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[RssFeedItems]') AND name = N'idx_RssFeedItems_Title')
+                DROP INDEX [idx_RssFeedItems_Title] ON [dbo].[RssFeedItems]
                 GO
 
                 SET ANSI_PADDING ON

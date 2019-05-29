@@ -1,5 +1,6 @@
 ﻿/****** Object:  StoredProcedure [dbo].[UpdateChannelErrorStatus]    Script Date: 4/8/2018 9:03:31 PM ******/
-DROP PROCEDURE IF EXISTS [dbo].[UpdateChannelErrorStatus]
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[UpdateChannelErrorStatus]') AND type IN (N'P', N'PC'))
+DROP PROCEDURE [dbo].[UpdateChannelErrorStatus]
 GO
 
 /****** Object:  StoredProcedure [dbo].[UpdateChannelErrorStatus]    Script Date: 4/8/2018 9:03:31 PM ******/

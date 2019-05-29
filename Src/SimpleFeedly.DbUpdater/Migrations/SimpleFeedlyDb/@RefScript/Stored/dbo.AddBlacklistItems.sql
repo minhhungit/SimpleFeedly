@@ -1,5 +1,6 @@
 ﻿/****** Object:  StoredProcedure [dbo].[AddBlacklistItems]    Script Date: 4/28/2019 19:40:41 AM ******/
-DROP PROCEDURE IF EXISTS [dbo].[AddBlacklistItems]
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[AddBlacklistItems]') AND type IN (N'P', N'PC'))
+DROP PROCEDURE [dbo].[AddBlacklistItems]
 GO
 
 /****** Object:  StoredProcedure [dbo].[AddBlacklistItems]    Script Date: 4/28/2019 19:40:41 AM ******/

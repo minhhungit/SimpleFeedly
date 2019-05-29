@@ -1,5 +1,6 @@
 ﻿/****** Object:  StoredProcedure [dbo].[UpdateChannelDefaultEngine]    Script Date: 4/27/2019 17:42:09 AM ******/
-DROP PROCEDURE IF EXISTS [dbo].[UpdateChannelDefaultEngine]
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[UpdateChannelDefaultEngine]') AND type IN (N'P', N'PC'))
+DROP PROCEDURE [dbo].[UpdateChannelDefaultEngine]
 GO
 
 /****** Object:  StoredProcedure [dbo].[UpdateChannelDefaultEngine]    Script Date: 4/27/2019 17:42:09 AM ******/
