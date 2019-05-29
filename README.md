@@ -4,7 +4,7 @@ Very simple Rss Crawler & Rss Reader
 ## Deploy
 > Note: SimpleFeedly.Web is using <a href='https://github.com/volkanceylan/Serenity'>Serenity framework</a> so you may need to read <a href="https://serenity.is/docs/getting_started/README" target="_blank">its document</a> first
 
-- Create an empty database, update connectionstring for 
+- Create an **empty database**, update connectionstring for 
   - `SimpleFeedly.Crawler` project
   - `SimpleFeedly.Web` project
   - `SimpleFeedly.DbUpdater` project
