@@ -75,6 +75,7 @@
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20160515_072600_UserPreferences.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20161029_130000_ExceptionLog.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20180323_080701_create_model.cs" />
+    <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20190607_095501_create_index.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20190429_213701_rename_blacklist_host.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20190428_211501_rename_feeditemid.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20190428_194601_blacklist_batch.cs" />
