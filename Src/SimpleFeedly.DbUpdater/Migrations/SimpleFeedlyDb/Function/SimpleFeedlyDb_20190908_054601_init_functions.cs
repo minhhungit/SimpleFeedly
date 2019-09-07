@@ -5,12 +5,13 @@ using System;
 
 namespace SimpleFeedly.DbUpdater.Migrations.SimpleFeedlyDb
 {
-    [ExtMgrStoredProcedure(2019,04,29,22,19,01)]
-    public class SimpleFeedlyDb_20190429_221901_rename_blacklist_channelId : Migration
+    [ExtMgrFunction(2019,09,08,05,46,01)]
+    public class SimpleFeedlyDb_20190908_054601_init_functions : Migration
     {
         public override void Up()
         {
-            this.ExecuteStoredProcedure("dbo.InsertFeedItem.sql");
+            this.ExecuteFunction("dbo.fnGetUnsignString.sql");
+            this.ExecuteFunction("dbo.fnRemoveNonAlphaCharactersAndDigit.sql");            
         }
 
         public override void Down() { throw new NotImplementedException(); }

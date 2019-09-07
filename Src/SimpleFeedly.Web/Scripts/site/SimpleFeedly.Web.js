@@ -3388,6 +3388,7 @@ var SimpleFeedly;
                                     data.push({ FeedItemId: item.Id, Title: item.Title });
                                 });
                                 Rss.RssFeedItemsService.AddBlacklistItems({ FeedItems: data, IsDeleteFeedItem: true }, function (response) {
+                                    Q.notifySuccess("ok");
                                     _this.rowSelection.resetCheckedAndRefresh();
                                 });
                             }, {
@@ -3411,7 +3412,9 @@ var SimpleFeedly;
             RssFeedItemsGrid.prototype.getColumns = function () {
                 var _this = this;
                 var columns = _super.prototype.getColumns.call(this);
-                columns.splice(0, 0, Serenity.GridRowSelectionMixin.createSelectColumn(function () { return _this.rowSelection; }));
+                var selectionCol = Serenity.GridRowSelectionMixin.createSelectColumn(function () { return _this.rowSelection; });
+                selectionCol.width = 25; // fix IE: dot issue
+                columns.splice(0, 0, selectionCol);
                 columns.splice(1, 0, {
                     field: 'View Details',
                     name: '',
@@ -3465,6 +3468,7 @@ var SimpleFeedly;
                                 return;
                             }
                             Rss.RssFeedItemsService.AddBlacklistItem({ ChannelId: item.ChannelId, FeedItemId: item.Id, Title: item.Title, IsDeleteFeedItem: true }, function (response) {
+                                Q.notifySuccess("ok");
                                 _this.refresh();
                             });
                         }, {
@@ -3492,9 +3496,9 @@ var SimpleFeedly;
             };
             RssFeedItemsGrid.prototype.getQuickSearchFields = function () {
                 return [
-                    { name: "", title: "All" },
                     { name: "Title" /* Title */, title: "Title" },
-                    { name: "Description" /* Description */, title: "Description" }
+                    { name: "Description" /* Description */, title: "Description" },
+                    { name: "", title: "All" }
                 ];
             };
             RssFeedItemsGrid.prototype.getSlickOptions = function () {

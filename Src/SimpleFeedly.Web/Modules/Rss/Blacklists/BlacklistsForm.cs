@@ -13,6 +13,7 @@ namespace SimpleFeedly.Rss.Forms
     [BasedOnRow(typeof(Entities.BlacklistsRow), CheckNames = true)]
     public class BlacklistsForm
     {
-        public String Title { get; set; }
+        public String ShrinkedTitle { get; set; }
+        public Stream ShrinkedTitleHash { get; set; }
     }
 }

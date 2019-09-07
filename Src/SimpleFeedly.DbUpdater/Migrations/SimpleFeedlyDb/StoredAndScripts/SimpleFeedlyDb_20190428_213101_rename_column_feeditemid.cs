@@ -5,12 +5,13 @@ using System;
 
 namespace SimpleFeedly.DbUpdater.Migrations.SimpleFeedlyDb
 {
-    [ExtMgrStoredProcedure(2019,04,27,08,59,01)]
-    public class SimpleFeedlyDb_20190427_085901_get_active_channels : Migration
+    [ExtMgrStoredProcedureAndScript(2019,04,28,21,31,01)]
+    public class SimpleFeedlyDb_20190428_213101_rename_column_feeditemid : Migration
     {
         public override void Up()
         {
-            this.ExecuteStoredProcedure("dbo.GetActiveChannels.sql");
+            this.ExecuteStoredProcedure("dbo.CheckExistFeedItem.sql");
+            this.ExecuteStoredProcedure("dbo.InsertFeedItem.sql");
         }
 
         public override void Down() { throw new NotImplementedException(); }

@@ -33,10 +33,19 @@ BEGIN
 	SET XACT_ABORT ON
 	BEGIN TRAN
 	BEGIN TRY
-		INSERT dbo.Blacklist (Title)
-		SELECT DISTINCT Title
-		FROM @blacklist bl
-		WHERE NOT EXISTS (SELECT TOP (1) 1 FROM dbo.Blacklist c WHERE bl.Title = c.Title)
+		DECLARE @tmp AS TABLE(
+			ShrinkedTitle NVARCHAR(300),
+			ShrinkedTitleHash BINARY(16)
+		)
+
+		INSERT @tmp (ShrinkedTitle, ShrinkedTitleHash)
+		SELECT DISTINCT LOWER(dbo.fnGetUnsignString(dbo.fnRemoveNonAlphaCharactersAndDigit(Title))), HashBytes('MD5', LOWER(dbo.fnGetUnsignString(dbo.fnRemoveNonAlphaCharactersAndDigit(Title))))
+		FROM @blacklist
+
+		INSERT INTO dbo.Blacklist (ShrinkedTitle, ShrinkedTitleHash)
+		SELECT DISTINCT ShrinkedTitle, ShrinkedTitleHash
+		FROM @tmp AS bl
+		WHERE NOT EXISTS (SELECT TOP (1) 1 FROM dbo.Blacklist c WHERE bl.ShrinkedTitleHash = c.ShrinkedTitleHash)
 
 		IF (@isDeleteFeedItem = 1)
 		BEGIN

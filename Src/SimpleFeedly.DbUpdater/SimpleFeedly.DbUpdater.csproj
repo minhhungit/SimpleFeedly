@@ -12,6 +12,8 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -45,23 +47,95 @@
     <Reference Include="Common.Logging.NLog41, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Common.Logging.NLog41.3.4.1\lib\net40\Common.Logging.NLog41.dll</HintPath>
     </Reference>
-    <Reference Include="DatabaseMigrateExt, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\DatabaseMigrateExt.2.3.0\lib\net40\DatabaseMigrateExt.dll</HintPath>
+    <Reference Include="DatabaseMigrateExt, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DatabaseMigrateExt.2.4.0\lib\net462\DatabaseMigrateExt.dll</HintPath>
     </Reference>
     <Reference Include="FluentCommandLineParser, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll</HintPath>
     </Reference>
-    <Reference Include="FluentMigrator, Version=1.6.2.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FluentMigrator.1.6.2\lib\40\FluentMigrator.dll</HintPath>
+    <Reference Include="FluentMigrator, Version=2.0.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentMigrator.2.0.0\lib\net45\FluentMigrator.dll</HintPath>
     </Reference>
-    <Reference Include="FluentMigrator.Runner, Version=1.6.2.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FluentMigrator.Runner.1.6.2\lib\40\FluentMigrator.Runner.dll</HintPath>
+    <Reference Include="FluentMigrator.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentMigrator.Abstractions.2.0.0\lib\net45\FluentMigrator.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentMigrator.Extensions.SqlAnywhere, Version=2.0.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentMigrator.Extensions.SqlAnywhere.2.0.0\lib\net45\FluentMigrator.Extensions.SqlAnywhere.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentMigrator.Extensions.SqlServer, Version=2.0.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentMigrator.Extensions.SqlServer.2.0.0\lib\net45\FluentMigrator.Extensions.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentMigrator.Runner, Version=2.0.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentMigrator.Runner.2.0.0\lib\net45\FluentMigrator.Runner.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentMigrator.Runner.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentMigrator.Runner.Core.2.0.0\lib\net45\FluentMigrator.Runner.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentMigrator.Runner.Db2, Version=2.0.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentMigrator.Runner.Db2.2.0.0\lib\net45\FluentMigrator.Runner.Db2.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentMigrator.Runner.Firebird, Version=2.0.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentMigrator.Runner.Firebird.2.0.0\lib\net45\FluentMigrator.Runner.Firebird.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentMigrator.Runner.Hana, Version=2.0.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentMigrator.Runner.Hana.2.0.0\lib\net45\FluentMigrator.Runner.Hana.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentMigrator.Runner.Jet, Version=2.0.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentMigrator.Runner.Jet.2.0.0\lib\net45\FluentMigrator.Runner.Jet.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentMigrator.Runner.MySql, Version=2.0.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentMigrator.Runner.MySql.2.0.0\lib\net45\FluentMigrator.Runner.MySql.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentMigrator.Runner.Oracle, Version=2.0.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentMigrator.Runner.Oracle.2.0.0\lib\net45\FluentMigrator.Runner.Oracle.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentMigrator.Runner.Postgres, Version=2.0.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentMigrator.Runner.Postgres.2.0.0\lib\net45\FluentMigrator.Runner.Postgres.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentMigrator.Runner.Redshift, Version=2.0.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentMigrator.Runner.Redshift.2.0.0\lib\net45\FluentMigrator.Runner.Redshift.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentMigrator.Runner.SqlAnywhere, Version=2.0.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentMigrator.Runner.SqlAnywhere.2.0.0\lib\net45\FluentMigrator.Runner.SqlAnywhere.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentMigrator.Runner.SQLite, Version=2.0.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentMigrator.Runner.SQLite.2.0.0\lib\net45\FluentMigrator.Runner.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentMigrator.Runner.SqlServer, Version=2.0.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentMigrator.Runner.SqlServer.2.0.0\lib\net45\FluentMigrator.Runner.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentMigrator.Runner.SqlServerCe, Version=2.0.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentMigrator.Runner.SqlServerCe.2.0.0\lib\net45\FluentMigrator.Runner.SqlServerCe.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NLog.4.1.2\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.ConfigurationManager, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Configuration.ConfigurationManager.4.5.0\lib\net461\System.Configuration.ConfigurationManager.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Data.SqlClient, Version=4.5.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Data.SqlClient.4.6.1\lib\net461\System.Data.SqlClient.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Security.AccessControl, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Security.AccessControl.4.5.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Permissions, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Security.Permissions.4.5.0\lib\net461\System.Security.Permissions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Security.Principal.Windows.4.5.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -85,17 +159,20 @@
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20190425_035001_create_feeds_index.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20190425_031301_create_udt_type.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20180325_041701_update_index.cs" />
-    <Compile Include="Migrations\SimpleFeedlyDb\Stored\SimpleFeedlyDb_20180324_025501_add_stored.cs" />
-    <Compile Include="Migrations\SimpleFeedlyDb\Stored\SimpleFeedlyDb_20190429_221901_rename_blacklist_channelId.cs" />
-    <Compile Include="Migrations\SimpleFeedlyDb\Stored\SimpleFeedlyDb_20190429_214401_rename_blacklist.cs" />
-    <Compile Include="Migrations\SimpleFeedlyDb\Stored\SimpleFeedlyDb_20190429_034101_cleanup_feeditems.cs" />
-    <Compile Include="Migrations\SimpleFeedlyDb\Stored\SimpleFeedlyDb_20190428_213101_rename_column_feeditemid.cs" />
-    <Compile Include="Migrations\SimpleFeedlyDb\Stored\SimpleFeedlyDb_20190428_200101_blacklist_batch.cs" />
-    <Compile Include="Migrations\SimpleFeedlyDb\Stored\SimpleFeedlyDb_20190428_065001_blacklist.cs" />
-    <Compile Include="Migrations\SimpleFeedlyDb\Stored\SimpleFeedlyDb_20190427_164501_crawler_engine.cs" />
-    <Compile Include="Migrations\SimpleFeedlyDb\Stored\SimpleFeedlyDb_20190427_085901_get_active_channels.cs" />
-    <Compile Include="Migrations\SimpleFeedlyDb\Stored\SimpleFeedlyDb_20190425_032201_markchecked_batch.cs" />
-    <Compile Include="Migrations\SimpleFeedlyDb\Stored\SimpleFeedlyDb_20180408_210501_add_stored_newcolumn.cs" />
+    <Compile Include="Migrations\SimpleFeedlyDb\Function\SimpleFeedlyDb_20190908_054601_init_functions.cs" />
+    <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20180324_025501_add_stored.cs" />
+    <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20190908_061501_blacklist_stored.cs" />
+    <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20190908_031401_blacklist_hash.cs" />
+    <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20190429_221901_rename_blacklist_channelId.cs" />
+    <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20190429_214401_rename_blacklist.cs" />
+    <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20190429_034101_cleanup_feeditems.cs" />
+    <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20190428_213101_rename_column_feeditemid.cs" />
+    <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20190428_200101_blacklist_batch.cs" />
+    <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20190428_065001_blacklist.cs" />
+    <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20190427_164501_crawler_engine.cs" />
+    <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20190427_085901_get_active_channels.cs" />
+    <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20190425_032201_markchecked_batch.cs" />
+    <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20180408_210501_add_stored_newcolumn.cs" />
     <Compile Include="MigrationUtils.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -106,6 +183,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <EmbeddedResource Include="Migrations\SimpleFeedlyDb\%40RefScript\Stored\Scripts\v000001_blacklist_hash.sql" />
+    <EmbeddedResource Include="Migrations\SimpleFeedlyDb\%40RefScript\Function\dbo.fnGetUnsignString.sql" />
+    <EmbeddedResource Include="Migrations\SimpleFeedlyDb\%40RefScript\Function\dbo.fnRemoveNonAlphaCharactersAndDigit.sql" />
     <EmbeddedResource Include="Migrations\SimpleFeedlyDb\%40RefScript\Stored\dbo.CleanupFeedItemsData.sql" />
     <EmbeddedResource Include="Migrations\SimpleFeedlyDb\%40RefScript\Stored\dbo.AddBlacklistItems.sql" />
     <EmbeddedResource Include="Migrations\SimpleFeedlyDb\%40RefScript\Stored\dbo.AddBlacklistItem.sql" />
@@ -119,7 +199,21 @@
     <EmbeddedResource Include="Migrations\SimpleFeedlyDb\%40RefScript\Stored\dbo.UpdateChannelErrorStatus.sql" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Migrations\SimpleFeedlyDb\Function\" />
+    <Folder Include="Migrations\SimpleFeedlyDb\%40RefScript\DataAndStructure\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
+    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\..\packages\FluentMigrator.Runner.SqlServerCe.2.0.0\build\netstandard2.0\FluentMigrator.Runner.SqlServerCe.targets" Condition="Exists('..\..\packages\FluentMigrator.Runner.SqlServerCe.2.0.0\build\netstandard2.0\FluentMigrator.Runner.SqlServerCe.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\FluentMigrator.Runner.SqlServerCe.2.0.0\build\netstandard2.0\FluentMigrator.Runner.SqlServerCe.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\FluentMigrator.Runner.SqlServerCe.2.0.0\build\netstandard2.0\FluentMigrator.Runner.SqlServerCe.targets'))" />
+  </Target>
 </Project>

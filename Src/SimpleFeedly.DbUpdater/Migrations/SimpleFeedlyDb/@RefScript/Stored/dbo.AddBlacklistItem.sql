@@ -27,10 +27,14 @@ BEGIN
 	SET XACT_ABORT ON
 	BEGIN TRAN
 	BEGIN TRY
-		IF NOT EXISTS (SELECT TOP (1) 1 FROM dbo.Blacklist AS b WHERE b.Title = @title)
+
+		DECLARE @shrinkedTitle NVARCHAR(300) = LOWER(dbo.fnGetUnsignString(dbo.fnRemoveNonAlphaCharactersAndDigit(@title)))
+		DECLARE @shrinkedTitleHash BINARY(16) = HashBytes('MD5', @shrinkedTitle)
+		
+		IF NOT EXISTS (SELECT TOP (1) 1 FROM dbo.Blacklist AS b WHERE b.ShrinkedTitleHash = @shrinkedTitleHash)
 		BEGIN
-			INSERT INTO dbo.Blacklist ( Title )
-			VALUES ( @title )
+			INSERT INTO dbo.Blacklist ( ShrinkedTitle, ShrinkedTitleHash )
+			VALUES ( @shrinkedTitle, @shrinkedTitleHash )
 		END
 
 		IF (@isDeleteFeedItem = 1)

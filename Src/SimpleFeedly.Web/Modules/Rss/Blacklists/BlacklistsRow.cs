@@ -15,6 +15,7 @@ namespace SimpleFeedly.Rss.Entities
     [InsertPermission(PermissionKeys.Blacklists.Insert)]
     [UpdatePermission(PermissionKeys.Blacklists.Update)]
     [DeletePermission(PermissionKeys.Blacklists.Delete)]
+    [UniqueConstraint(new[] { "ShrinkedTitle" })]
     public sealed class BlacklistsRow : Row, IIdRow, INameRow
     {
         [DisplayName("Id"), Identity]
@@ -24,11 +25,18 @@ namespace SimpleFeedly.Rss.Entities
             set { Fields.Id[this] = value; }
         }
 
-        [DisplayName("Title"), Size(300), QuickSearch]
-        public String Title
+        [DisplayName("Shrinked Title"), Size(300), QuickSearch]
+        public String ShrinkedTitle
         {
-            get { return Fields.Title[this]; }
-            set { Fields.Title[this] = value; }
+            get { return Fields.ShrinkedTitle[this]; }
+            set { Fields.ShrinkedTitle[this] = value; }
+        }
+
+        [DisplayName("Shrinked Title Hashed"), Size(16)]
+        public Stream ShrinkedTitleHash
+        {
+            get { return Fields.ShrinkedTitleHash[this]; }
+            set { Fields.ShrinkedTitleHash[this] = value; }
         }
 
         IIdField IIdRow.IdField
@@ -38,7 +46,7 @@ namespace SimpleFeedly.Rss.Entities
 
         StringField INameRow.NameField
         {
-            get { return Fields.Title; }
+            get { return Fields.ShrinkedTitle; }
         }
 
         public static readonly RowFields Fields = new RowFields().Init();
@@ -51,7 +59,8 @@ namespace SimpleFeedly.Rss.Entities
         public class RowFields : RowFieldsBase
         {
             public Int64Field Id;
-            public StringField Title;
+            public StringField ShrinkedTitle;
+            public StreamField ShrinkedTitleHash;
         }
     }
 }

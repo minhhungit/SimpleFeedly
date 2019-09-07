@@ -182,6 +182,7 @@ namespace SimpleFeedly.Rss {
                                 });
 
                                 RssFeedItemsService.AddBlacklistItems({ FeedItems: data, IsDeleteFeedItem: true }, response => {
+                                    Q.notifySuccess("ok");
                                     this.rowSelection.resetCheckedAndRefresh();
                                 });
                             },
@@ -209,7 +210,9 @@ namespace SimpleFeedly.Rss {
         protected getColumns(): Slick.Column[] {
             var columns = super.getColumns();
 
-            columns.splice(0, 0, Serenity.GridRowSelectionMixin.createSelectColumn(() => this.rowSelection));
+            let selectionCol = Serenity.GridRowSelectionMixin.createSelectColumn(() => this.rowSelection);
+            selectionCol.width = 25; // fix IE: dot issue
+            columns.splice(0, 0, selectionCol);
 
             columns.splice(1, 0, {
                 field: 'View Details',
@@ -277,6 +280,7 @@ namespace SimpleFeedly.Rss {
                             }
 
                             RssFeedItemsService.AddBlacklistItem({ ChannelId: item.ChannelId, FeedItemId: item.Id, Title: item.Title, IsDeleteFeedItem: true }, response => {
+                                Q.notifySuccess("ok");
                                 this.refresh();
                             });
                         },
@@ -310,9 +314,9 @@ namespace SimpleFeedly.Rss {
 
         protected getQuickSearchFields(): Serenity.QuickSearchField[] {
             return [
-                { name: "", title: "All" },
                 { name: fld.Title, title: "Title" },
-                { name: fld.Description, title: "Description" }
+                { name: fld.Description, title: "Description" },
+                { name: "", title: "All" }
             ];
         }
 

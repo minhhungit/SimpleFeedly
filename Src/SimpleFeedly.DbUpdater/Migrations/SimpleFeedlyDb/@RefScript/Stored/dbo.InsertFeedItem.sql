@@ -36,7 +36,10 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	IF NOT EXISTS (SELECT TOP (1) 1 FROM dbo.Blacklist AS b WHERE b.Title = @title)
+		DECLARE @shrinkedTitle NVARCHAR(300) = LOWER(dbo.fnGetUnsignString(dbo.fnRemoveNonAlphaCharactersAndDigit(@title)))
+		DECLARE @shrinkedTitleHash BINARY(16) = HashBytes('MD5', @shrinkedTitle)
+
+	IF NOT EXISTS (SELECT TOP (1) 1 FROM dbo.Blacklist AS b WHERE b.ShrinkedTitleHash = @shrinkedTitleHash)
 	BEGIN
 		IF NOT EXISTS (SELECT 1 FROM dbo.RssChannels AS c JOIN dbo.RssFeedItems i ON i.ChannelId = c.Id WHERE c.Id = @channelId AND i.FeedItemKey = @feedItemKey)
 		BEGIN

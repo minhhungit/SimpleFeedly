@@ -17,6 +17,9 @@ namespace SimpleFeedly.Rss.Columns
         //public Int64 Id { get; set; }
 
         [EditLink, Width(700)]
-        public String Title { get; set; }
+        public String ShrinkedTitle { get; set; }
+
+        [Width(250)]
+        public Stream ShrinkedTitleHash { get; set; }
     }
 }
