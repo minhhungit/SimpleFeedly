@@ -5,6 +5,7 @@ namespace SimpleFeedly.Rss.Endpoints
     using Serenity;
     using Serenity.Data;
     using Serenity.Services;
+    using SimpleFeedly.Common;
     using System.Data;
     using System.Linq;
     using System.Web.Mvc;
@@ -40,7 +41,7 @@ namespace SimpleFeedly.Rss.Endpoints
         }
 
         [HttpPost]
-        public ListResponse<MyRow> List(IDbConnection connection, ListRequest request)
+        public ListResponse<MyRow> List(IDbConnection connection, MyBaseListRequest request)
         {
             return new MyRepository().List(connection, request);
         }

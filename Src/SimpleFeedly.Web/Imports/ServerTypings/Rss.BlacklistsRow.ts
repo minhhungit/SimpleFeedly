@@ -1,17 +1,19 @@
 ﻿namespace SimpleFeedly.Rss {
     export interface BlacklistsRow {
         Id?: number;
-        Title?: string;
+        ShrinkedTitle?: string;
+        ShrinkedTitleHash?: number[];
     }
 
     export namespace BlacklistsRow {
         export const idProperty = 'Id';
-        export const nameProperty = 'Title';
+        export const nameProperty = 'ShrinkedTitle';
         export const localTextPrefix = 'Rss.Blacklists';
 
         export declare const enum Fields {
             Id = "Id",
-            Title = "Title"
+            ShrinkedTitle = "ShrinkedTitle",
+            ShrinkedTitleHash = "ShrinkedTitleHash"
         }
     }
 }

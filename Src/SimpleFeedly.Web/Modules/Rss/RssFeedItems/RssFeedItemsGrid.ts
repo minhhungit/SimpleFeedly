@@ -1,4 +1,5 @@
-﻿
+﻿/// <reference path="../../common/mixins/gridpaging/custompagerwithonlynextpreviousmixin.ts" />
+
 namespace SimpleFeedly.Rss {
 
     import fld = RssFeedItemsRow.Fields;
@@ -12,6 +13,7 @@ namespace SimpleFeedly.Rss {
         protected getService() { return RssFeedItemsService.baseUrl; }
 
         private rowSelection: Serenity.GridRowSelectionMixin;
+        private _pagerMixin: Common.CustomPagerWithOnlyNextPreviousMixin<RssFeedItemsRow>;
 
         constructor(container: JQuery) {
             super(container);   
@@ -32,9 +34,25 @@ namespace SimpleFeedly.Rss {
             return "New Feed";
         }
 
+        protected onViewSubmit() {
+            if (!super.onViewSubmit()) {
+                return false;
+            }
+            var request = this.view.params as Common.MyBaseListRequest;
+            request.EnableOnlyNextPreviousMode = this._pagerMixin.getCurrentPagerMode() == 'next-previous-only';
+            return true;
+        }
+
+
         protected createToolbarExtensions() {
             super.createToolbarExtensions();
+
             this.rowSelection = new Serenity.GridRowSelectionMixin(this);
+
+            this._pagerMixin = new Common.CustomPagerWithOnlyNextPreviousMixin({
+                grid: this,
+                rowPerPage: this.getPagerOptions().rowsPerPage
+            });
         }
 
         protected getQuickFilters(): Serenity.QuickFilter<Serenity.Widget<any>, any>[] {
@@ -308,6 +326,8 @@ namespace SimpleFeedly.Rss {
             RssFeedItemsService.GetFeedItemCheckedState({}, res => {
                 this.setTitle("Feed Items (" + res.UnCheckedItems + " unchecked)");
             });
+
+            this._pagerMixin.updateNextButton(result.Entities.length, response.Take);
 
             return result;
         }

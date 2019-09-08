@@ -360,6 +360,11 @@ declare namespace SimpleFeedly.Administration {
     }
 }
 declare namespace SimpleFeedly.Common {
+    interface MyBaseListRequest extends Serenity.ListRequest {
+        EnableOnlyNextPreviousMode?: boolean;
+    }
+}
+declare namespace SimpleFeedly.Common {
     interface UserPreferenceRetrieveRequest extends Serenity.ServiceRequest {
         PreferenceType?: string;
         Name?: string;
@@ -547,7 +552,8 @@ declare namespace SimpleFeedly.Rss {
 }
 declare namespace SimpleFeedly.Rss {
     interface BlacklistsForm {
-        Title: Serenity.StringEditor;
+        ShrinkedTitle: Serenity.StringEditor;
+        ShrinkedTitleHash: Serenity.StringEditor;
     }
     class BlacklistsForm extends Serenity.PrefixedContext {
         static formKey: string;
@@ -558,15 +564,17 @@ declare namespace SimpleFeedly.Rss {
 declare namespace SimpleFeedly.Rss {
     interface BlacklistsRow {
         Id?: number;
-        Title?: string;
+        ShrinkedTitle?: string;
+        ShrinkedTitleHash?: number[];
     }
     namespace BlacklistsRow {
         const idProperty = "Id";
-        const nameProperty = "Title";
+        const nameProperty = "ShrinkedTitle";
         const localTextPrefix = "Rss.Blacklists";
         const enum Fields {
             Id = "Id",
-            Title = "Title"
+            ShrinkedTitle = "ShrinkedTitle",
+            ShrinkedTitleHash = "ShrinkedTitleHash"
         }
     }
 }
@@ -613,6 +621,7 @@ declare namespace SimpleFeedly.Rss {
         Description: Serenity.StringEditor;
         IsError: Serenity.BooleanEditor;
         ErrorMessage: Serenity.TextAreaEditor;
+        RefreshTimeMinutes: Serenity.IntegerEditor;
     }
     class RssChannelsForm extends Serenity.PrefixedContext {
         static formKey: string;
@@ -636,6 +645,7 @@ declare namespace SimpleFeedly.Rss {
         ErrorMessage?: string;
         IsActive?: number;
         RssCrawlerEngine?: RssCrawlerEngine;
+        RefreshTimeMinutes?: number;
     }
     namespace RssChannelsRow {
         const idProperty = "Id";
@@ -658,7 +668,8 @@ declare namespace SimpleFeedly.Rss {
             IsError = "IsError",
             ErrorMessage = "ErrorMessage",
             IsActive = "IsActive",
-            RssCrawlerEngine = "RssCrawlerEngine"
+            RssCrawlerEngine = "RssCrawlerEngine",
+            RefreshTimeMinutes = "RefreshTimeMinutes"
         }
     }
 }
@@ -750,7 +761,7 @@ declare namespace SimpleFeedly.Rss {
         function Update(request: Serenity.SaveRequest<RssFeedItemsRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<RssFeedItemsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
-        function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<RssFeedItemsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function List(request: Common.MyBaseListRequest, onSuccess?: (response: Serenity.ListResponse<RssFeedItemsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function MarkCheckedFeedItem(request: MarkCheckedFeedItemRequest, onSuccess?: (response: Serenity.ServiceResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function MarkCheckedBatchFeedItems(request: MarkCheckedBatchFeedItemsRequest, onSuccess?: (response: Serenity.ServiceResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function GetFeedItemCheckedState(request: Serenity.ServiceRequest, onSuccess?: (response: FeedItemCheckedStateResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
@@ -1122,6 +1133,27 @@ declare namespace SimpleFeedly {
     }
 }
 declare namespace SimpleFeedly.Common {
+    class CustomPagerWithOnlyNextPreviousMixin<TItem> {
+        private options;
+        private dataGrid;
+        private _customPagerCurrentPage;
+        private _customPager;
+        private _originalPager;
+        private _pagingMode;
+        private _btnSwitch;
+        constructor(options: CustomPagerWithOnlyNextPreviousMixinOptions<TItem>);
+        updateNextButton(nbrOfRecords: number, nbrOfRowsPerPage: number): void;
+        private switchView;
+        private updatePageControls;
+        getCurrentPagerMode(): ('full' | 'next-previous-only');
+    }
+    class CustomPagerWithOnlyNextPreviousMixinOptions<TItem> {
+        grid: Serenity.DataGrid<TItem, any>;
+        rowPerPage: number;
+        pagingMode?: ('full' | 'next-previous-only');
+    }
+}
+declare namespace SimpleFeedly.Common {
     class LanguageSelection extends Serenity.Widget<any> {
         constructor(select: JQuery, currentLanguage: string);
     }
@@ -1322,8 +1354,10 @@ declare namespace SimpleFeedly.Rss {
         protected getLocalTextPrefix(): string;
         protected getService(): string;
         private rowSelection;
+        private _pagerMixin;
         constructor(container: JQuery);
         getAddButtonCaption(): string;
+        protected onViewSubmit(): boolean;
         protected createToolbarExtensions(): void;
         protected getQuickFilters(): Serenity.QuickFilter<Serenity.Widget<any>, any>[];
         private getSelectedItems;

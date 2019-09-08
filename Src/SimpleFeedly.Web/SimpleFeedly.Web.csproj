@@ -1098,6 +1098,9 @@
     <Content Include="tools\Node\less\lib\less\visitor.js" />
     <Content Include="tools\Node\node.exe" />
     <Content Include="tsconfig.json" />
+    <TypeScriptCompile Include="Imports\ServerTypings\Common.MyBaseListRequest.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Models.BlacklistItem.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
@@ -1537,6 +1540,7 @@
     <TypeScriptCompile Include="Imports\ServerTypings\GetNextNumberResponse.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Modules\Common\Mixins\GridPaging\CustomPagerWithOnlyNextPreviousMixin.ts" />
     <TypeScriptCompile Include="Modules\Common\Navigation\ThemeSelection.ts" />
     <TypeScriptCompile Include="Modules\Common\Navigation\SidebarSearch.ts" />
     <TypeScriptCompile Include="Modules\Common\Navigation\LanguageSelection.ts" />
@@ -1745,6 +1749,8 @@
     </Compile>
     <Compile Include="Models\BlacklistItem.cs" />
     <Compile Include="Modules\Common\Formatters\CustomLookupFormatterAttribute.cs" />
+    <Compile Include="Modules\Common\Mixins\GridPaging\IPagingRequest.cs" />
+    <Compile Include="Modules\Common\Mixins\GridPaging\MyBaseListRequest.cs" />
     <Compile Include="Modules\Rss\RssChannels\RssCrawlerEngine.cs" />
     <Compile Include="Modules\Rss\RssChannels\ServiceModel\TestChannelRequest.cs" />
     <Compile Include="Modules\Rss\RssFeedItems\ServiceModel\AddBlacklistItemRequest.cs" />

@@ -479,7 +479,8 @@ var SimpleFeedly;
                     var s = Serenity;
                     var w0 = s.StringEditor;
                     Q.initFormType(BlacklistsForm, [
-                        'Title', w0
+                        'ShrinkedTitle', w0,
+                        'ShrinkedTitleHash', w0
                     ]);
                 }
                 return _this;
@@ -497,7 +498,7 @@ var SimpleFeedly;
         var BlacklistsRow;
         (function (BlacklistsRow) {
             BlacklistsRow.idProperty = 'Id';
-            BlacklistsRow.nameProperty = 'Title';
+            BlacklistsRow.nameProperty = 'ShrinkedTitle';
             BlacklistsRow.localTextPrefix = 'Rss.Blacklists';
         })(BlacklistsRow = Rss.BlacklistsRow || (Rss.BlacklistsRow = {}));
     })(Rss = SimpleFeedly.Rss || (SimpleFeedly.Rss = {}));
@@ -537,12 +538,14 @@ var SimpleFeedly;
                     var w0 = s.StringEditor;
                     var w1 = s.BooleanEditor;
                     var w2 = s.TextAreaEditor;
+                    var w3 = s.IntegerEditor;
                     Q.initFormType(RssChannelsForm, [
                         'Title', w0,
                         'Link', w0,
                         'Description', w0,
                         'IsError', w1,
-                        'ErrorMessage', w2
+                        'ErrorMessage', w2,
+                        'RefreshTimeMinutes', w3
                     ]);
                 }
                 return _this;
@@ -686,7 +689,7 @@ var SimpleFeedly;
 (function (SimpleFeedly) {
     var Texts;
     (function (Texts) {
-        SimpleFeedly['Texts'] = Q.proxyTexts(Texts, '', { Db: { Administration: { Language: { Id: 1, LanguageId: 1, LanguageName: 1 }, Role: { RoleId: 1, RoleName: 1 }, RolePermission: { PermissionKey: 1, RoleId: 1, RolePermissionId: 1, RoleRoleName: 1 }, Translation: { CustomText: 1, EntityPlural: 1, Key: 1, OverrideConfirmation: 1, SaveChangesButton: 1, SourceLanguage: 1, SourceText: 1, TargetLanguage: 1, TargetText: 1 }, User: { DisplayName: 1, Email: 1, InsertDate: 1, InsertUserId: 1, IsActive: 1, LastDirectoryUpdate: 1, Password: 1, PasswordConfirm: 1, PasswordHash: 1, PasswordSalt: 1, Source: 1, UpdateDate: 1, UpdateUserId: 1, UserId: 1, UserImage: 1, Username: 1 }, UserPermission: { Granted: 1, PermissionKey: 1, User: 1, UserId: 1, UserPermissionId: 1, Username: 1 }, UserRole: { RoleId: 1, User: 1, UserId: 1, UserRoleId: 1, Username: 1 } }, Common: { UserPreference: { Name: 1, PreferenceType: 1, UserId: 1, UserPreferenceId: 1, Value: 1 } }, Rss: { Blacklists: { Id: 1, Title: 1 }, RssChannels: { Copyright: 1, Description: 1, ErrorMessage: 1, Id: 1, ImageUrl: 1, IsActive: 1, IsError: 1, Language: 1, LastUpdatedDate: 1, Link: 1, OriginalDocument: 1, RssCrawlerEngine: 1, Title: 1, Type: 1 }, RssFeedItems: { Author: 1, ChannelId: 1, Content: 1, Description: 1, FeedItemKey: 1, Id: 1, IsChecked: 1, Link: 1, PublishingDate: 1, RssChannelTitle: 1, Title: 1 } } }, Forms: { Membership: { ChangePassword: { FormTitle: 1, SubmitButton: 1, Success: 1 }, ForgotPassword: { BackToLogin: 1, FormInfo: 1, FormTitle: 1, SubmitButton: 1, Success: 1 }, Login: { FacebookButton: 1, ForgotPassword: 1, FormTitle: 1, GoogleButton: 1, OR: 1, RememberMe: 1, SignInButton: 1, SignUpButton: 1 }, ResetPassword: { BackToLogin: 1, EmailSubject: 1, FormTitle: 1, SubmitButton: 1, Success: 1 }, SignUp: { AcceptTerms: 1, ActivateEmailSubject: 1, ActivationCompleteMessage: 1, BackToLogin: 1, ConfirmEmail: 1, ConfirmPassword: 1, DisplayName: 1, Email: 1, FormInfo: 1, FormTitle: 1, Password: 1, SubmitButton: 1, Success: 1 } } }, Site: { AccessDenied: { ClickToChangeUser: 1, ClickToLogin: 1, LackPermissions: 1, NotLoggedIn: 1, PageTitle: 1 }, BasicProgressDialog: { CancelTitle: 1, PleaseWait: 1 }, BulkServiceAction: { AllHadErrorsFormat: 1, AllSuccessFormat: 1, ConfirmationFormat: 1, ErrorCount: 1, NothingToProcess: 1, SomeHadErrorsFormat: 1, SuccessCount: 1 }, Dashboard: { ContentDescription: 1 }, Layout: { FooterCopyright: 1, FooterInfo: 1, FooterRights: 1, GeneralSettings: 1, Language: 1, Theme: 1, ThemeBlack: 1, ThemeBlackLight: 1, ThemeBlue: 1, ThemeBlueLight: 1, ThemeGreen: 1, ThemeGreenLight: 1, ThemePurple: 1, ThemePurpleLight: 1, ThemeRed: 1, ThemeRedLight: 1, ThemeYellow: 1, ThemeYellowLight: 1 }, RolePermissionDialog: { DialogTitle: 1, EditButton: 1, SaveSuccess: 1 }, UserDialog: { EditPermissionsButton: 1, EditRolesButton: 1 }, UserPermissionDialog: { DialogTitle: 1, Grant: 1, Permission: 1, Revoke: 1, SaveSuccess: 1 }, UserRoleDialog: { DialogTitle: 1, SaveSuccess: 1 }, ValidationError: { Title: 1 } }, Validation: { AuthenticationError: 1, CantFindUserWithEmail: 1, CurrentPasswordMismatch: 1, DeleteForeignKeyError: 1, EmailConfirm: 1, EmailInUse: 1, InvalidActivateToken: 1, InvalidResetToken: 1, MinRequiredPasswordLength: 1, SavePrimaryKeyError: 1 } });
+        SimpleFeedly['Texts'] = Q.proxyTexts(Texts, '', { Db: { Administration: { Language: { Id: 1, LanguageId: 1, LanguageName: 1 }, Role: { RoleId: 1, RoleName: 1 }, RolePermission: { PermissionKey: 1, RoleId: 1, RolePermissionId: 1, RoleRoleName: 1 }, Translation: { CustomText: 1, EntityPlural: 1, Key: 1, OverrideConfirmation: 1, SaveChangesButton: 1, SourceLanguage: 1, SourceText: 1, TargetLanguage: 1, TargetText: 1 }, User: { DisplayName: 1, Email: 1, InsertDate: 1, InsertUserId: 1, IsActive: 1, LastDirectoryUpdate: 1, Password: 1, PasswordConfirm: 1, PasswordHash: 1, PasswordSalt: 1, Source: 1, UpdateDate: 1, UpdateUserId: 1, UserId: 1, UserImage: 1, Username: 1 }, UserPermission: { Granted: 1, PermissionKey: 1, User: 1, UserId: 1, UserPermissionId: 1, Username: 1 }, UserRole: { RoleId: 1, User: 1, UserId: 1, UserRoleId: 1, Username: 1 } }, Common: { UserPreference: { Name: 1, PreferenceType: 1, UserId: 1, UserPreferenceId: 1, Value: 1 } }, Rss: { Blacklists: { Id: 1, ShrinkedTitle: 1, ShrinkedTitleHash: 1 }, RssChannels: { Copyright: 1, Description: 1, ErrorMessage: 1, Id: 1, ImageUrl: 1, IsActive: 1, IsError: 1, Language: 1, LastUpdatedDate: 1, Link: 1, OriginalDocument: 1, RefreshTimeMinutes: 1, RssCrawlerEngine: 1, Title: 1, Type: 1 }, RssFeedItems: { Author: 1, ChannelId: 1, Content: 1, Description: 1, FeedItemKey: 1, Id: 1, IsChecked: 1, Link: 1, PublishingDate: 1, RssChannelTitle: 1, Title: 1 } } }, Forms: { Membership: { ChangePassword: { FormTitle: 1, SubmitButton: 1, Success: 1 }, ForgotPassword: { BackToLogin: 1, FormInfo: 1, FormTitle: 1, SubmitButton: 1, Success: 1 }, Login: { FacebookButton: 1, ForgotPassword: 1, FormTitle: 1, GoogleButton: 1, OR: 1, RememberMe: 1, SignInButton: 1, SignUpButton: 1 }, ResetPassword: { BackToLogin: 1, EmailSubject: 1, FormTitle: 1, SubmitButton: 1, Success: 1 }, SignUp: { AcceptTerms: 1, ActivateEmailSubject: 1, ActivationCompleteMessage: 1, BackToLogin: 1, ConfirmEmail: 1, ConfirmPassword: 1, DisplayName: 1, Email: 1, FormInfo: 1, FormTitle: 1, Password: 1, SubmitButton: 1, Success: 1 } } }, Site: { AccessDenied: { ClickToChangeUser: 1, ClickToLogin: 1, LackPermissions: 1, NotLoggedIn: 1, PageTitle: 1 }, BasicProgressDialog: { CancelTitle: 1, PleaseWait: 1 }, BulkServiceAction: { AllHadErrorsFormat: 1, AllSuccessFormat: 1, ConfirmationFormat: 1, ErrorCount: 1, NothingToProcess: 1, SomeHadErrorsFormat: 1, SuccessCount: 1 }, Dashboard: { ContentDescription: 1 }, Layout: { FooterCopyright: 1, FooterInfo: 1, FooterRights: 1, GeneralSettings: 1, Language: 1, Theme: 1, ThemeBlack: 1, ThemeBlackLight: 1, ThemeBlue: 1, ThemeBlueLight: 1, ThemeGreen: 1, ThemeGreenLight: 1, ThemePurple: 1, ThemePurpleLight: 1, ThemeRed: 1, ThemeRedLight: 1, ThemeYellow: 1, ThemeYellowLight: 1 }, RolePermissionDialog: { DialogTitle: 1, EditButton: 1, SaveSuccess: 1 }, UserDialog: { EditPermissionsButton: 1, EditRolesButton: 1 }, UserPermissionDialog: { DialogTitle: 1, Grant: 1, Permission: 1, Revoke: 1, SaveSuccess: 1 }, UserRoleDialog: { DialogTitle: 1, SaveSuccess: 1 }, ValidationError: { Title: 1 } }, Validation: { AuthenticationError: 1, CantFindUserWithEmail: 1, CurrentPasswordMismatch: 1, DeleteForeignKeyError: 1, EmailConfirm: 1, EmailInUse: 1, InvalidActivateToken: 1, InvalidResetToken: 1, MinRequiredPasswordLength: 1, SavePrimaryKeyError: 1 } });
     })(Texts = SimpleFeedly.Texts || (SimpleFeedly.Texts = {}));
 })(SimpleFeedly || (SimpleFeedly = {}));
 var SimpleFeedly;
@@ -2298,6 +2301,128 @@ var SimpleFeedly;
 (function (SimpleFeedly) {
     var Common;
     (function (Common) {
+        var CustomPagerWithOnlyNextPreviousMixin = /** @class */ (function () {
+            function CustomPagerWithOnlyNextPreviousMixin(options) {
+                var _this = this;
+                this._customPagerCurrentPage = 1;
+                this._customPager = $("<span class='next-previous-pager'><button class='custompager-pre'><strong>«</strong> Previous</button><span style='padding: 0 2px;'></span><button class='custompager-next'>Next <strong>»</strong></button><span style='padding: 0 2px;'></span><b>Page</b> <span class='custompager-curpage'>1</span></span>");
+                this._originalPager = $(".s-SlickPager");
+                var self = this;
+                this.options = options;
+                var dg = this.dataGrid = options.grid;
+                this._pagingMode = options.pagingMode = options.pagingMode || 'next-previous-only';
+                $(".slick-pg-in").hide();
+                this._originalPager.find(".slick-pg-in").append(this._customPager);
+                var btnSwitch = this._btnSwitch = $('<input type="checkbox" title="Full Pager" class="paging-mode-switch pull-right" style="margin-right: 5px" ' + (options.pagingMode == "full" ? ' checked' : '') + '/>')
+                    .appendTo(dg.element.find(".slick-pg-in"));
+                btnSwitch.change(function (evt) {
+                    var isFullMode = $(evt.target).is(":checked");
+                    // update current page number
+                    if (!isFullMode) {
+                        _this._customPagerCurrentPage = parseInt($(".slick-pg-current").val());
+                        _this._originalPager.find(".custompager-curpage").text($(".slick-pg-current").val());
+                    }
+                    _this.switchView(isFullMode ? 'full' : 'next-previous-only');
+                });
+                this._originalPager.find(".custompager-pre").click(function (e) {
+                    if (_this._customPagerCurrentPage > 1) {
+                        _this._customPagerCurrentPage--;
+                        _this.dataGrid.view.seekToPage = _this._customPagerCurrentPage;
+                        _this.dataGrid.refresh();
+                        _this._originalPager.find(".custompager-curpage").text(_this._customPagerCurrentPage);
+                    }
+                    return;
+                });
+                this._originalPager.find(".custompager-next").click(function (e) {
+                    _this._customPagerCurrentPage++;
+                    _this.dataGrid.view.seekToPage = _this._customPagerCurrentPage;
+                    _this.dataGrid.refresh();
+                    _this._originalPager.find(".custompager-curpage").text(_this._customPagerCurrentPage);
+                    return;
+                });
+                dg.view.onDataChanged.subscribe(function () {
+                    _this.updatePageControls(!$(_this._btnSwitch).is(":checked"));
+                });
+                // save setting
+                var oldCurrentSettings = dg.getCurrentSettings;
+                dg.getCurrentSettings = function (flag) {
+                    var settings = oldCurrentSettings.apply(dg, [flag]);
+                    settings['customPagerMode'] = $(btnSwitch).is(":checked") ? 'full' : 'next-previous-only';
+                    return settings;
+                };
+                var oldRestoreSettings = dg.restoreSettings;
+                dg.restoreSettings = function (settings, flags) {
+                    oldRestoreSettings.apply(dg, [settings, flags]);
+                    if (settings == null) {
+                        var storage = this.getPersistanceStorage();
+                        if (storage == null) {
+                            self.switchView(self._pagingMode);
+                            return;
+                        }
+                        var json = Q.trimToNull(storage.getItem(this.getPersistanceKey()));
+                        if (!json) {
+                            self.switchView(self._pagingMode);
+                            return;
+                        }
+                        settings = JSON.parse(json);
+                    }
+                    var viewPagerMode = settings.customPagerMode || self._pagingMode;
+                    var currentViewPagerMode = $(btnSwitch).is(":checked") ? 'full' : 'next-previous-only';
+                    if (viewPagerMode != currentViewPagerMode) {
+                        $(btnSwitch).click();
+                    }
+                };
+            }
+            CustomPagerWithOnlyNextPreviousMixin.prototype.updateNextButton = function (nbrOfRecords, nbrOfRowsPerPage) {
+                if (this.options.pagingMode === 'full') {
+                    return;
+                }
+                if (nbrOfRecords == 0 || nbrOfRecords < nbrOfRowsPerPage) {
+                    this._originalPager.find(".custompager-next").prop("disabled", true);
+                    this._originalPager.find(".custompager-next").css("opacity", 0.5);
+                }
+                else {
+                    this._originalPager.find(".custompager-next").prop("disabled", false);
+                    this._originalPager.find(".custompager-next").css("opacity", 1);
+                }
+            };
+            CustomPagerWithOnlyNextPreviousMixin.prototype.switchView = function (pMode) {
+                this.updatePageControls(pMode == "next-previous-only");
+                this.dataGrid.refresh();
+                this.dataGrid.persistSettings();
+            };
+            CustomPagerWithOnlyNextPreviousMixin.prototype.updatePageControls = function (isNextPreviousOnlyMode) {
+                if (isNextPreviousOnlyMode) {
+                    this._originalPager.find(".next-previous-pager").show();
+                    this._originalPager.find(".slick-pg-grp").hide();
+                    this._originalPager.find(".slick-pg-sep").hide();
+                    this._originalPager.find(".slick-pg-grp:first").show();
+                }
+                else {
+                    this._originalPager.find(".next-previous-pager").hide();
+                    this._originalPager.find(".slick-pg-grp").show();
+                    this._originalPager.find(".slick-pg-sep").show();
+                }
+                $(".slick-pg-in").show();
+            };
+            CustomPagerWithOnlyNextPreviousMixin.prototype.getCurrentPagerMode = function () {
+                return $(this._btnSwitch).is(":checked") ? 'full' : 'next-previous-only';
+            };
+            return CustomPagerWithOnlyNextPreviousMixin;
+        }());
+        Common.CustomPagerWithOnlyNextPreviousMixin = CustomPagerWithOnlyNextPreviousMixin;
+        var CustomPagerWithOnlyNextPreviousMixinOptions = /** @class */ (function () {
+            function CustomPagerWithOnlyNextPreviousMixinOptions() {
+            }
+            return CustomPagerWithOnlyNextPreviousMixinOptions;
+        }());
+        Common.CustomPagerWithOnlyNextPreviousMixinOptions = CustomPagerWithOnlyNextPreviousMixinOptions;
+    })(Common = SimpleFeedly.Common || (SimpleFeedly.Common = {}));
+})(SimpleFeedly || (SimpleFeedly = {}));
+var SimpleFeedly;
+(function (SimpleFeedly) {
+    var Common;
+    (function (Common) {
         var LanguageSelection = /** @class */ (function (_super) {
             __extends(LanguageSelection, _super);
             function LanguageSelection(select, currentLanguage) {
@@ -3238,6 +3363,7 @@ var SimpleFeedly;
         Rss.RssFeedItemsDialog = RssFeedItemsDialog;
     })(Rss = SimpleFeedly.Rss || (SimpleFeedly.Rss = {}));
 })(SimpleFeedly || (SimpleFeedly = {}));
+/// <reference path="../../common/mixins/gridpaging/custompagerwithonlynextpreviousmixin.ts" />
 var SimpleFeedly;
 (function (SimpleFeedly) {
     var Rss;
@@ -3266,9 +3392,21 @@ var SimpleFeedly;
             RssFeedItemsGrid.prototype.getAddButtonCaption = function () {
                 return "New Feed";
             };
+            RssFeedItemsGrid.prototype.onViewSubmit = function () {
+                if (!_super.prototype.onViewSubmit.call(this)) {
+                    return false;
+                }
+                var request = this.view.params;
+                request.EnableOnlyNextPreviousMode = this._pagerMixin.getCurrentPagerMode() == 'next-previous-only';
+                return true;
+            };
             RssFeedItemsGrid.prototype.createToolbarExtensions = function () {
                 _super.prototype.createToolbarExtensions.call(this);
                 this.rowSelection = new Serenity.GridRowSelectionMixin(this);
+                this._pagerMixin = new SimpleFeedly.Common.CustomPagerWithOnlyNextPreviousMixin({
+                    grid: this,
+                    rowPerPage: this.getPagerOptions().rowsPerPage
+                });
             };
             RssFeedItemsGrid.prototype.getQuickFilters = function () {
                 var filters = _super.prototype.getQuickFilters.call(this);
@@ -3492,6 +3630,7 @@ var SimpleFeedly;
                 Rss.RssFeedItemsService.GetFeedItemCheckedState({}, function (res) {
                     _this.setTitle("Feed Items (" + res.UnCheckedItems + " unchecked)");
                 });
+                this._pagerMixin.updateNextButton(result.Entities.length, response.Take);
                 return result;
             };
             RssFeedItemsGrid.prototype.getQuickSearchFields = function () {

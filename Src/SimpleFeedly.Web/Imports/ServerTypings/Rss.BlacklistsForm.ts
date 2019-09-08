@@ -1,6 +1,7 @@
 ﻿namespace SimpleFeedly.Rss {
     export interface BlacklistsForm {
-        Title: Serenity.StringEditor;
+        ShrinkedTitle: Serenity.StringEditor;
+        ShrinkedTitleHash: Serenity.StringEditor;
     }
 
     export class BlacklistsForm extends Serenity.PrefixedContext {
@@ -17,7 +18,8 @@
                 var w0 = s.StringEditor;
 
                 Q.initFormType(BlacklistsForm, [
-                    'Title', w0
+                    'ShrinkedTitle', w0,
+                    'ShrinkedTitleHash', w0
                 ]);
             }
         }

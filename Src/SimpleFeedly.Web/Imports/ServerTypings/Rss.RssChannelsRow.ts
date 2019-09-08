@@ -14,6 +14,7 @@
         ErrorMessage?: string;
         IsActive?: number;
         RssCrawlerEngine?: RssCrawlerEngine;
+        RefreshTimeMinutes?: number;
     }
 
     export namespace RssChannelsRow {
@@ -41,7 +42,8 @@
             IsError = "IsError",
             ErrorMessage = "ErrorMessage",
             IsActive = "IsActive",
-            RssCrawlerEngine = "RssCrawlerEngine"
+            RssCrawlerEngine = "RssCrawlerEngine",
+            RefreshTimeMinutes = "RefreshTimeMinutes"
         }
     }
 }

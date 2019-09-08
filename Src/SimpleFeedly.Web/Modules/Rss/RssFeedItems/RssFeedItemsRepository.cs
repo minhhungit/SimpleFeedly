@@ -4,6 +4,7 @@ namespace SimpleFeedly.Rss.Repositories
     using Serenity;
     using Serenity.Data;
     using Serenity.Services;
+    using SimpleFeedly.Common;
     using System;
     using System.Data;
     using MyRow = Entities.RssFeedItemsRow;
@@ -32,7 +33,7 @@ namespace SimpleFeedly.Rss.Repositories
             return new MyRetrieveHandler().Process(connection, request);
         }
 
-        public ListResponse<MyRow> List(IDbConnection connection, ListRequest request)
+        public ListResponse<MyRow> List(IDbConnection connection, MyBaseListRequest request)
         {
             return new MyListHandler().Process(connection, request);
         }
@@ -41,5 +42,24 @@ namespace SimpleFeedly.Rss.Repositories
         private class MyDeleteHandler : DeleteRequestHandler<MyRow> { }
         private class MyRetrieveHandler : RetrieveRequestHandler<MyRow> { }
         private class MyListHandler : ListRequestHandler<MyRow> { }
+
+        public class CustomListRequestHandle<TRow> : ListRequestHandler<TRow> where TRow : Row, new()
+        {
+            protected override void ApplyFilters(SqlQuery query)
+            {
+                base.ApplyFilters(query);
+
+                if (Request is MyBaseListRequest customRequest)
+                {
+                    if (customRequest.EnableOnlyNextPreviousMode)
+                    {
+                        query.ApplySkipTakeAndCount(this.Request.Skip, this.Request.Take, this.Request.ExcludeTotalCount || DistinctFields != null);
+
+                        // Setting CountRecords to false stops the count(*) query from running
+                        query.CountRecords = false;
+                    }
+                }
+            }
+        }
     }
 }
