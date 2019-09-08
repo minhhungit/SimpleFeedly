@@ -23,7 +23,7 @@ namespace SimpleFeedly.Rss {
                     this.quickFiltersDiv.hide();
                 }
 
-                $(".s-QuickSearchInput").css("width", "116px");
+                $(".s-QuickSearchInput").css("width", "110px");
                 $(".refresh-button").hide();
             } else {
                 $(".s-QuickSearchInput").css("width", "170px");
