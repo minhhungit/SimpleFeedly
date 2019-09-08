@@ -7,10 +7,12 @@
 BEGIN
 	ALTER TABLE dbo.Blacklist
 	ADD ShrinkedTitle NVARCHAR(300)
-
-	UPDATE dbo.Blacklist
-	SET ShrinkedTitle = LOWER(dbo.fnGetUnsignString(dbo.fnRemoveNonAlphaCharactersAndDigit(ShrinkedTitle)))
 END
+
+GO
+
+UPDATE dbo.Blacklist
+SET ShrinkedTitle = LOWER(dbo.fnGetUnsignString(dbo.fnRemoveNonAlphaCharactersAndDigit(Title)))
 
 GO
 
@@ -23,28 +25,30 @@ IF NOT EXISTS (
 BEGIN
 	ALTER TABLE dbo.Blacklist
 	ADD ShrinkedTitleHash BINARY(16)
-
-	UPDATE dbo.Blacklist
-	SET ShrinkedTitleHash = HashBytes('MD5', ShrinkedTitle)
 END
 
 GO
 
-;WITH cte AS (
-  SELECT 
-     row_number() OVER(PARTITION BY ShrinkedTitle ORDER BY Id) AS [rn],
-	 *
-  FROM [dbo].[Blacklist]
-)
-
---SELECT * FROM cte ORDER By ShrinkedTitle, rn
-DELETE FROM CTE  WHERE RN > 1
+UPDATE dbo.Blacklist
+SET ShrinkedTitleHash = HashBytes('MD5', ShrinkedTitle)
 
 GO
 
 IF  EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[Blacklist]') AND name = N'idx_Blacklist_unique')
 DROP INDEX [idx_Blacklist_unique] ON [dbo].[Blacklist]
 GO
+
+GO
+
+;WITH cte AS (
+  SELECT 
+     row_number() OVER(PARTITION BY ShrinkedTitleHash ORDER BY Id) AS [rn],
+	 *
+  FROM [dbo].[Blacklist]
+)
+
+--SELECT * FROM cte ORDER By ShrinkedTitle, rn
+DELETE FROM CTE  WHERE RN > 1
 
 GO
 
