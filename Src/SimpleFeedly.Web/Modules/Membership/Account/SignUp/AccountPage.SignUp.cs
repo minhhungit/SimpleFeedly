@@ -20,6 +20,8 @@ namespace SimpleFeedly.Membership.Pages
         [HttpGet]
         public ActionResult SignUp()
         {
+            throw new HttpException(404, "Not Found");
+
             if (UseAdminLTELoginBox)
                 return View(MVC.Views.Membership.Account.SignUp.AccountSignUp_AdminLTE);
             else
