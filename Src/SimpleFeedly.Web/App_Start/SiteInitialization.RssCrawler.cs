@@ -122,8 +122,7 @@
 
                                         if (!hasNew)
                                         {
-                                            var randomExpiryTime =
-                                            cache.Add(channelSleepingCacheKey, true, DateTime.Now.Add(channelFetchingDelay.GenerateRamdomValue()));
+                                            cache.Add(channelSleepingCacheKey, true, DateTime.Now.Add(channel.RefreshTimeMinutes == null ? channelFetchingDelay.GenerateRamdomValue() : TimeSpan.FromMinutes((int)channel.RefreshTimeMinutes)));
                                         }
                                     }
                                     else

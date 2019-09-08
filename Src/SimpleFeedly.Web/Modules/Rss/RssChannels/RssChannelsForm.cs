@@ -26,5 +26,7 @@ namespace SimpleFeedly.Rss.Forms
         //public DateTime LastUpdatedDate { get; set; }
         //public String ImageUrl { get; set; }
         //public String OriginalDocument { get; set; }
+
+        public Int32 RefreshTimeMinutes { get; set; }
     }
 }

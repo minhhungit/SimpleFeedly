@@ -124,6 +124,13 @@ namespace SimpleFeedly.Rss.Entities
             set { Fields.RssCrawlerEngine[this] = (int?)value; }
         }
 
+        [DisplayName("Refresh Time (min)")]
+        public Int32? RefreshTimeMinutes
+        {
+            get { return Fields.RefreshTimeMinutes[this]; }
+            set { Fields.RefreshTimeMinutes[this] = value; }
+        }
+
         IIdField IIdRow.IdField
         {
             get { return Fields.Id; }
@@ -162,6 +169,7 @@ namespace SimpleFeedly.Rss.Entities
             public StringField ErrorMessage;
             public Int16Field IsActive;
             public Int32Field RssCrawlerEngine;
+            public Int32Field RefreshTimeMinutes;
         }
     }
 }

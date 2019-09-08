@@ -40,7 +40,8 @@ BEGIN
         LastUpdatedDate ,
         ImageUrl ,
         OriginalDocument,
-		RssCrawlerEngine
+		RssCrawlerEngine,
+		RefreshTimeMinutes
 	FROM dbo.RssChannels
 	WHERE IsActive <> -1
 END

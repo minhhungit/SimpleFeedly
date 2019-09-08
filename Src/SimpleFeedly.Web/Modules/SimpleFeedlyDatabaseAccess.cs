@@ -124,8 +124,14 @@ namespace SimpleFeedly
                             Language = dr["Language"].ToString(),
                             Copyright = dr["Copyright"].ToString(),
                             ImageUrl = dr["ImageUrl"].ToString(),
-                            OriginalDocument = dr["OriginalDocument"].ToString()
+                            OriginalDocument = dr["OriginalDocument"].ToString(),
+                            RefreshTimeMinutes = dr["RefreshTimeMinutes"] == DBNull.Value ? null : (int?)int.Parse(dr["RefreshTimeMinutes"].ToString())
                         };
+
+                        if (item.RefreshTimeMinutes != null && item.RefreshTimeMinutes  <= 0)
+                        {
+                            item.RefreshTimeMinutes = null;
+                        }
 
                         if (dr["RssCrawlerEngine"] != DBNull.Value && !string.IsNullOrWhiteSpace(dr["RssCrawlerEngine"].ToString()))
                         {
