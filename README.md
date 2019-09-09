@@ -25,6 +25,16 @@ Very simple Rss Crawler & Rss Reader
    SimpleFeedly.Crawler UNINSTALL
    ```
    
+   - **Port**
+   When crawler runs, it will notify status to sfeedly web app in right bottom corner using signalr (self-host), so we need to enable port 8888 and setup cors options in App.config
+   
+   ```
+   <add key="CrawlerSignalrSelfhostUrl" value="http://*:8888"/>
+   <add key="SimpleFeedlyWebAppUrls" value="http://localhost:62318,http://abc.com:1234" />
+   ```
+   
+
+   
 - Please feel free to ask me any questions!
 
 ## Script (Only for demo)
