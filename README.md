@@ -26,6 +26,7 @@ Very simple Rss Crawler & Rss Reader
    ```
    
    - **Port**
+   
    When crawler runs, it will notify status to sfeedly web app in right bottom corner using signalr (self-host), so we need to enable port 8888 and setup cors options in App.config
    
    ```
