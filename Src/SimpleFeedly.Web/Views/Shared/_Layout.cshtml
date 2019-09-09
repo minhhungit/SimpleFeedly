@@ -83,7 +83,7 @@ else
                     </li>
                 </ul>
             </div>
-            @*<div class="singalr-channel-progressing-info-dot-status pull-right dot dot-sm bg-orange visible-xs" style="margin-top: 20px;"></div>*@
+            <div class="singalr-channel-progressing-info-dot-status pull-right dot dot-sm bg-orange visible-xs" style="margin-top: 20px;"></div>
         </nav>
     </header>
 
@@ -116,9 +116,9 @@ else
     </div>
 
     <footer class="main-footer">
-        @*<div class="pull-right hidden-xs">
+        <div class="pull-right hidden-xs">
             <div class="singalr-channel-progressing-info"><span class='link-muted'>Crawler's sleeping...</span></div>
-        </div>*@
+        </div>
         <strong>@Texts.Site.Layout.FooterCopyright</strong> @Texts.Site.Layout.FooterRights
     </footer>
 
@@ -169,8 +169,9 @@ else
 
 <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
 <script src="~/signalr/hubs"></script>
-@*<script>
+<script>
     $(function () {
+        $.connection.hub.url = "http://localhost:8888/signalr";
         //$.connection.hub.logging = true;
         var channelHub = $.connection.channelHub;
         
@@ -190,11 +191,12 @@ else
             $(".singalr-channel-progressing-info").html(data.Message);
         };
 
+        
         $.connection.hub.start().done(() => {
             //this.clientId = ($ as any).connection.hub.id;
         });
     });
-</script>*@
+</script>
 }
 </body>
 </html>

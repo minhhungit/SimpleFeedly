@@ -1,10 +1,16 @@
-﻿using NLog;
+﻿using Microsoft.Owin;
+using Microsoft.Owin.Cors;
+using Microsoft.Owin.Hosting;
+using NLog;
+using Owin;
 using SimpleFeedly.Core;
 using StackExchange.Exceptional;
 using System;
 using System.Threading.Tasks;
+using System.Web.Cors;
 using Topshelf;
 
+[assembly: OwinStartup("SimpleFeedly.Crawler.Startup", typeof(SimpleFeedly.Crawler.CrawlerStartup))]
 namespace SimpleFeedly.Crawler
 {
     class Program
@@ -56,6 +62,8 @@ namespace SimpleFeedly.Crawler
             {
                 _logger.Info("Initializing container");
 
+                WebApp.Start<CrawlerStartup>(AppSettings.Base.CrawlerSignalrSelfhostUrl);
+
                 Task.Run(() => SiteInitialization.InitializeRssCrawler(_logger, AppSettings.Base.ChannelFetchingDelay, AppSettings.Base.ChannelErrorDelay, AppSettings.Base.ErrorDelay, AppSettings.Base.LoopDelay));
             }
             catch (Exception ex)
@@ -74,6 +82,34 @@ namespace SimpleFeedly.Crawler
             {
                 _logger.Error(ex, $"An error occurred while stopping SimpleFeedly.Crawler: {ex.Message}");
             }
+        }
+    }
+
+    class CrawlerStartup
+    {
+        public void Configuration(IAppBuilder app)
+        {
+            var policy = new CorsPolicy()
+            {
+                AllowAnyHeader = true,
+                AllowAnyMethod = true,
+                SupportsCredentials = true
+            };
+
+            //be sure to include the port:
+            //example: "http://localhost:8081"
+            policy.Origins.Add(AppSettings.Base.SimpleFeedlyWebAppUrl);
+
+            app.UseCors(new CorsOptions
+            {
+                PolicyProvider = new CorsPolicyProvider
+                {
+                    PolicyResolver = context => Task.FromResult(policy)
+                }
+            });
+
+            //app.UseCors(CorsOptions.AllowAll);
+            app.MapSignalR();
         }
     }
 }

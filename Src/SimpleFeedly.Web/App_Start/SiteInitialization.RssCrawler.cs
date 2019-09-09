@@ -1,5 +1,6 @@
 ﻿namespace SimpleFeedly
 {
+    using Microsoft.AspNet.SignalR;
     using Newtonsoft.Json;
     using NLog;
     using SimpleFeedly.Core.Utils;
@@ -26,7 +27,21 @@
         {
             System.Threading.Tasks.Task.Run(() =>
             {
-                //var channelHubCtx = GlobalHost.ConnectionManager.GetHubContext<ChannelHub>();
+                var channelHubCtx = GlobalHost.ConnectionManager.GetHubContext<Hubs.ChannelHub>();
+
+                //System.Threading.Tasks.Task.Run(() =>
+                //{
+                //    var xxx = 0;
+                //    while (true)
+                //    {
+                //        xxx++;
+                //        channelHubCtx.Clients.All.updateChannelProgress(new { Message = "hello " + xxx, IsSleeping = true });
+
+                //        Console.WriteLine(xxx);
+                //        System.Threading.Thread.Sleep(1000);
+                //    }
+                //});
+
                 ObjectCache cache = MemoryCache.Default;
 
                 while (true)
@@ -51,7 +66,7 @@
                             count++;
 
                             logger.Info($"- [{count}/{channels.Count}] Working on channel: {channel.Id} | {feedUrl}");
-                            //channelHubCtx.Clients.All.updateChannelProgress(new { Message = $"<strong>Fetching</strong> <a href='{channel.Link}' target='_blank'>{channel.Link}</a>", IsSleeping = false });
+                            channelHubCtx.Clients.All.updateChannelProgress(new { Message = $"<strong>Fetching</strong> <a href='{channel.Link}' target='_blank'>{channel.Link}</a>", IsSleeping = false });
 
                             if (string.IsNullOrWhiteSpace(feedUrl))
                             {
@@ -160,7 +175,7 @@
                         System.Threading.Thread.Sleep(errorDelay);
                     }
 
-                    //channelHubCtx.Clients.All.updateChannelProgress(new { Message = "<span class='link-muted'>Crawler's sleeping...</span>", IsSleeping = true });
+                    channelHubCtx.Clients.All.updateChannelProgress(new { Message = "<span class='link-muted'>Crawler's sleeping...</span>", IsSleeping = true });
 
                     _currentDate = DateTime.Now.Day;
 
