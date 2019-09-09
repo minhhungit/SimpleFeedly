@@ -34,9 +34,19 @@ Very simple Rss Crawler & Rss Reader
    <add key="SimpleFeedlyWebAppUrls" value="http://localhost:62318,http://abc.com:1234" />
    ```
    
-
+   Currently crawler is using port 8888 for signalr, if you want to change that port, you should update signalr url in rss reader web app ( `\Src\SimpleFeedly.Web\Views\Shared\_Layout.cshtml` )
    
-- Please feel free to ask me any questions!
+   ```javascript
+   $.connection.hub.url = "http://localhost:8888/signalr";
+   ```
+  
+
+## Features:
+- rss verify (rss preview)
+- manage rss channels (of course)
+- block rss feed item by title
+- crawler notify its status using signalr
+- rss channel it-self refresh time
 
 ## Script (Only for demo)
 - <a href="https://github.com/minhhungit/SimpleFeedly/blob/master/wiki/Scripts/list-of-channels.sql" target="_blank">list-of-channels</a> (only channels, without feed items)
@@ -56,8 +66,6 @@ Very simple Rss Crawler & Rss Reader
 ### Rss Reader (Web App) - Mobile version
 <img src="https://raw.githubusercontent.com/minhhungit/SimpleFeedly/master/wiki/Images/demo04.png" />
 
-```
+---
 
-MORE DETAILS COMMING SOON...
-
-```
+Please feel free to ask me any questions!
