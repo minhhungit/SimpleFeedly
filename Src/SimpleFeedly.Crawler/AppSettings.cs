@@ -1,6 +1,5 @@
 ﻿using AppCfg;
 using SimpleFeedly.SettingParsers;
-using SimpleFeedly.Settings;
 using System;
 using System.Data.SqlClient;
 
@@ -15,7 +14,7 @@ namespace SimpleFeedly.Crawler
         TimeSpan LoopDelay { get; }
 
         string CrawlerSignalrSelfhostUrl { get; set; }
-        string SimpleFeedlyWebAppUrl { get; set; }
+        string SimpleFeedlyWebAppUrls { get; set; }
 
         IConnectionSettings Connections { get; }
     }

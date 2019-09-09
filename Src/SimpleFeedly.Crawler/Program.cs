@@ -89,27 +89,38 @@ namespace SimpleFeedly.Crawler
     {
         public void Configuration(IAppBuilder app)
         {
-            var policy = new CorsPolicy()
+            if (!string.IsNullOrWhiteSpace(AppSettings.Base.SimpleFeedlyWebAppUrls))
             {
-                AllowAnyHeader = true,
-                AllowAnyMethod = true,
-                SupportsCredentials = true
-            };
+                var urls = AppSettings.Base.SimpleFeedlyWebAppUrls.Split(',');
 
-            //be sure to include the port:
-            //example: "http://localhost:8081"
-            policy.Origins.Add(AppSettings.Base.SimpleFeedlyWebAppUrl);
-
-            app.UseCors(new CorsOptions
-            {
-                PolicyProvider = new CorsPolicyProvider
+                var policy = new CorsPolicy()
                 {
-                    PolicyResolver = context => Task.FromResult(policy)
-                }
-            });
+                    AllowAnyHeader = true,
+                    AllowAnyMethod = true,
+                    SupportsCredentials = true
+                };
 
-            //app.UseCors(CorsOptions.AllowAll);
-            app.MapSignalR();
+                foreach (var url in urls)
+                {
+                    //be sure to include the port:
+                    //example: "http://localhost:8081"
+                    policy.Origins.Add(url.Trim());
+                }
+
+                app.UseCors(new CorsOptions
+                {
+                    PolicyProvider = new CorsPolicyProvider
+                    {
+                        PolicyResolver = context => Task.FromResult(policy)
+                    }
+                });
+
+                //app.UseCors(CorsOptions.AllowAll);
+            }
+
+            app.MapSignalR(new Microsoft.AspNet.SignalR.HubConfiguration {
+                //EnableDetailedErrors = true
+            });
         }
     }
 }
