@@ -47,8 +47,8 @@
     <Reference Include="Common.Logging.NLog41, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Common.Logging.NLog41.3.4.1\lib\net40\Common.Logging.NLog41.dll</HintPath>
     </Reference>
-    <Reference Include="DatabaseMigrateExt, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\DatabaseMigrateExt.2.4.0\lib\net462\DatabaseMigrateExt.dll</HintPath>
+    <Reference Include="DatabaseMigrateExt, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DatabaseMigrateExt.2.5.0\lib\net462\DatabaseMigrateExt.dll</HintPath>
     </Reference>
     <Reference Include="FluentCommandLineParser, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll</HintPath>
@@ -164,7 +164,7 @@
     <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20180324_025501_add_stored.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20190908_082801_channel_refresh_time.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20190908_061501_blacklist_stored.cs" />
-    <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20190908_031401_blacklist_hash.cs" />
+    <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20180220_025601_blacklist_hash.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20190429_221901_rename_blacklist_channelId.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20190429_214401_rename_blacklist.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20190429_034101_cleanup_feeditems.cs" />
@@ -185,7 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
-    <EmbeddedResource Include="Migrations\SimpleFeedlyDb\%40RefScript\Stored\Scripts\v000001_blacklist_hash.sql" />
+    <EmbeddedResource Include="Migrations\SimpleFeedlyDb\%40RefScript\%40General\v000001_blacklist_hash.sql" />
     <EmbeddedResource Include="Migrations\SimpleFeedlyDb\%40RefScript\Function\dbo.fnGetUnsignString.sql" />
     <EmbeddedResource Include="Migrations\SimpleFeedlyDb\%40RefScript\Function\dbo.fnRemoveNonAlphaCharactersAndDigit.sql" />
     <EmbeddedResource Include="Migrations\SimpleFeedlyDb\%40RefScript\Stored\dbo.CleanupFeedItemsData.sql" />

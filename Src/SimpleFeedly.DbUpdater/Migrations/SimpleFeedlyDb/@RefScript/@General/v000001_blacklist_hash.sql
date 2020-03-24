@@ -1,4 +1,8 @@
-﻿IF NOT EXISTS (
+﻿IF  EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[Blacklist]') AND name = N'idx_Blacklist_unique')
+DROP INDEX [idx_Blacklist_unique] ON [dbo].[Blacklist]
+GO
+
+IF NOT EXISTS (
   SELECT * 
   FROM   sys.columns 
   WHERE  object_id = OBJECT_ID(N'[dbo].[Blacklist]') 
@@ -11,8 +15,16 @@ END
 
 GO
 
-UPDATE dbo.Blacklist
-SET ShrinkedTitle = LOWER(dbo.fnGetUnsignString(dbo.fnRemoveNonAlphaCharactersAndDigit(Title)))
+IF EXISTS (
+	SELECT * 
+	FROM   sys.columns 
+	WHERE  object_id = OBJECT_ID(N'[dbo].[Blacklist]') 
+			AND name = 'Title'
+)
+BEGIN
+	DECLARE @sql NVARCHAR(max) = 'UPDATE dbo.Blacklist SET ShrinkedTitle = LOWER(dbo.fnGetUnsignString(dbo.fnRemoveNonAlphaCharactersAndDigit(Title)))'
+	EXECUTE sp_executesql @sql
+END
 
 GO
 
@@ -28,16 +40,16 @@ BEGIN
 END
 
 GO
-
-UPDATE dbo.Blacklist
-SET ShrinkedTitleHash = HashBytes('MD5', ShrinkedTitle)
-
-GO
-
-IF  EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[Blacklist]') AND name = N'idx_Blacklist_unique')
-DROP INDEX [idx_Blacklist_unique] ON [dbo].[Blacklist]
-GO
-
+IF EXISTS (
+    SELECT * 
+    FROM   sys.columns 
+    WHERE  object_id = OBJECT_ID(N'[dbo].[Blacklist]') 
+            AND name = 'ShrinkedTitleHash'
+)
+BEGIN
+	DECLARE @sql NVARCHAR(max) = 'UPDATE dbo.Blacklist SET ShrinkedTitleHash = HashBytes(''MD5'', ShrinkedTitle)'
+    EXECUTE sp_executesql @sql
+END
 GO
 
 ;WITH cte AS (

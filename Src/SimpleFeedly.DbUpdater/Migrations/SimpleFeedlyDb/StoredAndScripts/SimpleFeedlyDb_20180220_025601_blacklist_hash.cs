@@ -5,12 +5,12 @@ using System;
 
 namespace SimpleFeedly.DbUpdater.Migrations.SimpleFeedlyDb
 {
-    [ExtMgrStoredProcedureAndScript(2019,09,08,03,14,01)]
-    public class SimpleFeedlyDb_20190908_031401_blacklist_hash : Migration
+    [ExtMgrStoredProcedureAndScript(2018,02,20,02,56,01)]
+    public class SimpleFeedlyDb_20180220_025601_blacklist_hash : Migration
     {
         public override void Up()
         {
-            this.ExecuteTsqlScript("v000001_blacklist_hash.sql");
+            this.ExecuteGeneralScript("v000001_blacklist_hash.sql");
         }
 
         public override void Down() { throw new NotImplementedException(); }
