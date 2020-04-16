@@ -2306,25 +2306,34 @@ var SimpleFeedly;
             function CustomPagerWithOnlyNextPreviousMixin(options) {
                 var _this = this;
                 this._customPagerCurrentPage = 1;
-                this._customPager = $("<span class='next-previous-pager'><button class='custompager-pre'><strong>«</strong> Previous</button><span style='padding: 0 2px;'></span><button class='custompager-next'>Next <strong>»</strong></button><span style='padding: 0 2px;'></span><b>Page</b> <span class='custompager-curpage'>1</span></span>");
-                this._originalPager = $(".s-SlickPager");
+                this._customPager = null;
+                this._originalPager = null;
+                this._btnSwitch = null;
                 var self = this;
                 this.options = options;
                 var dg = this.dataGrid = options.grid;
                 this._pagingMode = options.pagingMode = options.pagingMode || 'next-previous-only';
-                $(".slick-pg-in").hide();
-                this._originalPager.find(".slick-pg-in").append(this._customPager);
-                var btnSwitch = this._btnSwitch = $('<input type="checkbox" title="Full Pager" class="paging-mode-switch pull-right" style="margin-right: 5px" ' + (options.pagingMode == "full" ? ' checked' : '') + '/>')
-                    .appendTo(dg.element.find(".slick-pg-in"));
-                btnSwitch.change(function (evt) {
-                    var isFullMode = $(evt.target).is(":checked");
-                    // update current page number
-                    if (!isFullMode) {
-                        _this._customPagerCurrentPage = parseInt($(".slick-pg-current").val());
-                        _this._originalPager.find(".custompager-curpage").text($(".slick-pg-current").val());
-                    }
-                    _this.switchView(isFullMode ? 'full' : 'next-previous-only');
-                });
+                if (this._originalPager == null) {
+                    this._originalPager = this.options.grid.element.find(".s-SlickPager");
+                }
+                this.options.grid.element.find(".slick-pg-in").hide();
+                if (this._customPager == null) {
+                    this._customPager = $("<span class='next-previous-pager'><button class='custompager-pre'><strong>«</strong> Previous</button><span style='padding: 0 2px;'></span><button class='custompager-next'>Next <strong>»</strong></button><span style='padding: 0 2px;'></span><b>Page</b> <span class='custompager-curpage'>1</span></span>");
+                    this._originalPager.find(".slick-pg-in").append(this._customPager);
+                }
+                if (this._btnSwitch == null) {
+                    this._btnSwitch = $("<input type=\"checkbox\" title=\"Full Pager\" class=\"paging-mode-switch pull-right\" style=\"margin-right: 5px; cursor: pointer\" " + (options.pagingMode == "full" ? ' checked' : '') + ">");
+                    this._btnSwitch.appendTo(dg.element.find(".slick-pg-in"));
+                    this._btnSwitch.change(function (evt) {
+                        var isFullMode = $(evt.target).is(":checked");
+                        // update current page number
+                        if (!isFullMode) {
+                            _this._customPagerCurrentPage = parseInt(_this.options.grid.element.find(".slick-pg-current").val());
+                            _this._originalPager.find(".custompager-curpage").text(_this.options.grid.element.find(".slick-pg-current").val());
+                        }
+                        _this.switchView(isFullMode ? 'full' : 'next-previous-only');
+                    });
+                }
                 this._originalPager.find(".custompager-pre").click(function (e) {
                     if (_this._customPagerCurrentPage > 1) {
                         _this._customPagerCurrentPage--;
@@ -2348,7 +2357,7 @@ var SimpleFeedly;
                 var oldCurrentSettings = dg.getCurrentSettings;
                 dg.getCurrentSettings = function (flag) {
                     var settings = oldCurrentSettings.apply(dg, [flag]);
-                    settings['customPagerMode'] = $(btnSwitch).is(":checked") ? 'full' : 'next-previous-only';
+                    settings['customPagerMode'] = $(self._btnSwitch).is(":checked") ? 'full' : 'next-previous-only';
                     return settings;
                 };
                 var oldRestoreSettings = dg.restoreSettings;
@@ -2368,9 +2377,9 @@ var SimpleFeedly;
                         settings = JSON.parse(json);
                     }
                     var viewPagerMode = settings.customPagerMode || self._pagingMode;
-                    var currentViewPagerMode = $(btnSwitch).is(":checked") ? 'full' : 'next-previous-only';
+                    var currentViewPagerMode = $(self._btnSwitch).is(":checked") ? 'full' : 'next-previous-only';
                     if (viewPagerMode != currentViewPagerMode) {
-                        $(btnSwitch).click();
+                        $(self._btnSwitch).click();
                     }
                 };
             }
@@ -2404,7 +2413,7 @@ var SimpleFeedly;
                     this._originalPager.find(".slick-pg-grp").show();
                     this._originalPager.find(".slick-pg-sep").show();
                 }
-                $(".slick-pg-in").show();
+                this.options.grid.element.find(".slick-pg-in").show();
             };
             CustomPagerWithOnlyNextPreviousMixin.prototype.getCurrentPagerMode = function () {
                 return $(this._btnSwitch).is(":checked") ? 'full' : 'next-previous-only';
