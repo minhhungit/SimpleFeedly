@@ -367,6 +367,38 @@
             string pattern = "<img.+?src=[\"'](.+?)[\"'].*?>";
             Regex myRegex = new Regex(pattern, RegexOptions.IgnoreCase);
 
+            try
+            {
+                var doc = new HtmlWeb().Load(Link ?? string.Empty);
+
+                //Get value from given xpath
+                string xpath = "//meta[@property='og:image']";
+
+                var ogImage = doc.DocumentNode.SelectSingleNode(xpath);
+                var src = ogImage?.Attributes["content"]?.Value?.ToString() ?? string.Empty;
+                if (!string.IsNullOrWhiteSpace(src))
+                {
+                    imageUrl = src;
+                }
+                else
+                {
+                    Match m = myRegex.Match(doc.Text);
+
+                    if (m.Success && m.Groups.Count >= 2)
+                    {
+                        var imgSrc = m.Groups[1]?.Value ?? string.Empty;
+                        if (!string.IsNullOrWhiteSpace(imgSrc))
+                        {
+                            imageUrl = imgSrc;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
             if (!string.IsNullOrWhiteSpace(Description))
             {
                 try
@@ -420,38 +452,6 @@
             //    }
             //    catch { }
             //}
-
-            try
-            {
-                var doc = new HtmlWeb().Load(Link ?? string.Empty);
-
-                //Get value from given xpath
-                string xpath = "//meta[@property='og:image']";
-
-                var ogImage = doc.DocumentNode.SelectSingleNode(xpath);
-                var src = ogImage?.Attributes["content"]?.Value?.ToString() ?? string.Empty;
-                if (!string.IsNullOrWhiteSpace(src))
-                {
-                    imageUrl = src;
-                }
-                else
-                {
-                    Match m = myRegex.Match(doc.Text);
-
-                    if (m.Success && m.Groups.Count >= 2)
-                    {
-                        var imgSrc = m.Groups[1]?.Value ?? string.Empty;
-                        if (!string.IsNullOrWhiteSpace(imgSrc))
-                        {
-                            imageUrl = imgSrc;
-                        }
-                    }
-                }
-            }
-            catch
-            {
-
-            }
 
             if (!string.IsNullOrWhiteSpace(imageUrl))
             {
