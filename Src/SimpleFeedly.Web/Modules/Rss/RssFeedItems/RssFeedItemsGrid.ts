@@ -229,7 +229,7 @@ namespace SimpleFeedly.Rss {
             var columns = super.getColumns();
 
             let selectionCol = Serenity.GridRowSelectionMixin.createSelectColumn(() => this.rowSelection);
-            selectionCol.width = 25; // fix IE: dot issue
+            selectionCol.width = 27; // fix IE: dot issue
             columns.splice(0, 0, selectionCol);
 
             columns.splice(1, 0, {
@@ -343,7 +343,7 @@ namespace SimpleFeedly.Rss {
 
         protected getSlickOptions(): Slick.GridOptions {
             var opt = super.getSlickOptions();
-            opt.rowHeight = 190;
+            opt.rowHeight = 30;
             return opt;
         }
 
@@ -356,6 +356,5 @@ namespace SimpleFeedly.Rss {
         protected getPersistanceStorage(): Serenity.SettingStorage {
             return new Common.UserPreferenceStorage();
         }
-
     }
 }

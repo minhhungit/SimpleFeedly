@@ -3552,7 +3552,7 @@ var SimpleFeedly;
                 var _this = this;
                 var columns = _super.prototype.getColumns.call(this);
                 var selectionCol = Serenity.GridRowSelectionMixin.createSelectColumn(function () { return _this.rowSelection; });
-                selectionCol.width = 25; // fix IE: dot issue
+                selectionCol.width = 27; // fix IE: dot issue
                 columns.splice(0, 0, selectionCol);
                 columns.splice(1, 0, {
                     field: 'View Details',
@@ -3643,7 +3643,7 @@ var SimpleFeedly;
             };
             RssFeedItemsGrid.prototype.getSlickOptions = function () {
                 var opt = _super.prototype.getSlickOptions.call(this);
-                opt.rowHeight = 190;
+                opt.rowHeight = 30;
                 return opt;
             };
             RssFeedItemsGrid.prototype.getViewOptions = function () {
