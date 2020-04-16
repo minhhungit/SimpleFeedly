@@ -11,6 +11,8 @@
         Content?: string;
         IsChecked?: boolean;
         RssChannelTitle?: string;
+        CoverImageUrl?: string;
+        XmlData?: string;
     }
 
     export namespace RssFeedItemsRow {
@@ -29,7 +31,9 @@
             Author = "Author",
             Content = "Content",
             IsChecked = "IsChecked",
-            RssChannelTitle = "RssChannelTitle"
+            RssChannelTitle = "RssChannelTitle",
+            CoverImageUrl = "CoverImageUrl",
+            XmlData = "XmlData"
         }
     }
 }

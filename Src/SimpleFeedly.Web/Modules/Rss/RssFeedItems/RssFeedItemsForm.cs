@@ -26,5 +26,7 @@ namespace SimpleFeedly.Rss.Forms
         public String Author { get; set; }
         [HtmlContentEditor(Rows = 17)]
         public String Content { get; set; }
+
+        public String CoverImageUrl { get; set; }
     }
 }

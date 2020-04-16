@@ -714,6 +714,7 @@ declare namespace SimpleFeedly.Rss {
         PublishingDate: Serenity.DateEditor;
         Author: Serenity.StringEditor;
         Content: Serenity.HtmlContentEditor;
+        CoverImageUrl: Serenity.StringEditor;
     }
     class RssFeedItemsForm extends Serenity.PrefixedContext {
         static formKey: string;
@@ -734,6 +735,8 @@ declare namespace SimpleFeedly.Rss {
         Content?: string;
         IsChecked?: boolean;
         RssChannelTitle?: string;
+        CoverImageUrl?: string;
+        XmlData?: string;
     }
     namespace RssFeedItemsRow {
         const idProperty = "Id";
@@ -750,7 +753,9 @@ declare namespace SimpleFeedly.Rss {
             Author = "Author",
             Content = "Content",
             IsChecked = "IsChecked",
-            RssChannelTitle = "RssChannelTitle"
+            RssChannelTitle = "RssChannelTitle",
+            CoverImageUrl = "CoverImageUrl",
+            XmlData = "XmlData"
         }
     }
 }
@@ -1369,5 +1374,12 @@ declare namespace SimpleFeedly.Rss {
         protected getSlickOptions(): Slick.GridOptions;
         protected getViewOptions(): Slick.RemoteViewOptions;
         protected getPersistanceStorage(): Serenity.SettingStorage;
+    }
+}
+declare namespace SimpleFeedly.Rss {
+    class RssFeedImageFormatter implements Slick.Formatter, Serenity.IInitializeColumn {
+        format(ctx: Slick.FormatterContext): string;
+        initializeColumn(column: Slick.Column): void;
+        fileProperty: string;
     }
 }

@@ -1682,6 +1682,7 @@
     <TypeScriptCompile Include="Modules\Common\Helpers\BasicProgressDialog.ts" />
     <TypeScriptCompile Include="Modules\Common\Helpers\BulkServiceAction.ts" />
     <TypeScriptCompile Include="Modules\Rss\RssChannelsVerifier\RssChannelsVerifierForm.ts" />
+    <TypeScriptCompile Include="Modules\Rss\RssFeedItems\Formatters\RssFeedImageFormatter.ts" />
     <TypeScriptCompile Include="node_modules\%40types\jquery.blockui\index.d.ts" />
     <TypeScriptCompile Include="node_modules\%40types\jquery.cookie\index.d.ts" />
     <TypeScriptCompile Include="node_modules\%40types\jquery.validation\index.d.ts" />
@@ -1745,6 +1746,9 @@
     <Compile Include="Collections\BlacklistItemsCollection.cs" />
     <Compile Include="Hubs\ChannelHub.cs" />
     <Compile Include="Imports\ClientTypes\Common.CustomLookupFormatterAttribute.cs">
+      <DependentUpon>ClientTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Imports\ClientTypes\Rss.RssFeedImageFormatterAttribute.cs">
       <DependentUpon>ClientTypes.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BlacklistItem.cs" />

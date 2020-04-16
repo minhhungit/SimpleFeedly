@@ -17,6 +17,10 @@ namespace SimpleFeedly.Rss.Columns
         public Int64 Id { get; set; }
 
         //public String FeedItemKey { get; set; }
+
+        //[RssFeedImageFormatter(FileProperty = "CoverImageUrl")]
+        //public String CoverImageUrl { get; set; }
+
         [Width(1000)]
         public String Title { get; set; }
 

@@ -343,7 +343,7 @@ namespace SimpleFeedly.Rss {
 
         protected getSlickOptions(): Slick.GridOptions {
             var opt = super.getSlickOptions();
-            opt.rowHeight = 30;
+            opt.rowHeight = 190;
             return opt;
         }
 

@@ -9,6 +9,7 @@
         PublishingDate: Serenity.DateEditor;
         Author: Serenity.StringEditor;
         Content: Serenity.HtmlContentEditor;
+        CoverImageUrl: Serenity.StringEditor;
     }
 
     export class RssFeedItemsForm extends Serenity.PrefixedContext {
@@ -38,7 +39,8 @@
                     'Description', w3,
                     'PublishingDate', w4,
                     'Author', w2,
-                    'Content', w5
+                    'Content', w5,
+                    'CoverImageUrl', w2
                 ]);
             }
         }
