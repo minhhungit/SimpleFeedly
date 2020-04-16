@@ -29,7 +29,9 @@ ALTER PROCEDURE [dbo].[InsertFeedItem]
 	@description NVARCHAR(MAX),
 	@publishingDate DATETIME,
 	@author NVARCHAR(200),
-	@content  NVARCHAR(MAX)
+	@content  NVARCHAR(MAX),
+	@coverImageUrl NVARCHAR(500),
+	@xmlData NVARCHAR(MAX)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -51,7 +53,9 @@ BEGIN
 										   PublishingDate ,
 										   Author ,
 										   [Content ] ,
-										   IsChecked )
+										   IsChecked,
+										   CoverImageUrl,
+										   XmlData)
 			VALUES ( @channelId ,
 					 @feedItemKey ,
 					 @title ,     
@@ -60,7 +64,9 @@ BEGIN
 					 @publishingDate ,
 					 @author,
 					 @content,
-					 0
+					 0,
+					 @coverImageUrl,
+					 @xmlData
 				)
 		END
 	END

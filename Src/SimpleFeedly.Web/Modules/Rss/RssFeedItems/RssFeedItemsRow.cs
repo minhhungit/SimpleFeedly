@@ -98,6 +98,20 @@ namespace SimpleFeedly.Rss.Entities
             set { Fields.IsChecked[this] = value; }
         }
 
+        [DisplayName("Cover Image Url"), Column("CoverImageUrl")]
+        public String CoverImageUrl
+        {
+            get { return Fields.CoverImageUrl[this]; }
+            set { Fields.CoverImageUrl[this] = value; }
+        }
+
+        [DisplayName("Xml Data"), Column("XmlData")]
+        public String XmlData
+        {
+            get { return Fields.XmlData[this]; }
+            set { Fields.XmlData[this] = value; }
+        }
+        
         IIdField IIdRow.IdField
         {
             get { return Fields.Id; }
@@ -129,6 +143,8 @@ namespace SimpleFeedly.Rss.Entities
             public BooleanField IsChecked;
 
             public StringField RssChannelTitle;
+            public StringField CoverImageUrl;
+            public StringField XmlData;
         }
     }
 }

@@ -173,6 +173,8 @@ namespace SimpleFeedly
                 parms.Add("@publishingDate", item.PublishingDate == null || item.PublishingDate == DateTime.MinValue ? DateTime.Now : item.PublishingDate);
                 parms.Add("@author", item.Author);
                 parms.Add("@content", item.Content);
+                parms.Add("@coverImageUrl", item.CoverImageUrl);
+                parms.Add("@xmlData", item.XmlData);
 
                 con.Execute("InsertFeedItem", parms, commandType: CommandType.StoredProcedure, commandTimeout: 30);
             }

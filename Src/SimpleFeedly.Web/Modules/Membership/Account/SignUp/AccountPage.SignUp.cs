@@ -22,10 +22,10 @@ namespace SimpleFeedly.Membership.Pages
         {
             throw new HttpException(404, "Not Found");
 
-            if (UseAdminLTELoginBox)
-                return View(MVC.Views.Membership.Account.SignUp.AccountSignUp_AdminLTE);
-            else
-                return View(MVC.Views.Membership.Account.SignUp.AccountSignUp);
+            //if (UseAdminLTELoginBox)
+            //    return View(MVC.Views.Membership.Account.SignUp.AccountSignUp_AdminLTE);
+            //else
+            //    return View(MVC.Views.Membership.Account.SignUp.AccountSignUp);
         }
 
         [HttpPost, JsonFilter]

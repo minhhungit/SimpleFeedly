@@ -1,5 +1,6 @@
 ﻿namespace SimpleFeedly
 {
+    using HtmlAgilityPack;
     using Microsoft.AspNet.SignalR;
     using Newtonsoft.Json;
     using NLog;
@@ -121,8 +122,15 @@
                                                         Description = fItem.Description,
                                                         PublishingDate = fItem.PublishingDate,
                                                         Author = fItem.Author,
-                                                        Content = fItem.Content
+                                                        Content = fItem.Content,
+                                                        //XmlData = fItem.XmlData
                                                     };
+
+                                                    var coverImageUrl = fItem.GetFeedCoverImage();
+                                                    if (!string.IsNullOrWhiteSpace(coverImageUrl))
+                                                    {
+                                                        feedItem.CoverImageUrl = coverImageUrl;
+                                                    }
 
                                                     SimpleFeedlyDatabaseAccess.InsertFeedItem(feedItem);
 
@@ -276,147 +284,34 @@
                     continue;
                 }
 
-                if (engineLoop == RssCrawlerEngine.CodeHollowFeedReader && canRun)
+                IRssEngine rssEngine = null;
+                switch (engineLoop)
                 {
-                    if (!status)
-                    {
-                        try
-                        {
-                            var feed = CodeHollow.FeedReader.FeedReader.ReadAsync(feedUrl).GetAwaiter().GetResult();
-
-                            foreach (var item in feed.Items)
-                            {
-                                var feedItem = new SimpleFeedlyFeedItem
-                                {
-                                    Id = item.Id,
-                                    Title = string.IsNullOrWhiteSpace(item.Title) ? item.Link : item.Title,
-                                    Link = item.Link,
-                                    Description = item.Description,
-                                    PublishingDate = item.PublishingDate ?? DateTime.Now,
-                                    Author = item.Author,
-                                    Content = item.Content
-                                };
-
-                                items.Add(feedItem);
-                            }
-
-                            engine = RssCrawlerEngine.CodeHollowFeedReader;
-                            status = true;
-                        }
-                        catch (Exception ex)
-                        {
-                            error = ex;
-                        }
-                    }
+                    case RssCrawlerEngine.SyndicationFeed:
+                        rssEngine = new SyndicationFeedEngine();
+                        break;
+                    case RssCrawlerEngine.CodeHollowFeedReader:
+                        rssEngine = new CodeHollowFeedReaderEngine();
+                        break;
+                    case RssCrawlerEngine.ParseRssByXml:
+                        rssEngine = new ParseRssByXmlEngine();
+                        break;
+                    default:                        
+                        break;
                 }
 
-                if (engineLoop == RssCrawlerEngine.SyndicationFeed && canRun)
+                if (rssEngine != null && !status)
                 {
-                    if (!status)
+                    try
                     {
-                        try
-                        {
-                            XmlReaderSettings settings = new XmlReaderSettings();
-                            settings.DtdProcessing = DtdProcessing.Parse;
+                        items.AddRange(rssEngine.GetItems(feedUrl, out error) ?? new List<SimpleFeedlyFeedItem>());
 
-                            using (var reader = XmlReader.Create(feedUrl, settings))
-                            {
-                                var feed = System.ServiceModel.Syndication.SyndicationFeed.Load(reader);
-                                reader.Close();
-
-                                foreach (System.ServiceModel.Syndication.SyndicationItem item in feed.Items)
-                                {
-                                    var feedItem = new SimpleFeedlyFeedItem();
-
-                                    var link = item.Links.FirstOrDefault()?.Uri.ToString();
-                                    link = string.IsNullOrWhiteSpace(link) ? item.Id : link;
-
-                                    feedItem.Id = item.Id;
-                                    feedItem.Title = string.IsNullOrWhiteSpace(item.Title?.Text) ? link : item.Title.Text;
-                                    feedItem.Link = link;
-                                    feedItem.Description = item.Summary?.Text;
-                                    feedItem.PublishingDate = item.PublishDate.UtcDateTime;
-                                    feedItem.Author = item.Authors.FirstOrDefault()?.Name ?? string.Empty;
-                                    feedItem.Content = item.Content?.ToString();
-
-                                    items.Add(feedItem);
-                                }
-                            }
-
-                            engine = RssCrawlerEngine.SyndicationFeed;
-                            status = true;
-                        }
-                        catch (Exception ex)
-                        {
-                            error = ex;
-                        }
+                        engine = engineLoop;
+                        status = true;
                     }
-                }
-
-                if (engineLoop == RssCrawlerEngine.ParseRssByXml && canRun)
-                {
-                    if (!status)
+                    catch (Exception ex)
                     {
-                        try
-                        {
-                            var xmlString = string.Empty;
-                            using (WebClient client = new WebClient())
-                            {
-                                var htmlData = client.DownloadData(feedUrl);
-                                xmlString = System.Text.Encoding.UTF8.GetString(htmlData);
-
-                                // ReplaceHexadecimalSymbols
-                                string r = "[\x00-\x08\x0B\x0C\x0E-\x1F\x26]";
-                                xmlString = Regex.Replace(xmlString, r, "", RegexOptions.Compiled);
-                            }
-
-                            XmlDocument rssXmlDoc = new XmlDocument();
-                            rssXmlDoc.LoadXml(xmlString);
-
-                            // Parse the Items in the RSS file
-                            XmlNodeList rssNodes = rssXmlDoc.SelectNodes("rss/channel/item");
-
-                            // Iterate through the items in the RSS file
-                            foreach (XmlNode rssNode in rssNodes)
-                            {
-                                var feedItem = new SimpleFeedlyFeedItem();
-
-                                XmlNode rssSubNode = rssNode.SelectSingleNode("link");
-                                feedItem.Link = rssSubNode != null ? rssSubNode.InnerText : null;
-
-                                rssSubNode = rssNode.SelectSingleNode("title");
-                                feedItem.Title = rssSubNode != null ? rssSubNode.InnerText : null;
-                                feedItem.Title = string.IsNullOrWhiteSpace(feedItem.Title) ? feedItem.Link : feedItem.Title;
-
-                                rssSubNode = rssNode.SelectSingleNode("description");
-                                feedItem.Description = rssSubNode != null ? rssSubNode.InnerText : null;
-
-                                rssSubNode = rssNode.SelectSingleNode("pubDate");
-                                DateTime pubDate = DateTime.Now;
-
-                                if (rssSubNode != null)
-                                {
-                                    if (DateTime.TryParse(rssSubNode.InnerText, out DateTime tmpDate))
-                                    {
-                                        pubDate = tmpDate;
-                                    }
-                                }
-
-                                feedItem.PublishingDate = pubDate;
-
-                                if (!string.IsNullOrWhiteSpace(feedItem.Link))
-                                {
-                                    items.Add(feedItem);
-                                }
-                            }
-
-                            engine = RssCrawlerEngine.ParseRssByXml;
-                            status = true;
-                        }
-                        catch (Exception ex)
-                        {
-                            error = ex;
-                        }
+                        error = ex;
                     }
                 }
             }
@@ -462,5 +357,284 @@
         public DateTime PublishingDate { get; set; }
         public string Author { get; set; }
         public string Content { get; set; }
+
+        //public string XmlData { get; set; }
+
+        public string GetFeedCoverImage()
+        {
+            string imageUrl = string.Empty;
+            //string pattern = @"<img\s+[^>]*?src=('|')([^'']+)\1";
+            string pattern = "<img.+?src=[\"'](.+?)[\"'].*?>";
+            Regex myRegex = new Regex(pattern, RegexOptions.IgnoreCase);
+
+            if (!string.IsNullOrWhiteSpace(Description))
+            {
+                try
+                {                    
+                    Match m = myRegex.Match(Description);
+
+                    if (m.Success && m.Groups.Count >= 2)
+                    {
+                        var tmp = m.Groups[1]?.Value ?? string.Empty;
+                        if (!string.IsNullOrWhiteSpace(tmp))
+                        {
+                            return tmp;
+                        }
+                    }
+                }
+                catch { }
+            }
+
+            if (!string.IsNullOrWhiteSpace(Content))
+            {
+                try
+                {
+                    Match m = myRegex.Match(Content);
+
+                    if (m.Success && m.Groups.Count >= 2)
+                    {
+                        var tmp = m.Groups[1]?.Value ?? string.Empty;
+                        if (!string.IsNullOrWhiteSpace(tmp))
+                        {
+                            return tmp;
+                        }
+                    }
+                }
+                catch { }
+            }
+
+            //if (!string.IsNullOrWhiteSpace(XmlData))
+            //{
+            //    try
+            //    {
+            //        Match m = myRegex.Match(XmlData);
+
+            //        if (m.Success && m.Groups.Count >= 2)
+            //        {
+            //            var tmp = m.Groups[1]?.Value ?? string.Empty;
+            //            if (!string.IsNullOrWhiteSpace(tmp))
+            //            {
+            //                return tmp;
+            //            }
+            //        }
+            //    }
+            //    catch { }
+            //}
+
+            try
+            {
+                var doc = new HtmlWeb().Load(Link ?? string.Empty);
+
+                //Get value from given xpath
+                string xpath = "//meta[@property='og:image']";
+
+                var ogImage = doc.DocumentNode.SelectSingleNode(xpath);
+                var src = ogImage?.Attributes["content"]?.Value?.ToString() ?? string.Empty;
+                if (!string.IsNullOrWhiteSpace(src))
+                {
+                    imageUrl = src;
+                }
+                else
+                {
+                    Match m = myRegex.Match(doc.Text);
+
+                    if (m.Success && m.Groups.Count >= 2)
+                    {
+                        var imgSrc = m.Groups[1]?.Value ?? string.Empty;
+                        if (!string.IsNullOrWhiteSpace(imgSrc))
+                        {
+                            imageUrl = imgSrc;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
+            if (!string.IsNullOrWhiteSpace(imageUrl))
+            {
+                if (!imageUrl.StartsWith("http"))
+                {
+                    Uri pageUri = new Uri(Link);
+                    return $"{pageUri.Scheme + Uri.SchemeDelimiter + pageUri.Host + ":" + pageUri.Port}/{imageUrl.TrimStart('/')}";
+                }
+                else
+                {
+                    return imageUrl;
+                }
+            }
+            return string.Empty;
+        }
+    }
+
+    public interface IRssEngine
+    {
+        List<SimpleFeedlyFeedItem> GetItems(string feedUrl, out Exception error);
+    }
+
+    internal class CodeHollowFeedReaderEngine : IRssEngine
+    {
+        public List<SimpleFeedlyFeedItem> GetItems(string feedUrl, out Exception error)
+        {
+            Exception currentEx = null;
+            List<SimpleFeedlyFeedItem> items = new List<SimpleFeedlyFeedItem>();
+
+            var feed = CodeHollow.FeedReader.FeedReader.ReadAsync(feedUrl).GetAwaiter().GetResult();
+
+            foreach (var item in feed.Items)
+            {
+                try
+                {
+                    var feedItem = new SimpleFeedlyFeedItem
+                    {
+                        Id = item.Id,
+                        Title = string.IsNullOrWhiteSpace(item.Title) ? item.Link : item.Title,
+                        Link = item.Link,
+                        Description = item.Description,
+                        PublishingDate = item.PublishingDate ?? DateTime.Now,
+                        Author = item.Author,
+                        Content = item.Content
+                    };
+
+                    items.Add(feedItem);
+                }
+                catch (Exception ex)
+                {
+                    currentEx = ex;
+                }
+            }
+
+            error = currentEx;
+            return items;
+        }
+    }
+
+    internal class SyndicationFeedEngine : IRssEngine
+    {
+        public List<SimpleFeedlyFeedItem> GetItems(string feedUrl, out Exception error)
+        {
+            Exception currentEx = null;
+            List<SimpleFeedlyFeedItem> items = new List<SimpleFeedlyFeedItem>();
+            XmlReaderSettings settings = new XmlReaderSettings();
+            settings.DtdProcessing = DtdProcessing.Parse;
+
+            using (var reader = XmlReader.Create(feedUrl, settings))
+            {
+                var feed = System.ServiceModel.Syndication.SyndicationFeed.Load(reader);
+                reader.Close();
+
+                foreach (System.ServiceModel.Syndication.SyndicationItem item in feed.Items)
+                {
+                    try
+                    {
+                        var feedItem = new SimpleFeedlyFeedItem();
+
+                        var link = item.Links.FirstOrDefault()?.Uri.ToString();
+                        link = string.IsNullOrWhiteSpace(link) ? item.Id : link;
+
+                        feedItem.Id = item.Id;
+                        feedItem.Title = string.IsNullOrWhiteSpace(item.Title?.Text) ? link : item.Title.Text;
+                        feedItem.Link = link;
+                        feedItem.Description = item.Summary?.Text;
+                        feedItem.PublishingDate = item.PublishDate.UtcDateTime;
+                        feedItem.Author = item.Authors.FirstOrDefault()?.Name ?? string.Empty;
+                        feedItem.Content = item.Content?.ToString();
+
+                        //feedItem.XmlData = item.GetRss20Formatter().ToString();
+
+                        items.Add(feedItem);
+                    }
+                    catch (Exception ex){
+                        currentEx = ex;
+                    }
+                }
+            }
+
+            error = currentEx;
+            return items;
+        }
+    }
+
+    internal class ParseRssByXmlEngine : IRssEngine
+    {
+        public List<SimpleFeedlyFeedItem> GetItems(string feedUrl, out Exception error)
+        {
+            Exception currentEx = null;
+            List<SimpleFeedlyFeedItem> items = new List<SimpleFeedlyFeedItem>();
+
+            var xmlString = string.Empty;
+            using (WebClient client = new WebClient())
+            {
+                var htmlData = client.DownloadData(feedUrl);
+                xmlString = System.Text.Encoding.UTF8.GetString(htmlData);
+
+                // ReplaceHexadecimalSymbols
+                string r = "[\x00-\x08\x0B\x0C\x0E-\x1F\x26]";
+                xmlString = Regex.Replace(xmlString, r, "", RegexOptions.Compiled);
+            }
+
+            XmlDocument rssXmlDoc = new XmlDocument();
+            rssXmlDoc.LoadXml(xmlString);
+
+            // Parse the Items in the RSS file
+            XmlNodeList rssNodes = rssXmlDoc.SelectNodes("rss/channel/item");
+
+            var namespaceManager = new XmlNamespaceManager(rssXmlDoc.NameTable);
+            var contentNamespace = rssXmlDoc.DocumentElement.GetAttribute("xmlns:content");
+            namespaceManager.AddNamespace("content", contentNamespace);
+
+            // Iterate through the items in the RSS file
+            foreach (XmlNode rssNode in rssNodes)
+            {
+                try
+                {
+                    var feedItem = new SimpleFeedlyFeedItem();
+
+                    XmlNode rssSubNode = rssNode.SelectSingleNode("link");
+                    feedItem.Link = rssSubNode != null ? rssSubNode.InnerText : null;
+
+                    rssSubNode = rssNode.SelectSingleNode("title");
+                    feedItem.Title = rssSubNode != null ? rssSubNode.InnerText : null;
+                    feedItem.Title = string.IsNullOrWhiteSpace(feedItem.Title) ? feedItem.Link : feedItem.Title;
+
+                    rssSubNode = rssNode.SelectSingleNode("description");
+                    feedItem.Description = rssSubNode != null ? rssSubNode.InnerText : null;
+
+                    rssSubNode = rssNode.SelectSingleNode("//content:encoded", namespaceManager);
+                    feedItem.Content = rssSubNode != null ? rssSubNode.InnerText : null;
+
+                    rssSubNode = rssNode.SelectSingleNode("pubDate");
+                    DateTime pubDate = DateTime.Now;
+
+                    if (rssSubNode != null)
+                    {
+                        if (DateTime.TryParse(rssSubNode.InnerText, out DateTime tmpDate))
+                        {
+                            pubDate = tmpDate;
+                        }
+                    }
+
+                    feedItem.PublishingDate = pubDate;
+
+
+                    //feedItem.XmlData = rssNode.InnerXml.ToString();
+
+                    if (!string.IsNullOrWhiteSpace(feedItem.Link))
+                    {
+                        items.Add(feedItem);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    currentEx = ex;
+                    continue;
+                }
+            }
+
+            error = currentEx;
+            return items;
+        }
     }
 }
