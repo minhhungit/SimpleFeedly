@@ -382,57 +382,52 @@
                 }
                 else
                 {
-                    Match m = myRegex.Match(doc.Text);
-
-                    if (m.Success && m.Groups.Count >= 2)
+                    // use Desc
+                    if (!string.IsNullOrWhiteSpace(Description))
                     {
-                        var imgSrc = m.Groups[1]?.Value ?? string.Empty;
-                        if (!string.IsNullOrWhiteSpace(imgSrc))
+                        try
                         {
-                            imageUrl = imgSrc;
+                            var mDesc = myRegex.Match(Description);
+
+                            if (mDesc.Success && mDesc.Groups.Count >= 2)
+                            {
+                                imageUrl = mDesc.Groups[1]?.Value ?? string.Empty;
+                            }
                         }
+                        catch { }
                     }
+                    else
+                    {
+                        // use Content
+                        if (!string.IsNullOrWhiteSpace(Content))
+                        {
+                            try
+                            {
+                                Match mContent = myRegex.Match(Content);
+
+                                if (mContent.Success && mContent.Groups.Count >= 2)
+                                {
+                                    imageUrl = mContent.Groups[1]?.Value ?? string.Empty;
+                                }
+                            }
+                            catch { }
+                        }
+                        else
+                        {
+                            // last chance: full html
+                            Match m = myRegex.Match(doc.Text);
+
+                            if (m.Success && m.Groups.Count >= 2)
+                            {
+                                imageUrl = m.Groups[1]?.Value ?? string.Empty;
+                            }
+                        }
+                    }                    
                 }
             }
             catch
             {
 
-            }
-
-            if (!string.IsNullOrWhiteSpace(Description))
-            {
-                try
-                {                    
-                    Match m = myRegex.Match(Description);
-
-                    if (m.Success && m.Groups.Count >= 2)
-                    {
-                        var tmp = m.Groups[1]?.Value ?? string.Empty;
-                        if (!string.IsNullOrWhiteSpace(tmp))
-                        {
-                            return tmp;
-                        }
-                    }
-                }
-                catch { }
-            }
-
-            if (!string.IsNullOrWhiteSpace(Content))
-            {
-                try
-                {
-                    Match m = myRegex.Match(Content);
-
-                    if (m.Success && m.Groups.Count >= 2)
-                    {
-                        var tmp = m.Groups[1]?.Value ?? string.Empty;
-                        if (!string.IsNullOrWhiteSpace(tmp))
-                        {
-                            return tmp;
-                        }
-                    }
-                }
-                catch { }
             }
 
             //if (!string.IsNullOrWhiteSpace(XmlData))
@@ -465,6 +460,7 @@
                     return imageUrl;
                 }
             }
+
             return string.Empty;
         }
     }
