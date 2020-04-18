@@ -1,5 +1,6 @@
 ﻿/// <reference types="jquery" />
 /// <reference types="jqueryui" />
+/// <reference types="react" />
 declare namespace SimpleFeedly.Administration {
 }
 declare namespace SimpleFeedly.Administration {
@@ -1308,6 +1309,15 @@ declare namespace SimpleFeedly.Rss {
         protected getLocalTextPrefix(): string;
         protected getService(): string;
         constructor(container: JQuery);
+    }
+}
+declare namespace SimpleFeedly.Web.Rss {
+    interface HelloReactProps {
+        something: string;
+    }
+    class HelloReact extends React.Component<HelloReactProps> {
+        handleClick: (e: any) => void;
+        render(): React.ReactNode;
     }
 }
 declare namespace SimpleFeedly.Rss {

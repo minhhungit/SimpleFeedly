@@ -23,6 +23,8 @@ namespace SimpleFeedly.Rss {
 
             // verify button
             this.byId("btnCheck").click(() => this.CheckChannel(this.byId("txtFeedUrl").val()));
+
+            //ReactDOM.render(React.createElement(SimpleFeedly.Web.Rss.HelloReact, { something: 'Jin' }), this.byId("demoReactContainer")[0]);
         }
 
         private CheckChannel(feedUrl: string) {

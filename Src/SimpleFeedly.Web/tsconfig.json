@@ -9,6 +9,9 @@
     "sourceMap": true,
     "outFile": "Scripts/site/SimpleFeedly.Web.js",
     "target": "es5",
+    "jsx": "react",
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
     "typeRoots": [
       "./node_modules/@types/"
     ]

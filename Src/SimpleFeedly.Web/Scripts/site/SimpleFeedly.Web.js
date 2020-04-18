@@ -3234,6 +3234,34 @@ var SimpleFeedly;
 })(SimpleFeedly || (SimpleFeedly = {}));
 var SimpleFeedly;
 (function (SimpleFeedly) {
+    var Web;
+    (function (Web) {
+        var Rss;
+        (function (Rss) {
+            var HelloReact = /** @class */ (function (_super) {
+                __extends(HelloReact, _super);
+                function HelloReact() {
+                    var _this = _super !== null && _super.apply(this, arguments) || this;
+                    _this.handleClick = function (e) {
+                        Q.warning("My name is " + _this.props.something);
+                    };
+                    return _this;
+                }
+                HelloReact.prototype.render = function () {
+                    var something = this.props.something;
+                    return (React.createElement(React.Fragment, null,
+                        React.createElement("div", { onClick: this.handleClick, style: { padding: "40px", textAlign: "center", verticalAlign: "middle" } },
+                            "Hello ",
+                            something)));
+                };
+                return HelloReact;
+            }(React.Component));
+            Rss.HelloReact = HelloReact;
+        })(Rss = Web.Rss || (Web.Rss = {}));
+    })(Web = SimpleFeedly.Web || (SimpleFeedly.Web = {}));
+})(SimpleFeedly || (SimpleFeedly = {}));
+var SimpleFeedly;
+(function (SimpleFeedly) {
     var Rss;
     (function (Rss) {
         var RssChannelsDialog = /** @class */ (function (_super) {
@@ -3309,6 +3337,7 @@ var SimpleFeedly;
                 // verify button
                 _this.byId("btnCheck").click(function () { return _this.CheckChannel(_this.byId("txtFeedUrl").val()); });
                 return _this;
+                //ReactDOM.render(React.createElement(SimpleFeedly.Web.Rss.HelloReact, { something: 'Jin' }), this.byId("demoReactContainer")[0]);
             }
             RssChannelsVerifierForm.prototype.CheckChannel = function (feedUrl) {
                 var _this = this;
