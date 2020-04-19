@@ -3422,6 +3422,7 @@ var SimpleFeedly;
                             Q.confirm('You want to block:\n   - Title: ' + J.escapeHtml(_this.entity.Title) + '\n   - Channel: ' + J.escapeHtml(_this.entity.RssChannelTitle) + ' ?', function () {
                                 Rss.RssFeedItemsService.AddBlacklistItem({ ChannelId: _this.entity.ChannelId, FeedItemId: _this.entity.Id, Title: _this.entity.Title, IsDeleteFeedItem: true }, function (response) {
                                     Q.notifySuccess("ok");
+                                    Serenity.SubDialogHelper.triggerDataChange(_this);
                                     _this.dialogClose();
                                 });
                             }, {

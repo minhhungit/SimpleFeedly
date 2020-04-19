@@ -54,6 +54,8 @@ namespace SimpleFeedly.Rss {
                             () => {
                                 RssFeedItemsService.AddBlacklistItem({ ChannelId: this.entity.ChannelId, FeedItemId: this.entity.Id, Title: this.entity.Title, IsDeleteFeedItem: true }, response => {
                                     Q.notifySuccess("ok");
+
+                                    Serenity.SubDialogHelper.triggerDataChange(this);
                                     this.dialogClose();
                                 });
                             },
