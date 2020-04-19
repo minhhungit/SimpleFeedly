@@ -16,11 +16,11 @@ namespace SimpleFeedly.Rss.Endpoints
     [ConnectionKey(typeof(MyRow)), ServiceAuthorize(typeof(MyRow))]
     public class RssFeedItemsController : ServiceEndpoint
     {
-        [HttpPost, AuthorizeCreate(typeof(MyRow))]
-        public SaveResponse Create(IUnitOfWork uow, SaveRequest<MyRow> request)
-        {
-            return new MyRepository().Create(uow, request);
-        }
+        //[HttpPost, AuthorizeCreate(typeof(MyRow))]
+        //public SaveResponse Create(IUnitOfWork uow, SaveRequest<MyRow> request)
+        //{
+        //    return new MyRepository().Create(uow, request);
+        //}
 
         [HttpPost, AuthorizeUpdate(typeof(MyRow))]
         public SaveResponse Update(IUnitOfWork uow, SaveRequest<MyRow> request)

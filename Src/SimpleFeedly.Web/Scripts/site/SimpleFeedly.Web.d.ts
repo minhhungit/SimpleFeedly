@@ -1359,6 +1359,8 @@ declare namespace SimpleFeedly.Rss {
         protected getService(): string;
         protected form: RssFeedItemsForm;
         afterLoadEntity(): void;
+        protected updateInterface(): void;
+        getToolbarButtons(): Serenity.ToolButton[];
     }
 }
 declare namespace SimpleFeedly.Rss {

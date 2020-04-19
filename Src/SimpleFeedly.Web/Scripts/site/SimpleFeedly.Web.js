@@ -3392,6 +3392,45 @@ var SimpleFeedly;
                 if (this.isEditMode()) {
                     Serenity.EditorUtils.setReadOnly(this.form.ChannelId, true);
                 }
+                else {
+                    this.toolbar.findButton('block-feed-item').remove();
+                }
+            };
+            RssFeedItemsDialog.prototype.updateInterface = function () {
+                _super.prototype.updateInterface.call(this);
+                if (!this.isEditMode()) {
+                    this.element.remove();
+                    Q.notifyError("Add new is not allowed");
+                }
+            };
+            RssFeedItemsDialog.prototype.getToolbarButtons = function () {
+                var _this = this;
+                var buttons = _super.prototype.getToolbarButtons.call(this);
+                if (SimpleFeedly.Authorization.hasPermission("Blacklists:Insert")) {
+                    buttons.push({
+                        title: 'Block',
+                        cssClass: "block-feed-item text-red",
+                        icon: "fa fa-ban",
+                        onClick: function () {
+                            if (!_this.isEditMode()) {
+                                return;
+                            }
+                            if (!SimpleFeedly.Authorization.hasPermission("Blacklists:Insert")) {
+                                Q.alert("You have no permission for this action");
+                                return;
+                            }
+                            Q.confirm('You want to block:\n   - Title: ' + J.escapeHtml(_this.entity.Title) + '\n   - Channel: ' + J.escapeHtml(_this.entity.RssChannelTitle) + ' ?', function () {
+                                Rss.RssFeedItemsService.AddBlacklistItem({ ChannelId: _this.entity.ChannelId, FeedItemId: _this.entity.Id, Title: _this.entity.Title, IsDeleteFeedItem: true }, function (response) {
+                                    Q.notifySuccess("ok");
+                                    _this.dialogClose();
+                                });
+                            }, {
+                                title: 'Confirm',
+                            });
+                        }
+                    });
+                }
+                return buttons;
             };
             RssFeedItemsDialog = __decorate([
                 Serenity.Decorators.registerClass(),
