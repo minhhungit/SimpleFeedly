@@ -26,6 +26,10 @@ declare namespace SimpleFeedly.Administration {
         const localTextPrefix = "Administration.Language";
         const lookupKey = "Administration.Language";
         function getLookup(): Q.Lookup<LanguageRow>;
+        const deletePermission = "Administration:Translation";
+        const insertPermission = "Administration:Translation";
+        const readPermission = "Administration:Translation";
+        const updatePermission = "Administration:Translation";
         const enum Fields {
             Id = "Id",
             LanguageId = "LanguageId",
@@ -49,6 +53,8 @@ declare namespace SimpleFeedly.Administration {
             List = "Administration/Language/List"
         }
     }
+}
+declare namespace SimpleFeedly.Administration {
 }
 declare namespace SimpleFeedly.Administration {
 }
@@ -84,6 +90,10 @@ declare namespace SimpleFeedly.Administration {
         const idProperty = "RolePermissionId";
         const nameProperty = "PermissionKey";
         const localTextPrefix = "Administration.RolePermission";
+        const deletePermission = "Administration:Security";
+        const insertPermission = "Administration:Security";
+        const readPermission = "Administration:Security";
+        const updatePermission = "Administration:Security";
         const enum Fields {
             RolePermissionId = "RolePermissionId",
             RoleId = "RoleId",
@@ -122,6 +132,10 @@ declare namespace SimpleFeedly.Administration {
         const localTextPrefix = "Administration.Role";
         const lookupKey = "Administration.Role";
         function getLookup(): Q.Lookup<RoleRow>;
+        const deletePermission = "Administration:Security";
+        const insertPermission = "Administration:Security";
+        const readPermission = "Administration:Security";
+        const updatePermission = "Administration:Security";
         const enum Fields {
             RoleId = "RoleId",
             RoleName = "RoleName"
@@ -216,6 +230,10 @@ declare namespace SimpleFeedly.Administration {
         const idProperty = "UserPermissionId";
         const nameProperty = "PermissionKey";
         const localTextPrefix = "Administration.UserPermission";
+        const deletePermission = "Administration:Security";
+        const insertPermission = "Administration:Security";
+        const readPermission = "Administration:Security";
+        const updatePermission = "Administration:Security";
         const enum Fields {
             UserPermissionId = "UserPermissionId",
             UserId = "UserId",
@@ -269,6 +287,10 @@ declare namespace SimpleFeedly.Administration {
     namespace UserRoleRow {
         const idProperty = "UserRoleId";
         const localTextPrefix = "Administration.UserRole";
+        const deletePermission = "Administration:Security";
+        const insertPermission = "Administration:Security";
+        const readPermission = "Administration:Security";
+        const updatePermission = "Administration:Security";
         const enum Fields {
             UserRoleId = "UserRoleId",
             UserId = "UserId",
@@ -321,6 +343,10 @@ declare namespace SimpleFeedly.Administration {
         const localTextPrefix = "Administration.User";
         const lookupKey = "Administration.User";
         function getLookup(): Q.Lookup<UserRow>;
+        const deletePermission = "Administration:Security";
+        const insertPermission = "Administration:Security";
+        const readPermission = "Administration:Security";
+        const updatePermission = "Administration:Security";
         const enum Fields {
             UserId = "UserId",
             Username = "Username",
@@ -388,6 +414,10 @@ declare namespace SimpleFeedly.Common {
         const idProperty = "UserPreferenceId";
         const nameProperty = "Name";
         const localTextPrefix = "Common.UserPreference";
+        const deletePermission = "";
+        const insertPermission = "";
+        const readPermission = "";
+        const updatePermission = "";
         const enum Fields {
             UserPreferenceId = "UserPreferenceId",
             UserId = "UserId",
@@ -572,6 +602,10 @@ declare namespace SimpleFeedly.Rss {
         const idProperty = "Id";
         const nameProperty = "ShrinkedTitle";
         const localTextPrefix = "Rss.Blacklists";
+        const deletePermission = "Blacklists:Delete";
+        const insertPermission = "Blacklists:Insert";
+        const readPermission = "Blacklists:Read";
+        const updatePermission = "Blacklists:Update";
         const enum Fields {
             Id = "Id",
             ShrinkedTitle = "ShrinkedTitle",
@@ -655,6 +689,10 @@ declare namespace SimpleFeedly.Rss {
         const localTextPrefix = "Rss.RssChannels";
         const lookupKey = "Rss.RssChannels";
         function getLookup(): Q.Lookup<RssChannelsRow>;
+        const deletePermission = "Channels:Delete";
+        const insertPermission = "Channels:Insert";
+        const readPermission = "Channels:Read";
+        const updatePermission = "Channels:Update";
         const enum Fields {
             Id = "Id",
             Type = "Type",
@@ -743,6 +781,10 @@ declare namespace SimpleFeedly.Rss {
         const idProperty = "Id";
         const nameProperty = "FeedItemKey";
         const localTextPrefix = "Rss.RssFeedItems";
+        const deletePermission = "FeedItems:Delete";
+        const insertPermission = "FeedItems:Insert";
+        const readPermission = "FeedItems:Read";
+        const updatePermission = "FeedItems:Update";
         const enum Fields {
             Id = "Id",
             ChannelId = "ChannelId",
@@ -763,7 +805,6 @@ declare namespace SimpleFeedly.Rss {
 declare namespace SimpleFeedly.Rss {
     namespace RssFeedItemsService {
         const baseUrl = "Rss/RssFeedItems";
-        function Create(request: Serenity.SaveRequest<RssFeedItemsRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function Update(request: Serenity.SaveRequest<RssFeedItemsRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<RssFeedItemsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
@@ -774,7 +815,6 @@ declare namespace SimpleFeedly.Rss {
         function AddBlacklistItem(request: AddBlacklistItemRequest, onSuccess?: (response: Serenity.ServiceResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function AddBlacklistItems(request: AddBlacklistItemsRequest, onSuccess?: (response: Serenity.ServiceResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         const enum Methods {
-            Create = "Rss/RssFeedItems/Create",
             Update = "Rss/RssFeedItems/Update",
             Delete = "Rss/RssFeedItems/Delete",
             Retrieve = "Rss/RssFeedItems/Retrieve",

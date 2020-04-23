@@ -27,6 +27,10 @@
         export function getLookup(): Q.Lookup<RssChannelsRow> {
             return Q.getLookup<RssChannelsRow>('Rss.RssChannels');
         }
+        export const deletePermission = 'Channels:Delete';
+        export const insertPermission = 'Channels:Insert';
+        export const readPermission = 'Channels:Read';
+        export const updatePermission = 'Channels:Update';
 
         export declare const enum Fields {
             Id = "Id",

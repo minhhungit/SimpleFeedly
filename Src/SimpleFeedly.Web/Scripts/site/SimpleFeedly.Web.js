@@ -37,6 +37,10 @@ var SimpleFeedly;
                 return Q.getLookup('Administration.Language');
             }
             LanguageRow.getLookup = getLookup;
+            LanguageRow.deletePermission = 'Administration:Translation';
+            LanguageRow.insertPermission = 'Administration:Translation';
+            LanguageRow.readPermission = 'Administration:Translation';
+            LanguageRow.updatePermission = 'Administration:Translation';
         })(LanguageRow = Administration.LanguageRow || (Administration.LanguageRow = {}));
     })(Administration = SimpleFeedly.Administration || (SimpleFeedly.Administration = {}));
 })(SimpleFeedly || (SimpleFeedly = {}));
@@ -59,6 +63,12 @@ var SimpleFeedly;
                 };
             });
         })(LanguageService = Administration.LanguageService || (Administration.LanguageService = {}));
+    })(Administration = SimpleFeedly.Administration || (SimpleFeedly.Administration = {}));
+})(SimpleFeedly || (SimpleFeedly = {}));
+var SimpleFeedly;
+(function (SimpleFeedly) {
+    var Administration;
+    (function (Administration) {
     })(Administration = SimpleFeedly.Administration || (SimpleFeedly.Administration = {}));
 })(SimpleFeedly || (SimpleFeedly = {}));
 var SimpleFeedly;
@@ -94,6 +104,10 @@ var SimpleFeedly;
             RolePermissionRow.idProperty = 'RolePermissionId';
             RolePermissionRow.nameProperty = 'PermissionKey';
             RolePermissionRow.localTextPrefix = 'Administration.RolePermission';
+            RolePermissionRow.deletePermission = 'Administration:Security';
+            RolePermissionRow.insertPermission = 'Administration:Security';
+            RolePermissionRow.readPermission = 'Administration:Security';
+            RolePermissionRow.updatePermission = 'Administration:Security';
         })(RolePermissionRow = Administration.RolePermissionRow || (Administration.RolePermissionRow = {}));
     })(Administration = SimpleFeedly.Administration || (SimpleFeedly.Administration = {}));
 })(SimpleFeedly || (SimpleFeedly = {}));
@@ -129,6 +143,10 @@ var SimpleFeedly;
                 return Q.getLookup('Administration.Role');
             }
             RoleRow.getLookup = getLookup;
+            RoleRow.deletePermission = 'Administration:Security';
+            RoleRow.insertPermission = 'Administration:Security';
+            RoleRow.readPermission = 'Administration:Security';
+            RoleRow.updatePermission = 'Administration:Security';
         })(RoleRow = Administration.RoleRow || (Administration.RoleRow = {}));
     })(Administration = SimpleFeedly.Administration || (SimpleFeedly.Administration = {}));
 })(SimpleFeedly || (SimpleFeedly = {}));
@@ -213,6 +231,10 @@ var SimpleFeedly;
             UserPermissionRow.idProperty = 'UserPermissionId';
             UserPermissionRow.nameProperty = 'PermissionKey';
             UserPermissionRow.localTextPrefix = 'Administration.UserPermission';
+            UserPermissionRow.deletePermission = 'Administration:Security';
+            UserPermissionRow.insertPermission = 'Administration:Security';
+            UserPermissionRow.readPermission = 'Administration:Security';
+            UserPermissionRow.updatePermission = 'Administration:Security';
         })(UserPermissionRow = Administration.UserPermissionRow || (Administration.UserPermissionRow = {}));
     })(Administration = SimpleFeedly.Administration || (SimpleFeedly.Administration = {}));
 })(SimpleFeedly || (SimpleFeedly = {}));
@@ -244,6 +266,10 @@ var SimpleFeedly;
         (function (UserRoleRow) {
             UserRoleRow.idProperty = 'UserRoleId';
             UserRoleRow.localTextPrefix = 'Administration.UserRole';
+            UserRoleRow.deletePermission = 'Administration:Security';
+            UserRoleRow.insertPermission = 'Administration:Security';
+            UserRoleRow.readPermission = 'Administration:Security';
+            UserRoleRow.updatePermission = 'Administration:Security';
         })(UserRoleRow = Administration.UserRoleRow || (Administration.UserRoleRow = {}));
     })(Administration = SimpleFeedly.Administration || (SimpleFeedly.Administration = {}));
 })(SimpleFeedly || (SimpleFeedly = {}));
@@ -280,6 +306,10 @@ var SimpleFeedly;
                 return Q.getLookup('Administration.User');
             }
             UserRow.getLookup = getLookup;
+            UserRow.deletePermission = 'Administration:Security';
+            UserRow.insertPermission = 'Administration:Security';
+            UserRow.readPermission = 'Administration:Security';
+            UserRow.updatePermission = 'Administration:Security';
         })(UserRow = Administration.UserRow || (Administration.UserRow = {}));
     })(Administration = SimpleFeedly.Administration || (SimpleFeedly.Administration = {}));
 })(SimpleFeedly || (SimpleFeedly = {}));
@@ -314,6 +344,10 @@ var SimpleFeedly;
             UserPreferenceRow.idProperty = 'UserPreferenceId';
             UserPreferenceRow.nameProperty = 'Name';
             UserPreferenceRow.localTextPrefix = 'Common.UserPreference';
+            UserPreferenceRow.deletePermission = '';
+            UserPreferenceRow.insertPermission = '';
+            UserPreferenceRow.readPermission = '';
+            UserPreferenceRow.updatePermission = '';
         })(UserPreferenceRow = Common.UserPreferenceRow || (Common.UserPreferenceRow = {}));
     })(Common = SimpleFeedly.Common || (SimpleFeedly.Common = {}));
 })(SimpleFeedly || (SimpleFeedly = {}));
@@ -500,6 +534,10 @@ var SimpleFeedly;
             BlacklistsRow.idProperty = 'Id';
             BlacklistsRow.nameProperty = 'ShrinkedTitle';
             BlacklistsRow.localTextPrefix = 'Rss.Blacklists';
+            BlacklistsRow.deletePermission = 'Blacklists:Delete';
+            BlacklistsRow.insertPermission = 'Blacklists:Insert';
+            BlacklistsRow.readPermission = 'Blacklists:Read';
+            BlacklistsRow.updatePermission = 'Blacklists:Update';
         })(BlacklistsRow = Rss.BlacklistsRow || (Rss.BlacklistsRow = {}));
     })(Rss = SimpleFeedly.Rss || (SimpleFeedly.Rss = {}));
 })(SimpleFeedly || (SimpleFeedly = {}));
@@ -571,6 +609,10 @@ var SimpleFeedly;
                 return Q.getLookup('Rss.RssChannels');
             }
             RssChannelsRow.getLookup = getLookup;
+            RssChannelsRow.deletePermission = 'Channels:Delete';
+            RssChannelsRow.insertPermission = 'Channels:Insert';
+            RssChannelsRow.readPermission = 'Channels:Read';
+            RssChannelsRow.updatePermission = 'Channels:Update';
         })(RssChannelsRow = Rss.RssChannelsRow || (Rss.RssChannelsRow = {}));
     })(Rss = SimpleFeedly.Rss || (SimpleFeedly.Rss = {}));
 })(SimpleFeedly || (SimpleFeedly = {}));
@@ -657,6 +699,10 @@ var SimpleFeedly;
             RssFeedItemsRow.idProperty = 'Id';
             RssFeedItemsRow.nameProperty = 'FeedItemKey';
             RssFeedItemsRow.localTextPrefix = 'Rss.RssFeedItems';
+            RssFeedItemsRow.deletePermission = 'FeedItems:Delete';
+            RssFeedItemsRow.insertPermission = 'FeedItems:Insert';
+            RssFeedItemsRow.readPermission = 'FeedItems:Read';
+            RssFeedItemsRow.updatePermission = 'FeedItems:Update';
         })(RssFeedItemsRow = Rss.RssFeedItemsRow || (Rss.RssFeedItemsRow = {}));
     })(Rss = SimpleFeedly.Rss || (SimpleFeedly.Rss = {}));
 })(SimpleFeedly || (SimpleFeedly = {}));
@@ -668,7 +714,6 @@ var SimpleFeedly;
         (function (RssFeedItemsService) {
             RssFeedItemsService.baseUrl = 'Rss/RssFeedItems';
             [
-                'Create',
                 'Update',
                 'Delete',
                 'Retrieve',

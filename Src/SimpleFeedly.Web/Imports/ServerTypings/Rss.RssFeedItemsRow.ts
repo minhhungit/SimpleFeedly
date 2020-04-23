@@ -19,6 +19,10 @@
         export const idProperty = 'Id';
         export const nameProperty = 'FeedItemKey';
         export const localTextPrefix = 'Rss.RssFeedItems';
+        export const deletePermission = 'FeedItems:Delete';
+        export const insertPermission = 'FeedItems:Insert';
+        export const readPermission = 'FeedItems:Read';
+        export const updatePermission = 'FeedItems:Update';
 
         export declare const enum Fields {
             Id = "Id",

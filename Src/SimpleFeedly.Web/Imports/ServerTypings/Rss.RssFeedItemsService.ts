@@ -2,7 +2,6 @@
     export namespace RssFeedItemsService {
         export const baseUrl = 'Rss/RssFeedItems';
 
-        export declare function Create(request: Serenity.SaveRequest<RssFeedItemsRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         export declare function Update(request: Serenity.SaveRequest<RssFeedItemsRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         export declare function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         export declare function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<RssFeedItemsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
@@ -14,7 +13,6 @@
         export declare function AddBlacklistItems(request: AddBlacklistItemsRequest, onSuccess?: (response: Serenity.ServiceResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
 
         export declare const enum Methods {
-            Create = "Rss/RssFeedItems/Create",
             Update = "Rss/RssFeedItems/Update",
             Delete = "Rss/RssFeedItems/Delete",
             Retrieve = "Rss/RssFeedItems/Retrieve",
@@ -27,7 +25,6 @@
         }
 
         [
-            'Create', 
             'Update', 
             'Delete', 
             'Retrieve', 
