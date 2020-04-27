@@ -15,7 +15,7 @@
     using System.Net;
     using System.Runtime.Caching;
     using System.Text.RegularExpressions;
-
+    using System.Threading.Tasks;
     using System.Xml;
 
     public static partial class SiteInitialization
@@ -26,6 +26,7 @@
 
         public static void InitializeRssCrawler(ILogger logger, RandomTimeSpan channelFetchingDelay, TimeSpan channelErrorDelay, TimeSpan errorDelay, TimeSpan loopDelay)
         {
+            int nbrOfWorker = 5;
             System.Threading.Tasks.Task.Run(() =>
             {
                 var channelHubCtx = GlobalHost.ConnectionManager.GetHubContext<Hubs.ChannelHub>();
@@ -88,57 +89,84 @@
                                     // update default engine for channel
                                     SimpleFeedlyDatabaseAccess.UpdateChannelDefaultEngine((long)channel.Id, feed == null ? (RssCrawlerEngine?)null : usedEngine);
 
-                                    if (feed != null)
+                                    if(feed != null && feed?.Items != null)
                                     {
                                         logger.Info($"  + Number of items: {feed.Items.Count}");
-
+                                        var pageNumber = 1;
                                         var hasNew = false;
-                                        foreach (var fItem in feed.Items)
+
+                                        while (true)
                                         {
-                                            if (!StringUtils.IsUrl(fItem.Link))
+                                            var batchItems = feed.Items
+                                                .Skip(nbrOfWorker * (pageNumber - 1))
+                                                .Take(nbrOfWorker)
+                                                .ToList();
+
+                                            if (batchItems.Count == 0)
                                             {
-                                                continue;
+                                                break;
                                             }
-
-                                            var feedItemKey = GenerateFeedItemKey(fItem);
-                                            var feedCacheKey = GenerateFeedCacheKey((long)channel.Id, feedItemKey);
-
-                                            if (string.IsNullOrWhiteSpace(feedItemKey) || string.IsNullOrWhiteSpace(fItem.Link))
+                                            else
                                             {
-                                                logger.Info($"  + Skipped item: {JsonConvert.SerializeObject(fItem)}");
-                                                continue;
-                                            }
+                                                logger.Info($"    > Page number: {pageNumber}");
+                                                var tasks = new List<Task>();
 
-                                            if (!_feedCache.Contains(feedCacheKey))
-                                            {
-                                                if (!SimpleFeedlyDatabaseAccess.CheckExistFeedItem((long)channel.Id, feedItemKey))
+                                                for (int i = 0; i < batchItems.Count; i++)
                                                 {
-                                                    var feedItem = new RssFeedItemsRow
+                                                    var fItem = batchItems[i];
+                                                    tasks.Add(Task.Run(() =>
                                                     {
-                                                        ChannelId = channel.Id,
-                                                        RssChannelDomainGroup = channel.DomainGroup,
-                                                        FeedItemKey = feedItemKey,
-                                                        Title = string.IsNullOrWhiteSpace(fItem.Title) ? fItem.Link : fItem.Title,
-                                                        Link = fItem.Link,
-                                                        Description = fItem.Description,
-                                                        PublishingDate = fItem.PublishingDate,
-                                                        Author = fItem.Author,
-                                                        Content = fItem.Content,
-                                                        //XmlData = fItem.XmlData
-                                                    };
+                                                        if (!StringUtils.IsUrl(fItem.Link))
+                                                        {
+                                                            return;
+                                                        }
 
-                                                    var coverImageUrl = fItem.GetFeedCoverImage();
-                                                    if (!string.IsNullOrWhiteSpace(coverImageUrl))
-                                                    {
-                                                        feedItem.CoverImageUrl = coverImageUrl;
-                                                    }
+                                                        var feedItemKey = GenerateFeedItemKey(fItem);
+                                                        var feedCacheKey = GenerateFeedCacheKey((long)channel.Id, feedItemKey);
 
-                                                    SimpleFeedlyDatabaseAccess.InsertFeedItem(feedItem);
+                                                        if (string.IsNullOrWhiteSpace(feedItemKey) || string.IsNullOrWhiteSpace(fItem.Link))
+                                                        {
+                                                            logger.Info($"  + Skipped item: {JsonConvert.SerializeObject(fItem)}");
+                                                            return;
+                                                        }
 
-                                                    hasNew = true;
+                                                        if (!_feedCache.Contains(feedCacheKey))
+                                                        {
+                                                            if (!SimpleFeedlyDatabaseAccess.CheckExistFeedItem((long)channel.Id, feedItemKey))
+                                                            {
+                                                                var feedItem = new RssFeedItemsRow
+                                                                {
+                                                                    ChannelId = channel.Id,
+                                                                    RssChannelDomainGroup = channel.DomainGroup,
+                                                                    FeedItemKey = feedItemKey,
+                                                                    Title = string.IsNullOrWhiteSpace(fItem.Title) ? fItem.Link : fItem.Title,
+                                                                    Link = fItem.Link,
+                                                                    Description = fItem.Description,
+                                                                    PublishingDate = fItem.PublishingDate,
+                                                                    Author = fItem.Author,
+                                                                    Content = fItem.Content,
+                                                                    //XmlData = fItem.XmlData
+                                                                };
+
+                                                                var coverImageUrl = fItem.GetFeedCoverImage();
+                                                                if (!string.IsNullOrWhiteSpace(coverImageUrl))
+                                                                {
+                                                                    feedItem.CoverImageUrl = coverImageUrl;
+                                                                }
+
+                                                                SimpleFeedlyDatabaseAccess.InsertFeedItem(feedItem);
+
+                                                                hasNew = true;
+                                                            }
+
+                                                            _feedCache.Add(feedCacheKey);
+                                                        }
+                                                    }));
                                                 }
 
-                                                _feedCache.Add(feedCacheKey);
+                                                Task.WaitAll(tasks.ToArray());
+
+                                                pageNumber++;
                                             }
                                         }
 
