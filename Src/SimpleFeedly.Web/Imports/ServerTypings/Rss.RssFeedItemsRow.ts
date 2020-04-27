@@ -11,6 +11,7 @@
         Content?: string;
         IsChecked?: boolean;
         RssChannelTitle?: string;
+        RssChannelDomainGroup?: string;
         CoverImageUrl?: string;
         XmlData?: string;
     }
@@ -36,6 +37,7 @@
             Content = "Content",
             IsChecked = "IsChecked",
             RssChannelTitle = "RssChannelTitle",
+            RssChannelDomainGroup = "RssChannelDomainGroup",
             CoverImageUrl = "CoverImageUrl",
             XmlData = "XmlData"
         }

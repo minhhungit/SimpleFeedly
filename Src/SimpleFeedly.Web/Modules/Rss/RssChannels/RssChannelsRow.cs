@@ -32,6 +32,13 @@ namespace SimpleFeedly.Rss.Entities
             set { Fields.Type[this] = value; }
         }
 
+        [DisplayName("Domain Group"), Size(100), QuickSearch, LookupInclude]
+        public String DomainGroup
+        {
+            get { return Fields.DomainGroup[this]; }
+            set { Fields.DomainGroup[this] = value; }
+        }
+
         [DisplayName("Title"), Size(300), QuickSearch, LookupInclude]
         public String Title
         {
@@ -157,6 +164,7 @@ namespace SimpleFeedly.Rss.Entities
         {
             public Int64Field Id;
             public Int32Field Type;
+            public StringField DomainGroup;
             public StringField Title;
             public StringField Link;
             public StringField Description;

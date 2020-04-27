@@ -2,6 +2,7 @@
     export interface RssChannelsForm {
         Title: Serenity.StringEditor;
         Link: Serenity.StringEditor;
+        DomainGroup: Serenity.StringEditor;
         Description: Serenity.StringEditor;
         IsError: Serenity.BooleanEditor;
         ErrorMessage: Serenity.TextAreaEditor;
@@ -27,6 +28,7 @@
                 Q.initFormType(RssChannelsForm, [
                     'Title', w0,
                     'Link', w0,
+                    'DomainGroup', w0,
                     'Description', w0,
                     'IsError', w1,
                     'ErrorMessage', w2,

@@ -2,6 +2,7 @@
     export interface RssChannelsRow {
         Id?: number;
         Type?: number;
+        DomainGroup?: string;
         Title?: string;
         Link?: string;
         Description?: string;
@@ -35,6 +36,7 @@
         export declare const enum Fields {
             Id = "Id",
             Type = "Type",
+            DomainGroup = "DomainGroup",
             Title = "Title",
             Link = "Link",
             Description = "Description",

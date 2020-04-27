@@ -23,6 +23,9 @@ namespace SimpleFeedly.Rss.Columns
         public String Title { get; set; }
         [Width(500)]
         public String Link { get; set; }
+
+        public String DomainGroup { get; set; }
+
         [Width(400)]
         public String Description { get; set; }
         //public String Language { get; set; }

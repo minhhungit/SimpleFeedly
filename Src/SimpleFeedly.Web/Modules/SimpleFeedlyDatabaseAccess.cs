@@ -66,15 +66,16 @@ namespace SimpleFeedly
                     {
                         var item = new RssChannelsRow
                         {
-                            Id = long.Parse(dr["Id"].ToString()),
+                            Id = dr["Id"] == DBNull.Value ? 0 : long.Parse(dr["Id"].ToString()),
 
-                            Title = dr["Title"].ToString(),
-                            Link = dr["Link"].ToString(),
-                            Description = dr["Description"].ToString(),
-                            Language = dr["Language"].ToString(),
-                            Copyright = dr["Copyright"].ToString(),
-                            ImageUrl = dr["ImageUrl"].ToString(),
-                            OriginalDocument = dr["OriginalDocument"].ToString(),
+                            Title = dr["Title"] == DBNull.Value ? string.Empty : dr["Title"]?.ToString() ?? string.Empty,
+                            Link = dr["Link"] == DBNull.Value ? string.Empty : dr["Link"]?.ToString() ?? string.Empty,
+                            DomainGroup = dr["DomainGroup"] == DBNull.Value ? string.Empty : dr["DomainGroup"]?.ToString() ?? string.Empty,
+                            Description = dr["Description"] == DBNull.Value ? string.Empty : dr["Description"]?.ToString() ?? string.Empty,
+                            Language = dr["Language"] == DBNull.Value ? string.Empty : dr["Language"]?.ToString() ?? string.Empty,
+                            Copyright = dr["Copyright"] == DBNull.Value ? string.Empty : dr["Copyright"]?.ToString() ?? string.Empty,
+                            ImageUrl = dr["ImageUrl"] == DBNull.Value ? string.Empty : dr["ImageUrl"]?.ToString() ?? string.Empty,
+                            OriginalDocument = dr["OriginalDocument"] == DBNull.Value ? string.Empty : dr["OriginalDocument"]?.ToString() ?? string.Empty,
                         };
 
                         if (dr["RssCrawlerEngine"] != DBNull.Value && !string.IsNullOrWhiteSpace(dr["RssCrawlerEngine"].ToString()))
@@ -118,13 +119,14 @@ namespace SimpleFeedly
                         {
                             Id = long.Parse(dr["Id"].ToString()),
 
-                            Title = dr["Title"].ToString(),
-                            Link = dr["Link"].ToString(),
-                            Description = dr["Description"].ToString(),
-                            Language = dr["Language"].ToString(),
-                            Copyright = dr["Copyright"].ToString(),
-                            ImageUrl = dr["ImageUrl"].ToString(),
-                            OriginalDocument = dr["OriginalDocument"].ToString(),
+                            Title = dr["Title"] == DBNull.Value ? string.Empty : dr["Title"]?.ToString() ?? string.Empty,
+                            DomainGroup = dr["DomainGroup"] == DBNull.Value ? string.Empty : dr["DomainGroup"]?.ToString() ?? string.Empty,
+                            Link = dr["Link"] == DBNull.Value ? string.Empty : dr["Link"]?.ToString() ?? string.Empty,
+                            Description = dr["Description"] == DBNull.Value ? string.Empty : dr["Description"]?.ToString() ?? string.Empty,
+                            Language = dr["Language"] == DBNull.Value ? string.Empty : dr["Language"]?.ToString() ?? string.Empty,
+                            Copyright = dr["Copyright"] == DBNull.Value ? string.Empty : dr["Copyright"]?.ToString() ?? string.Empty,
+                            ImageUrl = dr["ImageUrl"] == DBNull.Value ? string.Empty : dr["ImageUrl"]?.ToString() ?? string.Empty,
+                            OriginalDocument = dr["OriginalDocument"] == DBNull.Value ? string.Empty : dr["OriginalDocument"]?.ToString() ?? string.Empty,
                             RefreshTimeMinutes = dr["RefreshTimeMinutes"] == DBNull.Value ? null : (int?)int.Parse(dr["RefreshTimeMinutes"].ToString())
                         };
 
@@ -166,6 +168,7 @@ namespace SimpleFeedly
             {
                 var parms = new DynamicParameters();
                 parms.Add("@channelId", item.ChannelId);
+                parms.Add("@channelId", string.IsNullOrEmpty(item.RssChannelDomainGroup) ? item.Link : item.RssChannelDomainGroup);
                 parms.Add("@feedItemKey", item.FeedItemKey);
                 parms.Add("@title", item.Title);
                 parms.Add("@link", item.Link);

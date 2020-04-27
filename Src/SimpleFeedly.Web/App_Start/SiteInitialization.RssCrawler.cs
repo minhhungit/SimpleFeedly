@@ -116,6 +116,7 @@
                                                     var feedItem = new RssFeedItemsRow
                                                     {
                                                         ChannelId = channel.Id,
+                                                        RssChannelDomainGroup = channel.DomainGroup,
                                                         FeedItemKey = feedItemKey,
                                                         Title = string.IsNullOrWhiteSpace(fItem.Title) ? fItem.Link : fItem.Title,
                                                         Link = fItem.Link,

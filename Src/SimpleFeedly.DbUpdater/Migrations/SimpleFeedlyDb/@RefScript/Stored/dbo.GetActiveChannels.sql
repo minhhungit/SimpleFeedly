@@ -34,6 +34,7 @@ BEGIN
         Type ,
         Title ,
         Link ,
+        DomainGroup,
         Description ,
         Language ,
         Copyright ,

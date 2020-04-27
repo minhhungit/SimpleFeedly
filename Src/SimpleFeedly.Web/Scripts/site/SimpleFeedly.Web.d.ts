@@ -653,6 +653,7 @@ declare namespace SimpleFeedly.Rss {
     interface RssChannelsForm {
         Title: Serenity.StringEditor;
         Link: Serenity.StringEditor;
+        DomainGroup: Serenity.StringEditor;
         Description: Serenity.StringEditor;
         IsError: Serenity.BooleanEditor;
         ErrorMessage: Serenity.TextAreaEditor;
@@ -668,6 +669,7 @@ declare namespace SimpleFeedly.Rss {
     interface RssChannelsRow {
         Id?: number;
         Type?: number;
+        DomainGroup?: string;
         Title?: string;
         Link?: string;
         Description?: string;
@@ -696,6 +698,7 @@ declare namespace SimpleFeedly.Rss {
         const enum Fields {
             Id = "Id",
             Type = "Type",
+            DomainGroup = "DomainGroup",
             Title = "Title",
             Link = "Link",
             Description = "Description",
@@ -774,6 +777,7 @@ declare namespace SimpleFeedly.Rss {
         Content?: string;
         IsChecked?: boolean;
         RssChannelTitle?: string;
+        RssChannelDomainGroup?: string;
         CoverImageUrl?: string;
         XmlData?: string;
     }
@@ -797,6 +801,7 @@ declare namespace SimpleFeedly.Rss {
             Content = "Content",
             IsChecked = "IsChecked",
             RssChannelTitle = "RssChannelTitle",
+            RssChannelDomainGroup = "RssChannelDomainGroup",
             CoverImageUrl = "CoverImageUrl",
             XmlData = "XmlData"
         }

@@ -159,10 +159,12 @@
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20190425_035001_create_feeds_index.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20190425_031301_create_udt_type.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20180325_041701_update_index.cs" />
+    <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20200427_133401_channel_group.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20200415_110101_feed_item_xml.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20190908_081101_channel_refresh_time.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\Function\SimpleFeedlyDb_20190908_054601_init_functions.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20180324_025501_add_stored.cs" />
+    <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20200427_134101_domain_group.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20200415_112301_insert_feed.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20190908_082801_channel_refresh_time.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20190908_061501_blacklist_stored.cs" />

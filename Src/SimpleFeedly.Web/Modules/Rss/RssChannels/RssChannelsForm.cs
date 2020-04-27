@@ -16,6 +16,7 @@ namespace SimpleFeedly.Rss.Forms
         //public Int32 Type { get; set; }
         public String Title { get; set; }
         public String Link { get; set; }
+        public String DomainGroup { get; set; }
         public String Description { get; set; }
         public Boolean IsError { get; set; }
 

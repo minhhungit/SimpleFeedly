@@ -41,6 +41,14 @@ namespace SimpleFeedly.Rss.Entities
             set { Fields.RssChannelTitle[this] = value; }
         }
 
+        [DisplayName("Domain Group")]
+        [Expression("jChannel.DomainGroup")]
+        public String RssChannelDomainGroup
+        {
+            get { return Fields.RssChannelDomainGroup[this]; }
+            set { Fields.RssChannelDomainGroup[this] = value; }
+        }
+
         [DisplayName("Feed Item Key"), Size(500), NotNull, QuickSearch]
         public String FeedItemKey
         {
@@ -143,6 +151,7 @@ namespace SimpleFeedly.Rss.Entities
             public BooleanField IsChecked;
 
             public StringField RssChannelTitle;
+            public StringField RssChannelDomainGroup;
             public StringField CoverImageUrl;
             public StringField XmlData;
         }

@@ -23,6 +23,7 @@ GO
 -- =============================================
 ALTER PROCEDURE [dbo].[InsertFeedItem]
 	@channelId BIGINT,
+	@channelDomainGroup NVARCHAR(100),
 	@feedItemKey NVARCHAR(500),
 	@title NVARCHAR(300),
 	@link  NVARCHAR(500),
@@ -43,7 +44,7 @@ BEGIN
 
 	IF NOT EXISTS (SELECT TOP (1) 1 FROM dbo.Blacklist AS b WHERE b.ShrinkedTitleHash = @shrinkedTitleHash)
 	BEGIN
-		IF NOT EXISTS (SELECT 1 FROM dbo.RssChannels AS c JOIN dbo.RssFeedItems i ON i.ChannelId = c.Id WHERE c.Id = @channelId AND i.FeedItemKey = @feedItemKey)
+		IF NOT EXISTS (SELECT 1 FROM dbo.RssChannels AS c JOIN dbo.RssFeedItems i ON i.ChannelId = c.Id WHERE ISNULL(c.DomainGroup, c.Link) = @channelDomainGroup AND i.FeedItemKey = @feedItemKey)
 		BEGIN
 			INSERT INTO dbo.RssFeedItems ( ChannelId ,
 										   FeedItemKey ,
