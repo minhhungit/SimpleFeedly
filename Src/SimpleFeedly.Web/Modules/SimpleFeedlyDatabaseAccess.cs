@@ -168,7 +168,7 @@ namespace SimpleFeedly
             {
                 var parms = new DynamicParameters();
                 parms.Add("@channelId", item.ChannelId);
-                parms.Add("@channelId", string.IsNullOrEmpty(item.RssChannelDomainGroup) ? item.Link : item.RssChannelDomainGroup);
+                parms.Add("@channelDomainGroup", string.IsNullOrEmpty(item.RssChannelDomainGroup) ? item.Link : item.RssChannelDomainGroup);
                 parms.Add("@feedItemKey", item.FeedItemKey);
                 parms.Add("@title", item.Title);
                 parms.Add("@link", item.Link);
