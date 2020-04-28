@@ -1425,7 +1425,6 @@ declare namespace SimpleFeedly.Rss {
         protected getService(): string;
         private rowSelection;
         private _pagerMixin;
-        private isMobile;
         constructor(container: JQuery);
         getAddButtonCaption(): string;
         protected onViewSubmit(): boolean;

@@ -3535,8 +3535,7 @@ var SimpleFeedly;
             __extends(RssFeedItemsGrid, _super);
             function RssFeedItemsGrid(container) {
                 var _this = _super.call(this, container) || this;
-                _this.isMobile = J.isMobile();
-                if (_this.isMobile) {
+                if (J.isMobile()) {
                     if (_this.quickFiltersDiv) {
                         _this.quickFiltersDiv.hide();
                     }
@@ -3598,7 +3597,7 @@ var SimpleFeedly;
                 var buttons = _super.prototype.getButtons.call(this);
                 buttons.splice(Q.indexOf(buttons, function (x) { return x.cssClass == "add-button"; }), 1);
                 buttons.unshift({
-                    title: this.isMobile ? '' : 'Mark as unread',
+                    title: J.isMobile() ? '' : 'Mark as unread',
                     cssClass: 'text-orange',
                     icon: "fa fa-undo",
                     separator: 'right',
@@ -3623,7 +3622,7 @@ var SimpleFeedly;
                     }
                 });
                 buttons.unshift({
-                    title: this.isMobile ? '' : 'Mark as read',
+                    title: J.isMobile() ? '' : 'Mark as read',
                     cssClass: 'text-green',
                     icon: 'fa fa-check',
                     hint: 'Mark as read',
@@ -3647,7 +3646,7 @@ var SimpleFeedly;
                     }
                 });
                 buttons.splice(0, 0, {
-                    title: this.isMobile ? '' : 'Page as read',
+                    title: J.isMobile() ? '' : 'Page as read',
                     cssClass: 'text-green text-bold',
                     icon: 'fa fa-check-square-o',
                     separator: 'right',
@@ -3664,7 +3663,7 @@ var SimpleFeedly;
                             Rss.RssFeedItemsService.MarkCheckedBatchFeedItems({ Ids: selectedItems.map(function (x) { return x.Id; }), IsChecked: true }, function (response) {
                                 _this.rowSelection.resetCheckedAndRefresh();
                                 if (J.isMobile()) {
-                                    J.goToByScroll($(".card-container"));
+                                    J.goToByScroll(_this.element);
                                 }
                             });
                         }, {
@@ -3672,9 +3671,9 @@ var SimpleFeedly;
                         });
                     }
                 });
-                if (SimpleFeedly.Authorization.hasPermission("Blacklists:InsertBatch") && !this.isMobile) {
+                if (SimpleFeedly.Authorization.hasPermission("Blacklists:InsertBatch") && !J.isMobile()) {
                     buttons.splice(1, 0, {
-                        title: this.isMobile ? '' : 'Block',
+                        title: J.isMobile() ? '' : 'Block',
                         cssClass: 'text-red text-bold',
                         icon: 'fa fa-ban',
                         separator: 'right',
@@ -3702,7 +3701,7 @@ var SimpleFeedly;
                         }
                     });
                 }
-                if (this.isMobile) {
+                if (J.isMobile()) {
                     buttons.push({
                         title: '',
                         icon: 'fa fa-filter text-blue',

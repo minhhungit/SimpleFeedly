@@ -15,13 +15,10 @@ namespace SimpleFeedly.Rss {
         private rowSelection: Serenity.GridRowSelectionMixin;
         private _pagerMixin: Common.CustomPagerWithOnlyNextPreviousMixin<RssFeedItemsRow>;
 
-        private isMobile: boolean;
-
         constructor(container: JQuery) {
             super(container);
-            this.isMobile = J.isMobile();
             
-            if (this.isMobile) {
+            if (J.isMobile()) {
                 if (this.quickFiltersDiv) {
                     this.quickFiltersDiv.hide();
                 }
@@ -87,7 +84,7 @@ namespace SimpleFeedly.Rss {
             buttons.splice(Q.indexOf(buttons, x => x.cssClass == "add-button"), 1);
 
             buttons.unshift({
-                title: this.isMobile ? '' : 'Mark as unread',
+                title: J.isMobile() ? '' : 'Mark as unread',
                 cssClass: 'text-orange',
                 icon: "fa fa-undo",
                 separator: 'right',
@@ -119,7 +116,7 @@ namespace SimpleFeedly.Rss {
             });
 
             buttons.unshift({
-                title: this.isMobile ? '' : 'Mark as read',
+                title: J.isMobile() ? '' : 'Mark as read',
                 cssClass: 'text-green',
                 icon: 'fa fa-check',
                 hint: 'Mark as read',
@@ -150,7 +147,7 @@ namespace SimpleFeedly.Rss {
             });
 
             buttons.splice(0, 0, {
-                title: this.isMobile ? '' : 'Page as read',
+                title: J.isMobile() ? '' : 'Page as read',
                 cssClass: 'text-green text-bold',
                 icon: 'fa fa-check-square-o',
                 separator: 'right',
@@ -171,7 +168,7 @@ namespace SimpleFeedly.Rss {
                             RssFeedItemsService.MarkCheckedBatchFeedItems({ Ids: selectedItems.map(x => x.Id), IsChecked: true }, response => {
                                 this.rowSelection.resetCheckedAndRefresh();
                                 if (J.isMobile()) {
-                                    J.goToByScroll($(".card-container"));
+                                    J.goToByScroll(this.element);
                                 }                                
                             });
                         },
@@ -181,9 +178,9 @@ namespace SimpleFeedly.Rss {
                 }
             });
 
-            if (Authorization.hasPermission("Blacklists:InsertBatch") && !this.isMobile) {
+            if (Authorization.hasPermission("Blacklists:InsertBatch") && !J.isMobile()) {
                 buttons.splice(1, 0, {
-                    title: this.isMobile ? '' : 'Block',
+                    title: J.isMobile() ? '' : 'Block',
                     cssClass: 'text-red text-bold',
                     icon: 'fa fa-ban',
                     separator: 'right',
@@ -217,7 +214,7 @@ namespace SimpleFeedly.Rss {
                 });              
             }
 
-            if (this.isMobile) {
+            if (J.isMobile()) {
                 buttons.push({
                     title: '',
                     icon: 'fa fa-filter text-blue',
