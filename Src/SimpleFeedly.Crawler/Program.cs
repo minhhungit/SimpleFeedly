@@ -6,6 +6,7 @@ using Owin;
 using SimpleFeedly.Core;
 using StackExchange.Exceptional;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Cors;
 using Topshelf;
@@ -17,6 +18,12 @@ namespace SimpleFeedly.Crawler
     {
         static void Main(string[] args)
         {
+            ServicePointManager.SecurityProtocol = 
+                SecurityProtocolType.Tls 
+                | SecurityProtocolType.Tls11 
+                | SecurityProtocolType.Tls12 
+                | SecurityProtocolType.Ssl3;
+
             // init settings
             new AppSettings().Init();
 
