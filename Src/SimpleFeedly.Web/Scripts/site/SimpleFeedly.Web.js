@@ -3541,6 +3541,7 @@ var SimpleFeedly;
                     }
                     $(".s-QuickSearchInput").css("width", "110px");
                     $(".refresh-button").hide();
+                    $(".tool-buttons").css("position", "fixed").css("z-index", "9998").css("right", "10px").css("bottom", "100px").css("background", "gray");
                 }
                 else {
                     $(".s-QuickSearchInput").css("width", "170px");
