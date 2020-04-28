@@ -1,6 +1,10 @@
 # SimpleFeedly
 Very simple Rss Crawler & Rss Reader
 
+## Demo
+http://sfeedly.azurewebsites.net/
+demo/1234567
+
 ## Deploy
 > Note: SimpleFeedly.Web is using <a href='https://github.com/volkanceylan/Serenity'>Serenity framework</a> so you may need to read <a href="https://serenity.is/docs/getting_started/README" target="_blank">its document</a> first
 
@@ -53,7 +57,7 @@ Very simple Rss Crawler & Rss Reader
 
 - <a href="https://github.com/minhhungit/SimpleFeedly/releases/download/v1.0/bkSimpleFeedly-20190425-0352am-MSSM-2017.zip" target="_blank">MSSQL database backup file</a> ( **SQL SERVER 2017** ) - restore and run `SimpleFeedly.DbUpdater.exe` to update database
 
-## Demo
+## Screenshot
 ### DbUpdater
 <img src="https://raw.githubusercontent.com/minhhungit/SimpleFeedly/master/wiki/Images/demo03.png" />
 
