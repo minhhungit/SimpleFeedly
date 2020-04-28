@@ -15,4 +15,10 @@
     export function escapeHtml(value: string) {
         return $("<div />").text(value).html();
     }
+
+    export function goToByScroll(element: JQuery) {
+        $('html,body').animate({
+            scrollTop: element.offset().top
+        }, 'slow');
+    }
 }

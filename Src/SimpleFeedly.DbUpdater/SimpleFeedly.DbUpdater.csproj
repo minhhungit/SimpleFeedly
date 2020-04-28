@@ -164,6 +164,7 @@
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20190908_081101_channel_refresh_time.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\Function\SimpleFeedlyDb_20190908_054601_init_functions.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20180324_025501_add_stored.cs" />
+    <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20200428_135301_check_exist.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20200427_134101_domain_group.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20200415_112301_insert_feed.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\StoredAndScripts\SimpleFeedlyDb_20190908_082801_channel_refresh_time.cs" />

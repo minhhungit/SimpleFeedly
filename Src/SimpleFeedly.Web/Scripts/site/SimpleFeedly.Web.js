@@ -2298,6 +2298,12 @@ var J;
         return $("<div />").text(value).html();
     }
     J.escapeHtml = escapeHtml;
+    function goToByScroll(element) {
+        $('html,body').animate({
+            scrollTop: element.offset().top
+        }, 'slow');
+    }
+    J.goToByScroll = goToByScroll;
 })(J || (J = {}));
 var SimpleFeedly;
 (function (SimpleFeedly) {
@@ -2618,6 +2624,38 @@ var SimpleFeedly;
             return ThemeSelection;
         }(Serenity.Widget));
         Common.ThemeSelection = ThemeSelection;
+    })(Common = SimpleFeedly.Common || (SimpleFeedly.Common = {}));
+})(SimpleFeedly || (SimpleFeedly = {}));
+var SimpleFeedly;
+(function (SimpleFeedly) {
+    var Common;
+    (function (Common) {
+        var MyReactImage = /** @class */ (function (_super) {
+            __extends(MyReactImage, _super);
+            function MyReactImage(props) {
+                var _this = _super.call(this, props) || this;
+                _this.onError = function () {
+                    if (!_this.state.errored) {
+                        _this.setState({
+                            src: _this.props.fallbackSrc,
+                            errored: true,
+                        });
+                    }
+                };
+                _this.state = {
+                    src: props.src,
+                    errored: false,
+                };
+                return _this;
+            }
+            MyReactImage.prototype.render = function () {
+                var src = this.state.src;
+                var _a = this.props, _1 = _a.src, _2 = _a.fallbackSrc, props = __rest(_a, ["src", "fallbackSrc"]);
+                return (React.createElement("img", __assign({ src: src, onError: this.onError }, props)));
+            };
+            return MyReactImage;
+        }(React.Component));
+        Common.MyReactImage = MyReactImage;
     })(Common = SimpleFeedly.Common || (SimpleFeedly.Common = {}));
 })(SimpleFeedly || (SimpleFeedly = {}));
 var SimpleFeedly;
@@ -3497,7 +3535,8 @@ var SimpleFeedly;
             __extends(RssFeedItemsGrid, _super);
             function RssFeedItemsGrid(container) {
                 var _this = _super.call(this, container) || this;
-                if (J.isMobile()) {
+                _this.isMobile = J.isMobile();
+                if (_this.isMobile) {
                     if (_this.quickFiltersDiv) {
                         _this.quickFiltersDiv.hide();
                     }
@@ -3559,7 +3598,7 @@ var SimpleFeedly;
                 var buttons = _super.prototype.getButtons.call(this);
                 buttons.splice(Q.indexOf(buttons, function (x) { return x.cssClass == "add-button"; }), 1);
                 buttons.unshift({
-                    title: J.isMobile() ? '' : 'Mark as unread',
+                    title: this.isMobile ? '' : 'Mark as unread',
                     cssClass: 'text-orange',
                     icon: "fa fa-undo",
                     separator: 'right',
@@ -3584,7 +3623,7 @@ var SimpleFeedly;
                     }
                 });
                 buttons.unshift({
-                    title: J.isMobile() ? '' : 'Mark as read',
+                    title: this.isMobile ? '' : 'Mark as read',
                     cssClass: 'text-green',
                     icon: 'fa fa-check',
                     hint: 'Mark as read',
@@ -3608,7 +3647,7 @@ var SimpleFeedly;
                     }
                 });
                 buttons.splice(0, 0, {
-                    title: J.isMobile() ? '' : 'Page as read',
+                    title: this.isMobile ? '' : 'Page as read',
                     cssClass: 'text-green text-bold',
                     icon: 'fa fa-check-square-o',
                     separator: 'right',
@@ -3624,15 +3663,18 @@ var SimpleFeedly;
                             }
                             Rss.RssFeedItemsService.MarkCheckedBatchFeedItems({ Ids: selectedItems.map(function (x) { return x.Id; }), IsChecked: true }, function (response) {
                                 _this.rowSelection.resetCheckedAndRefresh();
+                                if (J.isMobile()) {
+                                    J.goToByScroll($(".card-container"));
+                                }
                             });
                         }, {
                             title: 'Confirm',
                         });
                     }
                 });
-                if (SimpleFeedly.Authorization.hasPermission("Blacklists:InsertBatch") && !J.isMobile()) {
+                if (SimpleFeedly.Authorization.hasPermission("Blacklists:InsertBatch") && !this.isMobile) {
                     buttons.splice(1, 0, {
-                        title: J.isMobile() ? '' : 'Block',
+                        title: this.isMobile ? '' : 'Block',
                         cssClass: 'text-red text-bold',
                         icon: 'fa fa-ban',
                         separator: 'right',
@@ -3660,7 +3702,7 @@ var SimpleFeedly;
                         }
                     });
                 }
-                if (J.isMobile()) {
+                if (this.isMobile) {
                     buttons.push({
                         title: '',
                         icon: 'fa fa-filter text-blue',
@@ -3753,7 +3795,7 @@ var SimpleFeedly;
                 var _this = this;
                 var result = _super.prototype.onViewProcessData.call(this, response);
                 Rss.RssFeedItemsService.GetFeedItemCheckedState({}, function (res) {
-                    _this.setTitle("Feed Items (" + res.UnCheckedItems + " unchecked)");
+                    _this.titleDiv.find(".title-text").text("Feed Items (" + res.UnCheckedItems + " unchecked)");
                 });
                 this._pagerMixin.updateNextButton(result.Entities.length, response.Take);
                 return result;
@@ -3767,7 +3809,7 @@ var SimpleFeedly;
             };
             RssFeedItemsGrid.prototype.getSlickOptions = function () {
                 var opt = _super.prototype.getSlickOptions.call(this);
-                opt.rowHeight = 30;
+                opt.rowHeight = 29;
                 return opt;
             };
             RssFeedItemsGrid.prototype.getViewOptions = function () {

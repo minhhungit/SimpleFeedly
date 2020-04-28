@@ -1160,6 +1160,7 @@ declare namespace SimpleFeedly.Common {
 declare namespace J {
     function isMobile(): boolean;
     function escapeHtml(value: string): string;
+    function goToByScroll(element: JQuery): void;
 }
 declare namespace SimpleFeedly {
     /**
@@ -1220,6 +1221,13 @@ declare namespace SimpleFeedly.Common {
     class ThemeSelection extends Serenity.Widget<any> {
         constructor(select: JQuery);
         protected getCurrentTheme(): string;
+    }
+}
+declare namespace SimpleFeedly.Common {
+    class MyReactImage extends React.Component<any, any> {
+        constructor(props: any);
+        onError: () => void;
+        render(): React.ReactNode;
     }
 }
 declare var jsPDF: any;
@@ -1417,6 +1425,7 @@ declare namespace SimpleFeedly.Rss {
         protected getService(): string;
         private rowSelection;
         private _pagerMixin;
+        private isMobile;
         constructor(container: JQuery);
         getAddButtonCaption(): string;
         protected onViewSubmit(): boolean;

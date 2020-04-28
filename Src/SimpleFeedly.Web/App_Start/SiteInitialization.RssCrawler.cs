@@ -10,6 +10,7 @@
     using SimpleFeedly.SettingParsers;
     using StackExchange.Exceptional;
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
@@ -20,7 +21,7 @@
 
     public static partial class SiteInitialization
     {
-        private static HashSet<string> _feedCache = new HashSet<string>();
+        private static ConcurrentBag<string> _feedCache = new ConcurrentBag<string>();
         private static int _currentDate = DateTime.Now.Day;
         private static readonly Random _ran = new Random();
 
@@ -50,7 +51,7 @@
                 {
                     if (_currentDate != DateTime.Now.Day)
                     {
-                        _feedCache = new HashSet<string>();
+                        _feedCache = new ConcurrentBag<string>();
                         _currentDate = DateTime.Now.Day;
                     }
 
@@ -132,7 +133,7 @@
 
                                                         if (!_feedCache.Contains(feedCacheKey))
                                                         {
-                                                            if (!SimpleFeedlyDatabaseAccess.CheckExistFeedItem((long)channel.Id, feedItemKey))
+                                                            if (!SimpleFeedlyDatabaseAccess.CheckExistFeedItem(string.IsNullOrWhiteSpace(channel.DomainGroup) ? channel.Link : channel.DomainGroup, feedItemKey))
                                                             {
                                                                 var feedItem = new RssFeedItemsRow
                                                                 {

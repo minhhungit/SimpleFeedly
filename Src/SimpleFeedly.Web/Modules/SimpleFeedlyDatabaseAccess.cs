@@ -32,9 +32,9 @@ namespace SimpleFeedly
             Settings = buildSettingFunc();
         }
 
-        public static bool CheckExistFeedItem(long channelId, string feedItemKey)
+        public static bool CheckExistFeedItem(string channelDomainOrLink, string feedItemKey)
         {
-            if (channelId <= 0)
+            if (string.IsNullOrWhiteSpace(channelDomainOrLink))
             {
                 return true;
             }
@@ -42,7 +42,7 @@ namespace SimpleFeedly
             using (var con = new SqlConnection(Settings.ConnectionString))
             {
                 var parm = new DynamicParameters();
-                parm.Add("@channelId", channelId);
+                parm.Add("@channelDomainGroup", channelDomainOrLink);
                 parm.Add("@feedItemKey", feedItemKey);
 
                 var result = (int?)con.ExecuteScalar("CheckExistFeedItem", parm, commandType: CommandType.StoredProcedure, commandTimeout: 30);

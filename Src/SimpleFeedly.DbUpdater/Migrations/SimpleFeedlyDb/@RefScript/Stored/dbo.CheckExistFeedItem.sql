@@ -22,7 +22,7 @@ GO
 -- Description:	CheckExistFeedItem
 -- =============================================
 ALTER PROCEDURE [dbo].[CheckExistFeedItem]
-	@channelId NVARCHAR(500),
+	@channelDomainGroup NVARCHAR(100),
 	@feedItemKey NVARCHAR(500)
 AS
 BEGIN
@@ -30,7 +30,8 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
     SELECT 1 FROM dbo.RssFeedItems AS i 
-	WHERE i.ChannelId = @channelId AND i.FeedItemKey = @feedItemKey
+	JOIN dbo.RssChannels as c on i.ChannelId = c.Id
+	WHERE ISNULL(c.DomainGroup, c.Link) = @channelDomainGroup AND i.FeedItemKey = @feedItemKey
 END
 
 GO
