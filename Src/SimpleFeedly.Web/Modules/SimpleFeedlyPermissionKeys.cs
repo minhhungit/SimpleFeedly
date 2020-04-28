@@ -44,6 +44,12 @@ namespace SimpleFeedly
 
             [Description("Delete")]
             public const string Delete = "FeedItems:Delete";
+
+            [Description("Mark As Read/Unread")]
+            public const string MarkAsReadAndUnread = "FeedItems:MarkAsReadAndUnread";
+
+            [Description("Block Feed Item")]
+            public const string BlockFeedItem = "FeedItems:BlockFeedItem";
         }
 
         [NestedPermissionKeys]

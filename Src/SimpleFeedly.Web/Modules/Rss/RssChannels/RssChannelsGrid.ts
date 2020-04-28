@@ -10,6 +10,8 @@ namespace SimpleFeedly.Rss {
         protected getLocalTextPrefix() { return RssChannelsRow.localTextPrefix; }
         protected getService() { return RssChannelsService.baseUrl; }
 
+        protected getInsertPermission() { return RssChannelsRow.insertPermission; }
+
         constructor(container: JQuery) {
             super(container);
         }

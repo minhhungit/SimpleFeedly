@@ -12,6 +12,8 @@ namespace SimpleFeedly.Rss {
         protected getLocalTextPrefix() { return RssFeedItemsRow.localTextPrefix; }
         protected getService() { return RssFeedItemsService.baseUrl; }
 
+        protected getInsertPermission() { return RssFeedItemsRow.insertPermission; }
+
         private rowSelection: Serenity.GridRowSelectionMixin;
         private _pagerMixin: Common.CustomPagerWithOnlyNextPreviousMixin<RssFeedItemsRow>;
 
@@ -85,6 +87,7 @@ namespace SimpleFeedly.Rss {
 
             buttons.splice(Q.indexOf(buttons, x => x.cssClass == "add-button"), 1);
 
+
             buttons.unshift({
                 title: J.isMobile() ? '' : 'Mark as unread',
                 cssClass: 'text-orange',
@@ -92,8 +95,12 @@ namespace SimpleFeedly.Rss {
                 separator: 'right',
                 hint: 'Mark as unread',
                 onClick: () => {
-                    var selectedItems = this.getSelectedItems();
+                    if (!Authorization.hasPermission("FeedItems:MarkAsReadAndUnread")) {
+                        Q.alert("This action is not allowed");
+                        return;
+                    }
 
+                    var selectedItems = this.getSelectedItems();
 
                     if (selectedItems === null || selectedItems === undefined || selectedItems.length === 0) {
                         return Q.warning("Please select at least one item");
@@ -123,8 +130,12 @@ namespace SimpleFeedly.Rss {
                 icon: 'fa fa-check',
                 hint: 'Mark as read',
                 onClick: () => {
-                    var selectedItems = this.getSelectedItems();
+                    if (!Authorization.hasPermission("FeedItems:MarkAsReadAndUnread")) {
+                        Q.alert("This action is not allowed");
+                        return;
+                    }
 
+                    var selectedItems = this.getSelectedItems();
 
                     if (selectedItems === null || selectedItems === undefined || selectedItems.length === 0) {
                         return Q.warning("Please select at least one item");
@@ -155,6 +166,11 @@ namespace SimpleFeedly.Rss {
                 separator: 'right',
                 hint: 'Mark this page as read',
                 onClick: () => {
+                    if (!Authorization.hasPermission("FeedItems:MarkAsReadAndUnread")) {
+                        Q.alert("This action is not allowed");
+                        return;
+                    }
+
                     var selectedItems = this.view.getItems();
 
                     if (selectedItems === null || selectedItems === undefined || selectedItems.length === 0) {
@@ -171,7 +187,7 @@ namespace SimpleFeedly.Rss {
                                 this.rowSelection.resetCheckedAndRefresh();
                                 if (J.isMobile()) {
                                     J.goToByScroll(this.element);
-                                }                                
+                                }
                             });
                         },
                         {
@@ -179,8 +195,8 @@ namespace SimpleFeedly.Rss {
                         });
                 }
             });
-
-            if (Authorization.hasPermission("Blacklists:InsertBatch") && !J.isMobile()) {
+            
+            if (!J.isMobile()) {
                 buttons.splice(1, 0, {
                     title: J.isMobile() ? '' : 'Block',
                     cssClass: 'text-red text-bold',
@@ -188,6 +204,11 @@ namespace SimpleFeedly.Rss {
                     separator: 'right',
                     hint: 'Block feed items',
                     onClick: () => {
+                        if (!Authorization.hasPermission("FeedItems:BlockFeedItem")) {
+                            Q.alert("This action is not allowed");
+                            return;
+                        }
+
                         var selectedItems = this.getSelectedItems();
 
                         if (selectedItems === null || selectedItems === undefined || selectedItems.length === 0) {
@@ -246,7 +267,7 @@ namespace SimpleFeedly.Rss {
                 maxWidth: 24
             });
 
-            if (Authorization.hasPermission("Blacklists:Insert")) {
+            if (Authorization.hasPermission("FeedItems:BlockFeedItem")) {
                 columns.splice(2, 0, {
                     field: 'Block Feed Item',
                     name: '',

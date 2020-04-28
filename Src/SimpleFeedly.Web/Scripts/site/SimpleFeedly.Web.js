@@ -3286,6 +3286,9 @@ var SimpleFeedly;
             BlacklistsDialog.prototype.getLocalTextPrefix = function () { return Rss.BlacklistsRow.localTextPrefix; };
             BlacklistsDialog.prototype.getNameProperty = function () { return Rss.BlacklistsRow.nameProperty; };
             BlacklistsDialog.prototype.getService = function () { return Rss.BlacklistsService.baseUrl; };
+            BlacklistsDialog.prototype.getDeletePermission = function () { return Rss.BlacklistsRow.deletePermission; };
+            BlacklistsDialog.prototype.getUpdatePermission = function () { return Rss.BlacklistsRow.updatePermission; };
+            BlacklistsDialog.prototype.getInsertPermission = function () { return Rss.BlacklistsRow.insertPermission; };
             BlacklistsDialog = __decorate([
                 Serenity.Decorators.registerClass()
             ], BlacklistsDialog);
@@ -3308,6 +3311,7 @@ var SimpleFeedly;
             BlacklistsGrid.prototype.getIdProperty = function () { return Rss.BlacklistsRow.idProperty; };
             BlacklistsGrid.prototype.getLocalTextPrefix = function () { return Rss.BlacklistsRow.localTextPrefix; };
             BlacklistsGrid.prototype.getService = function () { return Rss.BlacklistsService.baseUrl; };
+            BlacklistsGrid.prototype.getInsertPermission = function () { return Rss.BlacklistsRow.insertPermission; };
             BlacklistsGrid = __decorate([
                 Serenity.Decorators.registerClass()
             ], BlacklistsGrid);
@@ -3360,6 +3364,9 @@ var SimpleFeedly;
             RssChannelsDialog.prototype.getLocalTextPrefix = function () { return Rss.RssChannelsRow.localTextPrefix; };
             RssChannelsDialog.prototype.getNameProperty = function () { return Rss.RssChannelsRow.nameProperty; };
             RssChannelsDialog.prototype.getService = function () { return Rss.RssChannelsService.baseUrl; };
+            RssChannelsDialog.prototype.getDeletePermission = function () { return Rss.RssChannelsRow.deletePermission; };
+            RssChannelsDialog.prototype.getUpdatePermission = function () { return Rss.RssChannelsRow.updatePermission; };
+            RssChannelsDialog.prototype.getInsertPermission = function () { return Rss.RssChannelsRow.insertPermission; };
             RssChannelsDialog.prototype.afterLoadEntity = function () {
                 _super.prototype.afterLoadEntity.call(this);
                 if (this.isNew()) {
@@ -3390,6 +3397,7 @@ var SimpleFeedly;
             RssChannelsGrid.prototype.getIdProperty = function () { return Rss.RssChannelsRow.idProperty; };
             RssChannelsGrid.prototype.getLocalTextPrefix = function () { return Rss.RssChannelsRow.localTextPrefix; };
             RssChannelsGrid.prototype.getService = function () { return Rss.RssChannelsService.baseUrl; };
+            RssChannelsGrid.prototype.getInsertPermission = function () { return Rss.RssChannelsRow.insertPermission; };
             RssChannelsGrid.prototype.getAddButtonCaption = function () {
                 return "New Channel";
             };
@@ -3471,6 +3479,9 @@ var SimpleFeedly;
             RssFeedItemsDialog.prototype.getLocalTextPrefix = function () { return Rss.RssFeedItemsRow.localTextPrefix; };
             RssFeedItemsDialog.prototype.getNameProperty = function () { return Rss.RssFeedItemsRow.nameProperty; };
             RssFeedItemsDialog.prototype.getService = function () { return Rss.RssFeedItemsService.baseUrl; };
+            RssFeedItemsDialog.prototype.getDeletePermission = function () { return Rss.RssFeedItemsRow.deletePermission; };
+            RssFeedItemsDialog.prototype.getUpdatePermission = function () { return Rss.RssFeedItemsRow.updatePermission; };
+            RssFeedItemsDialog.prototype.getInsertPermission = function () { return Rss.RssFeedItemsRow.insertPermission; };
             RssFeedItemsDialog.prototype.afterLoadEntity = function () {
                 _super.prototype.afterLoadEntity.call(this);
                 if (this.isEditMode()) {
@@ -3553,6 +3564,7 @@ var SimpleFeedly;
             RssFeedItemsGrid.prototype.getIdProperty = function () { return Rss.RssFeedItemsRow.idProperty; };
             RssFeedItemsGrid.prototype.getLocalTextPrefix = function () { return Rss.RssFeedItemsRow.localTextPrefix; };
             RssFeedItemsGrid.prototype.getService = function () { return Rss.RssFeedItemsService.baseUrl; };
+            RssFeedItemsGrid.prototype.getInsertPermission = function () { return Rss.RssFeedItemsRow.insertPermission; };
             RssFeedItemsGrid.prototype.getAddButtonCaption = function () {
                 return "New Feed";
             };
@@ -3604,6 +3616,10 @@ var SimpleFeedly;
                     separator: 'right',
                     hint: 'Mark as unread',
                     onClick: function () {
+                        if (!SimpleFeedly.Authorization.hasPermission("FeedItems:MarkAsReadAndUnread")) {
+                            Q.alert("This action is not allowed");
+                            return;
+                        }
                         var selectedItems = _this.getSelectedItems();
                         if (selectedItems === null || selectedItems === undefined || selectedItems.length === 0) {
                             return Q.warning("Please select at least one item");
@@ -3628,6 +3644,10 @@ var SimpleFeedly;
                     icon: 'fa fa-check',
                     hint: 'Mark as read',
                     onClick: function () {
+                        if (!SimpleFeedly.Authorization.hasPermission("FeedItems:MarkAsReadAndUnread")) {
+                            Q.alert("This action is not allowed");
+                            return;
+                        }
                         var selectedItems = _this.getSelectedItems();
                         if (selectedItems === null || selectedItems === undefined || selectedItems.length === 0) {
                             return Q.warning("Please select at least one item");
@@ -3653,6 +3673,10 @@ var SimpleFeedly;
                     separator: 'right',
                     hint: 'Mark this page as read',
                     onClick: function () {
+                        if (!SimpleFeedly.Authorization.hasPermission("FeedItems:MarkAsReadAndUnread")) {
+                            Q.alert("This action is not allowed");
+                            return;
+                        }
                         var selectedItems = _this.view.getItems();
                         if (selectedItems === null || selectedItems === undefined || selectedItems.length === 0) {
                             return Q.warning("Please select at least one item");
@@ -3672,7 +3696,7 @@ var SimpleFeedly;
                         });
                     }
                 });
-                if (SimpleFeedly.Authorization.hasPermission("Blacklists:InsertBatch") && !J.isMobile()) {
+                if (!J.isMobile()) {
                     buttons.splice(1, 0, {
                         title: J.isMobile() ? '' : 'Block',
                         cssClass: 'text-red text-bold',
@@ -3680,6 +3704,10 @@ var SimpleFeedly;
                         separator: 'right',
                         hint: 'Block feed items',
                         onClick: function () {
+                            if (!SimpleFeedly.Authorization.hasPermission("FeedItems:BlockFeedItem")) {
+                                Q.alert("This action is not allowed");
+                                return;
+                            }
                             var selectedItems = _this.getSelectedItems();
                             if (selectedItems === null || selectedItems === undefined || selectedItems.length === 0) {
                                 return Q.warning("Please select at least one item");
@@ -3728,7 +3756,7 @@ var SimpleFeedly;
                     minWidth: 24,
                     maxWidth: 24
                 });
-                if (SimpleFeedly.Authorization.hasPermission("Blacklists:Insert")) {
+                if (SimpleFeedly.Authorization.hasPermission("FeedItems:BlockFeedItem")) {
                     columns.splice(2, 0, {
                         field: 'Block Feed Item',
                         name: '',

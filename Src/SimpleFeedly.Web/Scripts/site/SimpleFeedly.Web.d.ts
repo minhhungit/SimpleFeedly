@@ -1351,6 +1351,9 @@ declare namespace SimpleFeedly.Rss {
         protected getLocalTextPrefix(): string;
         protected getNameProperty(): string;
         protected getService(): string;
+        protected getDeletePermission(): string;
+        protected getUpdatePermission(): string;
+        protected getInsertPermission(): string;
         protected form: BlacklistsForm;
     }
 }
@@ -1361,6 +1364,7 @@ declare namespace SimpleFeedly.Rss {
         protected getIdProperty(): string;
         protected getLocalTextPrefix(): string;
         protected getService(): string;
+        protected getInsertPermission(): string;
         constructor(container: JQuery);
     }
 }
@@ -1380,6 +1384,9 @@ declare namespace SimpleFeedly.Rss {
         protected getLocalTextPrefix(): string;
         protected getNameProperty(): string;
         protected getService(): string;
+        protected getDeletePermission(): string;
+        protected getUpdatePermission(): string;
+        protected getInsertPermission(): string;
         protected form: RssChannelsForm;
         protected afterLoadEntity(): void;
     }
@@ -1392,6 +1399,7 @@ declare namespace SimpleFeedly.Rss {
         protected getIdProperty(): string;
         protected getLocalTextPrefix(): string;
         protected getService(): string;
+        protected getInsertPermission(): string;
         constructor(container: JQuery);
         getAddButtonCaption(): string;
     }
@@ -1410,6 +1418,9 @@ declare namespace SimpleFeedly.Rss {
         protected getLocalTextPrefix(): string;
         protected getNameProperty(): string;
         protected getService(): string;
+        protected getDeletePermission(): string;
+        protected getUpdatePermission(): string;
+        protected getInsertPermission(): string;
         protected form: RssFeedItemsForm;
         afterLoadEntity(): void;
         protected updateInterface(): void;
@@ -1423,6 +1434,7 @@ declare namespace SimpleFeedly.Rss {
         protected getIdProperty(): string;
         protected getLocalTextPrefix(): string;
         protected getService(): string;
+        protected getInsertPermission(): string;
         private rowSelection;
         private _pagerMixin;
         constructor(container: JQuery);

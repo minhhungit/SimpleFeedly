@@ -10,6 +10,10 @@ namespace SimpleFeedly.Rss {
         protected getNameProperty() { return RssFeedItemsRow.nameProperty; }
         protected getService() { return RssFeedItemsService.baseUrl; }
 
+        protected getDeletePermission() { return RssFeedItemsRow.deletePermission; }
+        protected getUpdatePermission() { return RssFeedItemsRow.updatePermission; }
+        protected getInsertPermission() { return RssFeedItemsRow.insertPermission; }
+
         protected form = new RssFeedItemsForm(this.idPrefix);
 
         afterLoadEntity() {

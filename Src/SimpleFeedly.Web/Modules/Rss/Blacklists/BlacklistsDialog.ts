@@ -9,6 +9,10 @@ namespace SimpleFeedly.Rss {
         protected getNameProperty() { return BlacklistsRow.nameProperty; }
         protected getService() { return BlacklistsService.baseUrl; }
 
+        protected getDeletePermission() { return BlacklistsRow.deletePermission; }
+        protected getUpdatePermission() { return BlacklistsRow.updatePermission; }
+        protected getInsertPermission() { return BlacklistsRow.insertPermission; }
+
         protected form = new BlacklistsForm(this.idPrefix);
 
     }
