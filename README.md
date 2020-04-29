@@ -1,11 +1,6 @@
 # SimpleFeedly
 Very simple Rss Crawler & Rss Reader
 
-## Demo
-http://sfeedly.azurewebsites.net/
-- Username: demo
-- Password: 1234567
-
 ## Deploy
 > Note: SimpleFeedly.Web is using <a href='https://github.com/volkanceylan/Serenity'>Serenity framework</a> so you may need to read <a href="https://serenity.is/docs/getting_started/README" target="_blank">its document</a> first
 
