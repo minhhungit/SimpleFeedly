@@ -89,7 +89,7 @@
                                     // update default engine for channel
                                     SimpleFeedlyDatabaseAccess.UpdateChannelDefaultEngine((long)channel.Id, fetchFeedError != null ? (RssCrawlerEngine?)null : usedEngine);
 
-                                    if(feed != null && feed?.Items != null)
+                                    if (feed != null && feed?.Items != null)
                                     {
                                         logger.Info($"  + Number of items: {feed.Items.Count}");
                                         var pageNumber = 1;
@@ -277,7 +277,7 @@
         public static SimpleFeedlyFeed GetFeedsFromChannel(string feedUrl, RssCrawlerEngine defaultEngineType, out RssCrawlerEngine engineTypeResult, out Exception error)
         {
             RssCrawlerEngine currentEngineType = RssCrawlerEngine.CodeHollowFeedReader;
-            SimpleFeedlyFeed result = null;
+            var items = new List<SimpleFeedlyFeedItem>();
 
             try
             {
@@ -305,20 +305,15 @@
 
                 IRssEngine rssEngine = getEngine(defaultEngineType);
 
-                var items = new List<SimpleFeedlyFeedItem>();
-
                 var feedItems = rssEngine.GetItems(feedUrl, out error);
 
-                items.AddRange(feedItems ?? new List<SimpleFeedlyFeedItem>());
-
-                if (error == null) // no error
+                if (error == null && feedItems.Count > 0) // no error
                 {
                     currentEngineType = defaultEngineType;
-                    result = new SimpleFeedlyFeed { Items = items ?? new List<SimpleFeedlyFeedItem>() };
+                    items = feedItems ?? new List<SimpleFeedlyFeedItem>();
                 }
                 else
                 {
-                    items = new List<SimpleFeedlyFeedItem>();
                     error = null;
 
                     foreach (RssCrawlerEngine engineLoop in (RssCrawlerEngine[])Enum.GetValues(typeof(RssCrawlerEngine)))
@@ -326,11 +321,14 @@
                         currentEngineType = engineLoop;
 
                         rssEngine = getEngine(engineLoop);
-                        items.AddRange(rssEngine.GetItems(feedUrl, out error) ?? new List<SimpleFeedlyFeedItem>());
+                        feedItems = rssEngine.GetItems(feedUrl, out error);
 
-                        if (error == null) // no error
+                        items.AddRange(feedItems ?? new List<SimpleFeedlyFeedItem>());
+
+                        if (error == null && feedItems.Count > 0) // no error
                         {
-                            result = new SimpleFeedlyFeed { Items = items ?? new List<SimpleFeedlyFeedItem>() };
+                            items = feedItems ?? new List<SimpleFeedlyFeedItem>();
+                            break;
                         }
                     }
                 }
@@ -341,7 +339,7 @@
             }
 
             engineTypeResult = currentEngineType;
-            return result ?? new SimpleFeedlyFeed { Items = new List<SimpleFeedlyFeedItem> { } };
+            return new SimpleFeedlyFeed { Items = items ?? new List<SimpleFeedlyFeedItem>() };
         }
     }
 
@@ -430,7 +428,7 @@
                                 imageUrl = m.Groups[1]?.Value ?? string.Empty;
                             }
                         }
-                    }                    
+                    }
                 }
             }
             catch

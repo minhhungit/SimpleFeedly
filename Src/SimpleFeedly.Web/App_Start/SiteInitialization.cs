@@ -51,11 +51,6 @@
                         ErrorStore.LogExceptionWithoutContext(ex);
                     }
                 });
-                    
-
-                // we don't run RssCrawler in web application
-                // we will use a Windows Service: SimpleFeedly.Crawler
-                //InitializeRssCrawler(AppSettings.Crawler.ChannelFetchingDelay, AppSettings.Crawler.ChannelErrorDelay, AppSettings.Crawler.ErrorDelay, AppSettings.Crawler.LoopDelay);
             }
             catch (Exception ex)
             {
