@@ -64,7 +64,7 @@ namespace SimpleFeedly.Rss.Endpoints
                     throw new Exception($"Url '{request.FeedUrl}' is invalid");
                 }
 
-                var feed = RssCrawler.GetFeedsFromChannel(request.FeedUrl, null, false, out RssCrawlerEngine usedEngine, out Exception fetchError);
+                var feed = RssCrawler.GetFeedsFromChannel(request.FeedUrl, RssCrawlerEngine.CodeHollowFeedReader, out RssCrawlerEngine usedEngine, out Exception fetchError);
 
                 if (feed == null || feed.Items == null || feed.Items.Count == 0)
                 {
