@@ -71,7 +71,7 @@ namespace SimpleFeedly.Crawler
 
                 WebApp.Start<CrawlerStartup>(AppSettings.Base.CrawlerSignalrSelfhostUrl);
 
-                Task.Run(() => SiteInitialization.InitializeRssCrawler(_logger, AppSettings.Base.ChannelFetchingDelay, AppSettings.Base.ChannelErrorDelay, AppSettings.Base.ErrorDelay, AppSettings.Base.LoopDelay));
+                Task.Run(() => SiteInitialization.InitializeRssCrawler(_logger, AppSettings.Base.ChannelFetchingDelay, AppSettings.Base.ChannelErrorDelay, AppSettings.Base.ErrorDelay, AppSettings.Base.LoopDelay, AppSettings.Base.NbrOfWorker));
             }
             catch (Exception ex)
             {

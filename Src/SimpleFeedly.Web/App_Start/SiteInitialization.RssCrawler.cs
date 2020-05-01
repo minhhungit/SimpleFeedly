@@ -25,9 +25,10 @@
         private static int _currentDate = DateTime.Now.Day;
         private static readonly Random _ran = new Random();
 
-        public static void InitializeRssCrawler(ILogger logger, RandomTimeSpan channelFetchingDelay, TimeSpan channelErrorDelay, TimeSpan errorDelay, TimeSpan loopDelay)
+        public static void InitializeRssCrawler(ILogger logger, RandomTimeSpan channelFetchingDelay, TimeSpan channelErrorDelay, TimeSpan errorDelay, TimeSpan loopDelay, int nbrOfWorker = 5)
         {
-            int nbrOfWorker = 5;
+            nbrOfWorker = nbrOfWorker == 0 ? 1 : nbrOfWorker;
+
             Task.Run(() =>
             {
                 var channelHubCtx = GlobalHost.ConnectionManager.GetHubContext<Hubs.ChannelHub>();
@@ -276,35 +277,40 @@
         /// <returns></returns>
         public static SimpleFeedlyFeed GetFeedsFromChannel(string feedUrl, RssCrawlerEngine defaultEngineType, out RssCrawlerEngine engineTypeResult, out Exception error)
         {
+            IRssEngine getEngine(RssCrawlerEngine type)
+            {
+                IRssEngine tmpEngine = null;
+                switch (type)
+                {
+                    case RssCrawlerEngine.SyndicationFeed:
+                        tmpEngine = new SyndicationFeedEngine();
+                        break;
+                    case RssCrawlerEngine.CodeHollowFeedReader:
+                        tmpEngine = new CodeHollowFeedReaderEngine();
+                        break;
+                    case RssCrawlerEngine.ParseRssByXml:
+                        tmpEngine = new ParseRssByXmlEngine();
+                        break;
+                    default:
+                        
+                        break;
+                }
+
+                if (tmpEngine == null)
+                {
+                    throw new Exception($"Can not find crawler engine for type <{type}>");
+                }
+
+                return tmpEngine;
+            }
+
             RssCrawlerEngine currentEngineType = RssCrawlerEngine.CodeHollowFeedReader;
             var items = new List<SimpleFeedlyFeedItem>();
 
             try
             {
-                IRssEngine getEngine(RssCrawlerEngine type)
-                {
-                    IRssEngine tmpEngine = null;
-                    switch (type)
-                    {
-                        case RssCrawlerEngine.SyndicationFeed:
-                            tmpEngine = new SyndicationFeedEngine();
-                            break;
-                        case RssCrawlerEngine.CodeHollowFeedReader:
-                            tmpEngine = new CodeHollowFeedReaderEngine();
-                            break;
-                        case RssCrawlerEngine.ParseRssByXml:
-                            tmpEngine = new ParseRssByXmlEngine();
-                            break;
-                        default:
-                            tmpEngine = new SyndicationFeedEngine();
-                            break;
-                    }
-
-                    return tmpEngine;
-                }
-
+                // check default engine first
                 IRssEngine rssEngine = getEngine(defaultEngineType);
-
                 var feedItems = rssEngine.GetItems(feedUrl, out error);
 
                 if (error == null && feedItems.Count > 0) // no error
@@ -314,10 +320,16 @@
                 }
                 else
                 {
+                    // check the rest engines
                     error = null;
 
                     foreach (RssCrawlerEngine engineLoop in (RssCrawlerEngine[])Enum.GetValues(typeof(RssCrawlerEngine)))
                     {
+                        if (engineLoop == defaultEngineType)
+                        {
+                            continue;
+                        }
+
                         currentEngineType = engineLoop;
 
                         rssEngine = getEngine(engineLoop);

@@ -13,6 +13,9 @@ namespace SimpleFeedly.Crawler
         TimeSpan ErrorDelay { get; }
         TimeSpan LoopDelay { get; }
 
+        [Option(DefaultValue = 1)]
+        int NbrOfWorker { get; }
+
         string CrawlerSignalrSelfhostUrl { get; set; }
         string SimpleFeedlyWebAppUrls { get; set; }
 
