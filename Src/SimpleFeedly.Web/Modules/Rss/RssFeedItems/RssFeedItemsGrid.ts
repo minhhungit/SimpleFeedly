@@ -358,13 +358,13 @@ namespace SimpleFeedly.Rss {
             return result;
         }
 
-        protected getQuickSearchFields(): Serenity.QuickSearchField[] {
-            return [
-                { name: fld.Title, title: "Title" },
-                { name: fld.Description, title: "Description" },
-                { name: "", title: "All" }
-            ];
-        }
+        //protected getQuickSearchFields(): Serenity.QuickSearchField[] {
+        //    return [
+        //        { name: fld.Title, title: "Title" },
+        //        { name: fld.Description, title: "Description" },
+        //        { name: "", title: "All" }
+        //    ];
+        //}
 
 
         protected getSlickOptions(): Slick.GridOptions {

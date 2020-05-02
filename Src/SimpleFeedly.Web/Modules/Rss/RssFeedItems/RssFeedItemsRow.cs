@@ -49,7 +49,7 @@ namespace SimpleFeedly.Rss.Entities
             set { Fields.RssChannelDomainGroup[this] = value; }
         }
 
-        [DisplayName("Feed Item Key"), Size(500), NotNull, QuickSearch]
+        [DisplayName("Feed Item Key"), Size(500), NotNull, QuickSearch(SearchType.FullTextContains)]
         public String FeedItemKey
         {
             get { return Fields.FeedItemKey[this]; }
@@ -92,7 +92,7 @@ namespace SimpleFeedly.Rss.Entities
             set { Fields.Author[this] = value; }
         }
 
-        [DisplayName("Content"), Column("Content"), QuickSearch]
+        [DisplayName("Content"), Column("Content"), QuickSearch(SearchType.FullTextContains)]
         public String Content
         {
             get { return Fields.Content[this]; }

@@ -7,6 +7,7 @@ namespace SimpleFeedly.Rss.Repositories
     using SimpleFeedly.Common;
     using System;
     using System.Data;
+    using System.Linq;
     using MyRow = Entities.RssFeedItemsRow;
 
     public class RssFeedItemsRepository
@@ -35,6 +36,19 @@ namespace SimpleFeedly.Rss.Repositories
 
         public ListResponse<MyRow> List(IDbConnection connection, MyBaseListRequest request)
         {
+            if (!string.IsNullOrWhiteSpace(request.ContainsText))
+            {
+                var ftCandidates = request.ContainsText.Trim()
+                    .Replace("\"", "")
+                    .Replace("\'", "")
+                    .Split(' ')
+                    .ToList()
+                    .Where(x => !string.IsNullOrWhiteSpace(x))
+                    .Select(x => $"\"{x}*\"");
+
+                request.ContainsText = string.Join(" AND ", ftCandidates);
+            }
+
             return new MyListHandler().Process(connection, request);
         }
 

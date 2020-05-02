@@ -3828,13 +3828,13 @@ var SimpleFeedly;
                 this._pagerMixin.updateNextButton(result.Entities.length, response.Take);
                 return result;
             };
-            RssFeedItemsGrid.prototype.getQuickSearchFields = function () {
-                return [
-                    { name: "Title" /* Title */, title: "Title" },
-                    { name: "Description" /* Description */, title: "Description" },
-                    { name: "", title: "All" }
-                ];
-            };
+            //protected getQuickSearchFields(): Serenity.QuickSearchField[] {
+            //    return [
+            //        { name: fld.Title, title: "Title" },
+            //        { name: fld.Description, title: "Description" },
+            //        { name: "", title: "All" }
+            //    ];
+            //}
             RssFeedItemsGrid.prototype.getSlickOptions = function () {
                 var opt = _super.prototype.getSlickOptions.call(this);
                 opt.rowHeight = 29;
