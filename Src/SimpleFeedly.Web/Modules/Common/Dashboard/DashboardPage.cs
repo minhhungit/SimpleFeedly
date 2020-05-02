@@ -1,21 +1,14 @@
 ﻿
 namespace SimpleFeedly.Common.Pages
 {
-    using HtmlAgilityPack;
-    using Serenity;
-    using Serenity.Data;
-    using System;
-    using System.Linq;
-    using System.Text.RegularExpressions;
     using System.Web.Mvc;
-    using System.Xml;
 
     [RoutePrefix("Dashboard"), Route("{action=index}")]
     public class DashboardController : Controller
     {
         [Authorize, HttpGet, Route("~/")]
         public ActionResult Index()
-        {           
+        {
             //using (var connection = SqlConnections.NewFor<Rss.Entities.RssFeedItemsRow>())
             //{
             //    var entity = new Rss.Endpoints.RssFeedItemsController().Retrieve(connection, new Serenity.Services.RetrieveRequest { EntityId = 14 }).Entity;

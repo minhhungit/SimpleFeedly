@@ -12,9 +12,11 @@
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Net;
     using System.Runtime.Caching;
+    using System.Text;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using System.Xml;
@@ -381,25 +383,63 @@
         public string GetFeedCoverImage()
         {
             string imageUrl = string.Empty;
-            //string pattern = @"<img\s+[^>]*?src=('|')([^'']+)\1";
-            string pattern = "<img.+?src=[\"'](.+?)[\"'].*?>";
-            Regex myRegex = new Regex(pattern, RegexOptions.IgnoreCase);
+            HtmlDocument doc = new HtmlDocument();
 
             try
             {
-                var doc = new HtmlWeb().Load(Link ?? string.Empty);
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Link ?? string.Empty);
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                string pageSource = string.Empty;
 
-                //Get value from given xpath
-                string xpath = "//meta[@property='og:image']";
-
-                var ogImage = doc.DocumentNode.SelectSingleNode(xpath);
-                var src = ogImage?.Attributes["content"]?.Value?.ToString() ?? string.Empty;
-                if (!string.IsNullOrWhiteSpace(src))
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    imageUrl = src;
+                    Stream receiveStream = response.GetResponseStream();
+                    StreamReader readStream;
+                    if (string.IsNullOrWhiteSpace(response.CharacterSet))
+                        readStream = new StreamReader(receiveStream);
+                    else
+                        readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
+
+                    pageSource = readStream.ReadToEnd();
+
+                    response.Close();
+                    readStream.Close();
                 }
-                else
+
+                string metaImageRegexPattern = @"<meta[\s]+[^>]*?property[\s]?=[\s""']+og:image[\s""']+content[\s]?=[\s""']+(.*?)[""']+.*?>";
+                var metaRegex = new Regex(metaImageRegexPattern, RegexOptions.IgnoreCase);
+                var mDesc = metaRegex.Match(pageSource ?? string.Empty);
+                if (mDesc.Success && mDesc.Groups.Count >= 2)
                 {
+                    imageUrl = mDesc.Groups[1]?.Value ?? string.Empty;
+                }
+            }
+            catch { }
+
+            try
+            {
+                if (string.IsNullOrWhiteSpace(imageUrl))
+                {
+                    string xpath = "//meta[@property='og:image']";
+                    doc = new HtmlWeb().Load(Link ?? string.Empty);
+                    var ogImage = doc.DocumentNode.SelectSingleNode(xpath);
+
+                    imageUrl = ogImage?.Attributes["content"]?.Value?.ToString() ?? string.Empty;
+                }
+            }
+            catch
+            {
+
+            }
+
+            try
+            {
+                if (string.IsNullOrWhiteSpace(imageUrl))
+                {
+                    //string pattern = @"<img\s+[^>]*?src=('|')([^'']+)\1";
+                    string pattern = "<img.+?src=[\"'](.+?)[\"'].*?>";
+                    Regex myRegex = new Regex(pattern, RegexOptions.IgnoreCase);
+
                     // use Desc
                     if (!string.IsNullOrWhiteSpace(Description))
                     {
@@ -433,12 +473,15 @@
                         else
                         {
                             // last chance: full html
-                            Match m = myRegex.Match(doc.Text);
-
-                            if (m.Success && m.Groups.Count >= 2)
+                            if (doc != null && !string.IsNullOrWhiteSpace(doc?.Text))
                             {
-                                imageUrl = m.Groups[1]?.Value ?? string.Empty;
-                            }
+                                Match m = myRegex.Match(doc.Text);
+
+                                if (m.Success && m.Groups.Count >= 2)
+                                {
+                                    imageUrl = m.Groups[1]?.Value ?? string.Empty;
+                                }
+                            }                            
                         }
                     }
                 }
