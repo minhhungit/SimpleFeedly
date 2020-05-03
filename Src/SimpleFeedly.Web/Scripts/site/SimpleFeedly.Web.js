@@ -3752,6 +3752,7 @@ var SimpleFeedly;
                     field: 'View Details',
                     name: '',
                     format: function (ctx) { return '<a class="inline-action view-details" title="view details"></a>'; },
+                    sortable: false,
                     width: 24,
                     minWidth: 24,
                     maxWidth: 24
@@ -3760,6 +3761,7 @@ var SimpleFeedly;
                     columns.splice(2, 0, {
                         field: 'Block Feed Item',
                         name: '',
+                        sortable: false,
                         format: function (ctx) { return '<a class="inline-action block-feed-item" title="block feed item"><i class="fa fa-ban link-muted"></i></a>'; },
                         width: 24,
                         minWidth: 24,

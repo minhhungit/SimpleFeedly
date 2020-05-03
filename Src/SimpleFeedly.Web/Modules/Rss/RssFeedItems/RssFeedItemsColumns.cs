@@ -21,25 +21,25 @@ namespace SimpleFeedly.Rss.Columns
         //[RssFeedImageFormatter(FileProperty = "CoverImageUrl")]
         //public String CoverImageUrl { get; set; }
 
-        [Width(1000)]
+        [Width(1000), Sortable(false)]
         public String Title { get; set; }
 
-        [Width(280)]
+        [Width(280), Sortable(false)]
         public String RssChannelTitle { get; set; }
 
-        [QuickFilter, Hidden, DisplayName("Channel")]
+        [QuickFilter, Hidden, DisplayName("Channel"), Sortable(false)]
         public Int64 ChannelId { get; set; }
 
 
-        [Hidden]
+        [Hidden, Sortable(false)]
         public String Link { get; set; }
         //public String Description { get; set; }
         [SortOrder(1, true), Width(120)]
         public DateTime PublishingDate { get; set; }
-        [Hidden]
+        [Hidden, Sortable(false)]
         public String Author { get; set; }
         //public String Content { get; set; }
-        [Width(100), QuickFilter]
+        [Width(100), QuickFilter, Sortable(false)]
         public Boolean IsChecked { get; set; }
     }
 }

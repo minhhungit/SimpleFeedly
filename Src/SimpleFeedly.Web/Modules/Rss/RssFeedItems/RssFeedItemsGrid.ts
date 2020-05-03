@@ -262,6 +262,7 @@ namespace SimpleFeedly.Rss {
                 field: 'View Details',
                 name: '',
                 format: ctx => '<a class="inline-action view-details" title="view details"></a>',
+                sortable: false,
                 width: 24,
                 minWidth: 24,
                 maxWidth: 24
@@ -271,6 +272,7 @@ namespace SimpleFeedly.Rss {
                 columns.splice(2, 0, {
                     field: 'Block Feed Item',
                     name: '',
+                    sortable: false,
                     format: ctx => '<a class="inline-action block-feed-item" title="block feed item"><i class="fa fa-ban link-muted"></i></a>',
                     width: 24,
                     minWidth: 24,
