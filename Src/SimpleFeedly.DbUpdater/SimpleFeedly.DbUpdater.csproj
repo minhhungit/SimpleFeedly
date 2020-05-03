@@ -161,6 +161,7 @@
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20190425_035001_create_feeds_index.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20190425_031301_create_udt_type.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20180325_041701_update_index.cs" />
+    <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20200503_195101_optimize_indexes.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20200503_011901_feed_full_text_index.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20200427_133401_channel_group.cs" />
     <Compile Include="Migrations\SimpleFeedlyDb\DataAndStructure\SimpleFeedlyDb_20200415_110101_feed_item_xml.cs" />

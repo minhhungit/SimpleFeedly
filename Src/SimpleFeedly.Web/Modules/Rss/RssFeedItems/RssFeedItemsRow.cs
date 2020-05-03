@@ -70,7 +70,7 @@ namespace SimpleFeedly.Rss.Entities
             set { Fields.Link[this] = value; }
         }
 
-        [DisplayName("Description")]
+        [DisplayName("Description"), MinSelectLevel(SelectLevel.Details)]
         [TextAreaEditor(Rows = 3)]
         public String Description
         {
@@ -92,7 +92,7 @@ namespace SimpleFeedly.Rss.Entities
             set { Fields.Author[this] = value; }
         }
 
-        [DisplayName("Content"), Column("Content"), QuickSearch(SearchType.FullTextContains)]
+        [DisplayName("Content"), Column("Content"), QuickSearch(SearchType.FullTextContains), MinSelectLevel(SelectLevel.Details)]
         public String Content
         {
             get { return Fields.Content[this]; }
@@ -113,7 +113,7 @@ namespace SimpleFeedly.Rss.Entities
             set { Fields.CoverImageUrl[this] = value; }
         }
 
-        [DisplayName("Xml Data"), Column("XmlData")]
+        [DisplayName("Xml Data"), Column("XmlData"), MinSelectLevel(SelectLevel.Details)]
         public String XmlData
         {
             get { return Fields.XmlData[this]; }
