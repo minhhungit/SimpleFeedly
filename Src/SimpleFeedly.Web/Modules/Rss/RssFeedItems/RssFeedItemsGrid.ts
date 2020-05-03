@@ -293,7 +293,7 @@ namespace SimpleFeedly.Rss {
                 }
             });
 
-            buttons.splice(Q.indexOf(buttons, x => x.cssClass == "column-picker-button"));
+            buttons.splice(Q.indexOf(buttons, x => x.cssClass == "column-picker-button"), 1);
 
             return buttons;
         }

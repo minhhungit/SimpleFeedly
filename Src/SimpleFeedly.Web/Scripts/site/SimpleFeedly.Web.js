@@ -3804,7 +3804,7 @@ var SimpleFeedly;
                         _this.quickFiltersDiv.slideToggle();
                     }
                 });
-                buttons.splice(Q.indexOf(buttons, function (x) { return x.cssClass == "column-picker-button"; }));
+                buttons.splice(Q.indexOf(buttons, function (x) { return x.cssClass == "column-picker-button"; }), 1);
                 return buttons;
             };
             RssFeedItemsGrid.prototype.getColumns = function () {
