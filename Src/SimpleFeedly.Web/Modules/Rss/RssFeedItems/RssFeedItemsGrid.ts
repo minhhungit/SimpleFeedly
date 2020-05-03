@@ -16,21 +16,52 @@ namespace SimpleFeedly.Rss {
 
         private rowSelection: Serenity.GridRowSelectionMixin;
         private _pagerMixin: Common.CustomPagerWithOnlyNextPreviousMixin<RssFeedItemsRow>;
+        private cardContainer: JQuery;
 
         constructor(container: JQuery) {
             super(container);
-            
-            if (J.isMobile()) {
-                if (this.quickFiltersDiv) {
-                    this.quickFiltersDiv.hide();
-                }
 
+            $('body').addClass('sidebar-collapse');
+
+            $(".grid-title").hide();
+
+            if (this.quickFiltersDiv) {
+                this.quickFiltersDiv.hide();
+            }
+
+            if (J.isMobile()) {
+                
                 $(".s-QuickSearchInput").css("width", "110px");
                 $(".refresh-button").hide();
 
                 $(".tool-buttons").css("position", "fixed").css("z-index", "9998").css("right", "10px").css("bottom", "100px").css("background", "gray");
+
             } else {
                 $(".s-QuickSearchInput").css("width", "170px");
+            }
+
+            (function adjustContainerWidth() {
+                setTimeout(function () {
+                    if (!$(".card-container").hasClass("card-container-full-width")) {
+                        $(".card-container").addClass("card-container-full-width");
+                    }
+                    else {
+                        adjustContainerWidth();
+                    }
+                }, 100);
+            })();
+
+            if (J.isMobile()) {
+                (function adjustContainerHeight() {
+                    setTimeout(function () {
+                        if (!$(".card-container").hasClass("card-container-height-auto")) {
+                            $(".card-container").addClass("card-container-height-auto");
+                        }
+                        else {
+                            adjustContainerHeight();
+                        }
+                    }, 100);
+                })();
             }
         }
 
@@ -57,6 +88,23 @@ namespace SimpleFeedly.Rss {
                 grid: this,
                 rowPerPage: this.getPagerOptions().rowsPerPage
             });
+
+            var editItemEvt = this.editItem.bind(this);
+
+            this.element.children('.grid-container').empty().hide();
+
+            this.cardContainer = $('<div class="card-container"></div>')
+                .insertAfter(this.element.children('.grid-container'));
+
+            (this.view as any).onDataChanged.subscribe(() => {
+                this.updateItems(editItemEvt);
+            });
+
+            this.updateItems(editItemEvt);
+        }
+
+        private updateItems(editItemClickEvt: (item: RssFeedItemsRow) => void) {
+            ReactDOM.render(React.createElement(RssFeedCard, { items: this.getItems(), editItemClickEvt: editItemClickEvt }), this.cardContainer[0]);
         }
 
         protected getQuickFilters(): Serenity.QuickFilter<Serenity.Widget<any>, any>[] {
@@ -86,7 +134,6 @@ namespace SimpleFeedly.Rss {
             var buttons = super.getButtons();
 
             buttons.splice(Q.indexOf(buttons, x => x.cssClass == "add-button"), 1);
-
 
             buttons.unshift({
                 title: J.isMobile() ? '' : 'Mark as unread',
@@ -237,16 +284,16 @@ namespace SimpleFeedly.Rss {
                 });              
             }
 
-            if (J.isMobile()) {
-                buttons.push({
-                    title: '',
-                    icon: 'fa fa-filter text-blue',
-                    hint: 'Filters',
-                    onClick: () => {
-                        this.quickFiltersDiv.slideToggle();
-                    }
-                });
-            }
+            buttons.push({
+                title: '',
+                icon: 'fa fa-filter text-blue',
+                hint: 'Filters',
+                onClick: () => {
+                    this.quickFiltersDiv.slideToggle();
+                }
+            });
+
+            buttons.splice(Q.indexOf(buttons, x => x.cssClass == "column-picker-button"));
 
             return buttons;
         }

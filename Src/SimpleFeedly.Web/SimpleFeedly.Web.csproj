@@ -1700,6 +1700,7 @@
     <TypeScriptCompile Include="Modules\Rss\DemoReact\HelloReact.tsx" />
     <TypeScriptCompile Include="Modules\Rss\RssChannelsVerifier\RssChannelsVerifierForm.ts" />
     <TypeScriptCompile Include="Modules\Rss\RssFeedItems\Formatters\RssFeedImageFormatter.ts" />
+    <TypeScriptCompile Include="Modules\Rss\RssFeedItems\RssFeedCard.tsx" />
     <TypeScriptCompile Include="node_modules\%40types\jquery.blockui\index.d.ts" />
     <TypeScriptCompile Include="node_modules\%40types\jquery.cookie\index.d.ts" />
     <TypeScriptCompile Include="node_modules\%40types\jquery.validation\index.d.ts" />

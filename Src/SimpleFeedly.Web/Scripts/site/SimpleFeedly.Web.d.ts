@@ -1412,6 +1412,16 @@ declare namespace SimpleFeedly.Rss {
     }
 }
 declare namespace SimpleFeedly.Rss {
+    interface RssFeedCardProps {
+        items: RssFeedItemsRow[];
+        editItemClickEvt: (item: RssFeedItemsRow) => void;
+    }
+    class RssFeedCard extends React.Component<RssFeedCardProps> {
+        private getRandomColor;
+        render(): React.ReactNode;
+    }
+}
+declare namespace SimpleFeedly.Rss {
     class RssFeedItemsDialog extends Serenity.EntityDialog<RssFeedItemsRow, any> {
         protected getFormKey(): string;
         protected getIdProperty(): string;
@@ -1437,10 +1447,12 @@ declare namespace SimpleFeedly.Rss {
         protected getInsertPermission(): string;
         private rowSelection;
         private _pagerMixin;
+        private cardContainer;
         constructor(container: JQuery);
         getAddButtonCaption(): string;
         protected onViewSubmit(): boolean;
         protected createToolbarExtensions(): void;
+        private updateItems;
         protected getQuickFilters(): Serenity.QuickFilter<Serenity.Widget<any>, any>[];
         private getSelectedItems;
         protected getButtons(): Serenity.ToolButton[];

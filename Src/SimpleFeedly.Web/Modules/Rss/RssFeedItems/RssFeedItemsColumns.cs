@@ -34,7 +34,7 @@ namespace SimpleFeedly.Rss.Columns
         [Hidden, Sortable(false)]
         public String Link { get; set; }
         //public String Description { get; set; }
-        [SortOrder(1, true), Width(120)]
+        [SortOrder(1, true), Width(120), QuickFilter]
         public DateTime PublishingDate { get; set; }
         [Hidden, Sortable(false)]
         public String Author { get; set; }

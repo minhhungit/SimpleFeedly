@@ -3467,6 +3467,36 @@ var SimpleFeedly;
 (function (SimpleFeedly) {
     var Rss;
     (function (Rss) {
+        var RssFeedCard = /** @class */ (function (_super) {
+            __extends(RssFeedCard, _super);
+            function RssFeedCard() {
+                return _super !== null && _super.apply(this, arguments) || this;
+            }
+            RssFeedCard.prototype.getRandomColor = function () {
+                var randomColor = Math.floor(Math.random() * 16777215).toString(16);
+                return "#" + randomColor;
+            };
+            RssFeedCard.prototype.render = function () {
+                var _this = this;
+                return (React.createElement(React.Fragment, null,
+                    React.createElement("div", { className: "custom-card-items", style: { marginLeft: "-10px" } }, this.props.items.map(function (item, index) {
+                        return (React.createElement("div", { className: "custom-card-item col-md-12 col-md-6 col-md-3", key: item.Id, style: { marginTop: "5px", marginBottom: "5px", height: "138px" } },
+                            React.createElement("div", { style: { border: "solid 1px #ddd", padding: "10px", borderRadius: "5px", boxShadow: "5px 7px 15px #e2dfdf" } },
+                                React.createElement("a", { href: "javascript:void(0);", onClick: function () { _this.props.editItemClickEvt(item); return true; } },
+                                    React.createElement(SimpleFeedly.Common.MyReactImage, { src: item.CoverImageUrl == null ? "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==" : item.CoverImageUrl, fallbackSrc: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==", style: { width: "100%", minHeight: "90px", maxHeight: "92px", objectFit: "cover", backgroundColor: _this.getRandomColor(), border: "solid 1px #ececec" } })),
+                                React.createElement("a", { href: item.Link, target: "_blank" },
+                                    React.createElement("div", { style: { textAlign: "left", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", paddingTop: "6px", fontWeight: 600 } }, item.Title)))));
+                    }))));
+            };
+            return RssFeedCard;
+        }(React.Component));
+        Rss.RssFeedCard = RssFeedCard;
+    })(Rss = SimpleFeedly.Rss || (SimpleFeedly.Rss = {}));
+})(SimpleFeedly || (SimpleFeedly = {}));
+var SimpleFeedly;
+(function (SimpleFeedly) {
+    var Rss;
+    (function (Rss) {
         var RssFeedItemsDialog = /** @class */ (function (_super) {
             __extends(RssFeedItemsDialog, _super);
             function RssFeedItemsDialog() {
@@ -3546,16 +3576,40 @@ var SimpleFeedly;
             __extends(RssFeedItemsGrid, _super);
             function RssFeedItemsGrid(container) {
                 var _this = _super.call(this, container) || this;
+                $('body').addClass('sidebar-collapse');
+                $(".grid-title").hide();
+                if (_this.quickFiltersDiv) {
+                    _this.quickFiltersDiv.hide();
+                }
                 if (J.isMobile()) {
-                    if (_this.quickFiltersDiv) {
-                        _this.quickFiltersDiv.hide();
-                    }
                     $(".s-QuickSearchInput").css("width", "110px");
                     $(".refresh-button").hide();
                     $(".tool-buttons").css("position", "fixed").css("z-index", "9998").css("right", "10px").css("bottom", "100px").css("background", "gray");
                 }
                 else {
                     $(".s-QuickSearchInput").css("width", "170px");
+                }
+                (function adjustContainerWidth() {
+                    setTimeout(function () {
+                        if (!$(".card-container").hasClass("card-container-full-width")) {
+                            $(".card-container").addClass("card-container-full-width");
+                        }
+                        else {
+                            adjustContainerWidth();
+                        }
+                    }, 100);
+                })();
+                if (J.isMobile()) {
+                    (function adjustContainerHeight() {
+                        setTimeout(function () {
+                            if (!$(".card-container").hasClass("card-container-height-auto")) {
+                                $(".card-container").addClass("card-container-height-auto");
+                            }
+                            else {
+                                adjustContainerHeight();
+                            }
+                        }, 100);
+                    })();
                 }
                 return _this;
             }
@@ -3577,12 +3631,24 @@ var SimpleFeedly;
                 return true;
             };
             RssFeedItemsGrid.prototype.createToolbarExtensions = function () {
+                var _this = this;
                 _super.prototype.createToolbarExtensions.call(this);
                 this.rowSelection = new Serenity.GridRowSelectionMixin(this);
                 this._pagerMixin = new SimpleFeedly.Common.CustomPagerWithOnlyNextPreviousMixin({
                     grid: this,
                     rowPerPage: this.getPagerOptions().rowsPerPage
                 });
+                var editItemEvt = this.editItem.bind(this);
+                this.element.children('.grid-container').empty().hide();
+                this.cardContainer = $('<div class="card-container"></div>')
+                    .insertAfter(this.element.children('.grid-container'));
+                this.view.onDataChanged.subscribe(function () {
+                    _this.updateItems(editItemEvt);
+                });
+                this.updateItems(editItemEvt);
+            };
+            RssFeedItemsGrid.prototype.updateItems = function (editItemClickEvt) {
+                ReactDOM.render(React.createElement(Rss.RssFeedCard, { items: this.getItems(), editItemClickEvt: editItemClickEvt }), this.cardContainer[0]);
             };
             RssFeedItemsGrid.prototype.getQuickFilters = function () {
                 var filters = _super.prototype.getQuickFilters.call(this);
@@ -3730,16 +3796,15 @@ var SimpleFeedly;
                         }
                     });
                 }
-                if (J.isMobile()) {
-                    buttons.push({
-                        title: '',
-                        icon: 'fa fa-filter text-blue',
-                        hint: 'Filters',
-                        onClick: function () {
-                            _this.quickFiltersDiv.slideToggle();
-                        }
-                    });
-                }
+                buttons.push({
+                    title: '',
+                    icon: 'fa fa-filter text-blue',
+                    hint: 'Filters',
+                    onClick: function () {
+                        _this.quickFiltersDiv.slideToggle();
+                    }
+                });
+                buttons.splice(Q.indexOf(buttons, function (x) { return x.cssClass == "column-picker-button"; }));
                 return buttons;
             };
             RssFeedItemsGrid.prototype.getColumns = function () {
