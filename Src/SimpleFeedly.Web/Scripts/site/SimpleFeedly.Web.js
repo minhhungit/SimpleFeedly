@@ -3576,6 +3576,8 @@ var SimpleFeedly;
             __extends(RssFeedItemsGrid, _super);
             function RssFeedItemsGrid(container) {
                 var _this = _super.call(this, container) || this;
+                _this.nbrNotCheckedItems = $("<span style=\"margin-left: 10px; font-size: 20px; color: #f1f1f1; display: none; line-height: 50px; border: dashed 1px #DDD; padding: 2px\" />");
+                _this.nbrNotCheckedItems.insertAfter($(".sidebar-toggle"));
                 $('body').addClass('sidebar-collapse');
                 $(".grid-title").hide();
                 if (_this.quickFiltersDiv) {
@@ -3624,6 +3626,11 @@ var SimpleFeedly;
             };
             RssFeedItemsGrid.prototype.onViewSubmit = function () {
                 if (!_super.prototype.onViewSubmit.call(this)) {
+                    return false;
+                }
+                // in the first times it will load data for grid view, we just need to call endpoint to load data for card view
+                if (typeof this.isCalled == 'undefined') {
+                    this.isCalled = true;
                     return false;
                 }
                 var request = this.view.params;
@@ -3890,7 +3897,8 @@ var SimpleFeedly;
                 var _this = this;
                 var result = _super.prototype.onViewProcessData.call(this, response);
                 Rss.RssFeedItemsService.GetFeedItemCheckedState({}, function (res) {
-                    _this.titleDiv.find(".title-text").text("Feed Items (" + res.UnCheckedItems + " unchecked)");
+                    //this.titleDiv.find(".title-text").text("Feed Items (" + res.UnCheckedItems + " unchecked)");
+                    _this.nbrNotCheckedItems.text("" + res.UnCheckedItems).fadeIn('slow');
                 });
                 this._pagerMixin.updateNextButton(result.Entities.length, response.Take);
                 return result;

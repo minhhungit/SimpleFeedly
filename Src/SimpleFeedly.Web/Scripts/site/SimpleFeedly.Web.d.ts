@@ -1448,6 +1448,8 @@ declare namespace SimpleFeedly.Rss {
         private rowSelection;
         private _pagerMixin;
         private cardContainer;
+        private nbrNotCheckedItems;
+        private isCalled;
         constructor(container: JQuery);
         getAddButtonCaption(): string;
         protected onViewSubmit(): boolean;

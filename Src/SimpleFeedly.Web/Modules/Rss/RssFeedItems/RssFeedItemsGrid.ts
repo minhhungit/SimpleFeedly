@@ -17,9 +17,14 @@ namespace SimpleFeedly.Rss {
         private rowSelection: Serenity.GridRowSelectionMixin;
         private _pagerMixin: Common.CustomPagerWithOnlyNextPreviousMixin<RssFeedItemsRow>;
         private cardContainer: JQuery;
+        private nbrNotCheckedItems: JQuery = $(`<span style="margin-left: 10px; font-size: 20px; color: #f1f1f1; display: none; line-height: 50px; border: dashed 1px #DDD; padding: 2px" />`);
+
+        private isCalled: boolean;
 
         constructor(container: JQuery) {
             super(container);
+
+            this.nbrNotCheckedItems.insertAfter($(".sidebar-toggle"));
 
             $('body').addClass('sidebar-collapse');
 
@@ -73,6 +78,13 @@ namespace SimpleFeedly.Rss {
             if (!super.onViewSubmit()) {
                 return false;
             }
+
+            // in the first times it will load data for grid view, we just need to call endpoint to load data for card view
+            if (typeof this.isCalled == 'undefined') {
+                this.isCalled = true;
+                return false;
+            }
+
             var request = this.view.params as Common.MyBaseListRequest;
             request.EnableOnlyNextPreviousMode = this._pagerMixin.getCurrentPagerMode() == 'next-previous-only';
             return true;
@@ -399,7 +411,9 @@ namespace SimpleFeedly.Rss {
             var result = super.onViewProcessData(response);
 
             RssFeedItemsService.GetFeedItemCheckedState({}, res => {
-                this.titleDiv.find(".title-text").text("Feed Items (" + res.UnCheckedItems + " unchecked)");
+                //this.titleDiv.find(".title-text").text("Feed Items (" + res.UnCheckedItems + " unchecked)");
+
+                this.nbrNotCheckedItems.text(`${res.UnCheckedItems}`).fadeIn('slow');
             });
 
             this._pagerMixin.updateNextButton(result.Entities.length, response.Take);
