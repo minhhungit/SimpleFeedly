@@ -79,11 +79,11 @@ namespace SimpleFeedly.Rss {
                 return false;
             }
 
-            // in the first times it will load data for grid view, we just need to call endpoint to load data for card view
-            if (typeof this.isCalled == 'undefined') {
-                this.isCalled = true;
-                return false;
-            }
+            //// in the first times it will load data for grid view, we just need to call endpoint to load data for card view
+            //if (typeof this.isCalled == 'undefined') {
+            //    this.isCalled = true;
+            //    return false;
+            //}
 
             var request = this.view.params as Common.MyBaseListRequest;
             request.EnableOnlyNextPreviousMode = this._pagerMixin.getCurrentPagerMode() == 'next-previous-only';
