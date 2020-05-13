@@ -11,8 +11,9 @@
             return `#${randomColor}`;
         }
 
-
         render(): React.ReactNode {
+
+            let bkImage = "/Content/site/images/tech-ph.png";
             return (
                 <React.Fragment>
                     <div className="custom-card-items" style={{ marginLeft: "-10px" }}>
@@ -22,8 +23,9 @@
                                     <div style={{ border: "solid 1px #ddd", padding: "10px", borderRadius: "5px", boxShadow: "5px 7px 15px #e2dfdf" }}>
                                         <a href="javascript:void(0);" onClick={() => { this.props.editItemClickEvt(item); return true; }}>
                                             <Common.MyReactImage
-                                                src={item.CoverImageUrl == null ? "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==" : item.CoverImageUrl}
-                                                fallbackSrc="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+                                                src={item.CoverImageUrl == null ? bkImage : item.CoverImageUrl}
+                                                //fallbackSrc="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+                                                fallbackSrc={bkImage}
                                                 style={{ width: "100%", minHeight: "90px", maxHeight: "92px", objectFit: "cover", backgroundColor: this.getRandomColor(), border: "solid 1px #ececec" }}
                                             />
                                         </a>

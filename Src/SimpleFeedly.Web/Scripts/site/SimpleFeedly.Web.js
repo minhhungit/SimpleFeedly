@@ -3478,12 +3478,15 @@ var SimpleFeedly;
             };
             RssFeedCard.prototype.render = function () {
                 var _this = this;
+                var bkImage = "/Content/site/images/tech-ph.png";
                 return (React.createElement(React.Fragment, null,
                     React.createElement("div", { className: "custom-card-items", style: { marginLeft: "-10px" } }, this.props.items.map(function (item, index) {
                         return (React.createElement("div", { className: "custom-card-item col-md-12 col-md-6 col-md-3", key: item.Id, style: { marginTop: "5px", marginBottom: "5px", height: "138px" } },
                             React.createElement("div", { style: { border: "solid 1px #ddd", padding: "10px", borderRadius: "5px", boxShadow: "5px 7px 15px #e2dfdf" } },
                                 React.createElement("a", { href: "javascript:void(0);", onClick: function () { _this.props.editItemClickEvt(item); return true; } },
-                                    React.createElement(SimpleFeedly.Common.MyReactImage, { src: item.CoverImageUrl == null ? "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==" : item.CoverImageUrl, fallbackSrc: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==", style: { width: "100%", minHeight: "90px", maxHeight: "92px", objectFit: "cover", backgroundColor: _this.getRandomColor(), border: "solid 1px #ececec" } })),
+                                    React.createElement(SimpleFeedly.Common.MyReactImage, { src: item.CoverImageUrl == null ? bkImage : item.CoverImageUrl, 
+                                        //fallbackSrc="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+                                        fallbackSrc: bkImage, style: { width: "100%", minHeight: "90px", maxHeight: "92px", objectFit: "cover", backgroundColor: _this.getRandomColor(), border: "solid 1px #ececec" } })),
                                 React.createElement("a", { href: item.Link, target: "_blank" },
                                     React.createElement("div", { style: { textAlign: "left", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", paddingTop: "6px", fontWeight: 600 } }, item.Title)))));
                     }))));
