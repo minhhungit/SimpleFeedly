@@ -3481,9 +3481,11 @@ var SimpleFeedly;
                 var bkImage = "/Content/site/images/tech-ph.png";
                 return (React.createElement(React.Fragment, null,
                     React.createElement("div", { className: "custom-card-items", style: { marginLeft: "-10px" } }, this.props.items.map(function (item, index) {
-                        return (React.createElement("div", { className: "custom-card-item col-md-12 col-md-6 col-md-3", key: item.Id, style: { marginTop: "5px", marginBottom: "5px", height: "138px" } },
+                        return (React.createElement("div", { className: "custom-card-item col-md-12 col-md-6 col-md-3", key: item.Id, style: { marginTop: "5px", marginBottom: "5px", height: "138px", position: "relative" } },
+                            React.createElement("div", { style: { border: "dashed 1px #ccc", borderTop: "none", borderRight: "none", position: "absolute", top: "11px", right: "26px", padding: "0 0 2px 3px", borderBottomLeftRadius: "3px", backgroundColor: "#fff" } },
+                                React.createElement("span", { className: "fa fa-pencil-square fa-lg text-purple", onClick: function () { _this.props.editItemClickEvt(item); return true; }, style: { cursor: "pointer", opacity: "0.9" } })),
                             React.createElement("div", { style: { border: "solid 1px #ddd", padding: "10px", borderRadius: "5px", boxShadow: "5px 7px 15px #e2dfdf" } },
-                                React.createElement("a", { href: "javascript:void(0);", onClick: function () { _this.props.editItemClickEvt(item); return true; } },
+                                React.createElement("a", { href: item.Link, target: "_blank" },
                                     React.createElement(SimpleFeedly.Common.MyReactImage, { src: item.CoverImageUrl == null ? bkImage : item.CoverImageUrl, 
                                         //fallbackSrc="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
                                         fallbackSrc: bkImage, style: { width: "100%", minHeight: "90px", maxHeight: "92px", objectFit: "cover", backgroundColor: _this.getRandomColor(), border: "solid 1px #ececec" } })),

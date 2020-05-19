@@ -19,9 +19,10 @@
                     <div className="custom-card-items" style={{ marginLeft: "-10px" }}>
                         {this.props.items.map((item, index) => {
                             return (
-                                <div className="custom-card-item col-md-12 col-md-6 col-md-3" key={item.Id} style={{ marginTop: "5px", marginBottom: "5px", height: "138px" }}>
+                                <div className="custom-card-item col-md-12 col-md-6 col-md-3" key={item.Id} style={{ marginTop: "5px", marginBottom: "5px", height: "138px", position: "relative" }}>
+                                    <div style={{ border: "dashed 1px #ccc", borderTop: "none", borderRight: "none", position: "absolute", top: "11px", right: "26px", padding: "0 0 2px 3px", borderBottomLeftRadius: "3px", backgroundColor: "#fff" }}><span className="fa fa-pencil-square fa-lg text-purple" onClick={() => { this.props.editItemClickEvt(item); return true; }} style={{ cursor: "pointer", opacity: "0.9" }}></span></div>
                                     <div style={{ border: "solid 1px #ddd", padding: "10px", borderRadius: "5px", boxShadow: "5px 7px 15px #e2dfdf" }}>
-                                        <a href="javascript:void(0);" onClick={() => { this.props.editItemClickEvt(item); return true; }}>
+                                        <a href={item.Link} target="_blank">
                                             <Common.MyReactImage
                                                 src={item.CoverImageUrl == null ? bkImage : item.CoverImageUrl}
                                                 //fallbackSrc="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
