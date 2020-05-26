@@ -22,6 +22,18 @@ namespace SimpleFeedly.DbUpdater.Migrations.SimpleFeedlyDb
                 INCLUDE([ChannelId]) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
                 GO
             ");
+
+
+            Execute.Sql(@"
+                DROP INDEX IF EXISTS [idx_RssFeedItems_IsChecked] ON [dbo].[RssFeedItems]
+                GO
+
+                CREATE NONCLUSTERED INDEX [idx_RssFeedItems_IsChecked] ON [dbo].[RssFeedItems]
+                (
+	                [IsChecked] ASC
+                )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+                GO
+            ");
         }
 
         public override void Down()
