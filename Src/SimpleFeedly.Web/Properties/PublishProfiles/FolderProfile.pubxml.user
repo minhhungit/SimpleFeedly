@@ -1915,7 +1915,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/25/2020 15:42:29</publishTime>
     </File>
     <File Include="Content/site/site.css">
-      <publishTime>06/10/2020 22:46:55</publishTime>
+      <publishTime>11/07/2020 20:03:07</publishTime>
     </File>
     <File Include="Content/site/site.htmlcontent.css">
       <publishTime>04/25/2020 15:42:30</publishTime>
@@ -1936,7 +1936,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/25/2020 15:42:31</publishTime>
     </File>
     <File Include="Content/site/site.theme.less">
-      <publishTime>04/25/2020 15:42:32</publishTime>
+      <publishTime>11/07/2020 19:45:15</publishTime>
     </File>
     <File Include="Content/site/slides/slide1.jpg">
       <publishTime>04/25/2020 15:42:32</publishTime>
@@ -1946,6 +1946,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Content/site/slides/slide3.jpg">
       <publishTime>04/25/2020 15:42:32</publishTime>
+    </File>
+    <File Include="Content/skins/dark001/theme.less">
+      <publishTime>11/07/2020 20:02:58</publishTime>
     </File>
     <File Include="Content/slick-default-theme.css">
       <publishTime>04/25/2020 15:42:33</publishTime>
@@ -3790,7 +3793,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/25/2020 15:45:27</publishTime>
     </File>
     <File Include="Scripts/site/SimpleFeedly.Web.js">
-      <publishTime>08/15/2020 07:08:22</publishTime>
+      <publishTime>11/07/2020 19:57:36</publishTime>
     </File>
     <File Include="Scripts/site/texts/site.texts.de.json">
       <publishTime>04/25/2020 15:45:28</publishTime>
@@ -4174,13 +4177,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/12/2020 03:39:45</publishTime>
     </File>
     <File Include="Views/Shared/LeftNavigation.cshtml">
-      <publishTime>04/25/2020 15:46:06</publishTime>
+      <publishTime>11/07/2020 19:48:57</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>05/26/2020 22:38:16</publishTime>
+      <publishTime>11/07/2020 19:49:16</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutHead.cshtml">
-      <publishTime>04/12/2020 03:39:45</publishTime>
+      <publishTime>11/07/2020 19:49:05</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutNoNavigation.cshtml">
       <publishTime>04/25/2020 15:46:06</publishTime>

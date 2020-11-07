@@ -1,4 +1,5 @@
 ﻿/// <reference path="../Common/Helpers/LanguageList.ts" />
+/// <reference path="Helpers/J.initSkins.ts" />
 
 namespace SimpleFeedly.ScriptInitialization {
     Q.Config.responsiveDialogs = true;
@@ -9,6 +10,8 @@ namespace SimpleFeedly.ScriptInitialization {
         $.fn['colorbox'].settings.maxWidth = "95%";
         $.fn['colorbox'].settings.maxHeight = "95%";
     }
+
+    J.initSkins();
 
     window.onerror = Q.ErrorHandling.runtimeErrorHandler;
 }   

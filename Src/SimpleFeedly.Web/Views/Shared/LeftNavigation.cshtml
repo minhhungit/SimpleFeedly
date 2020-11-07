@@ -60,3 +60,18 @@ path[depth]++;
             ", scrollbars=1, resizable=yes, left=" + x + ", top=" + y);
     }
 </script>
+
+<script type="text/javascript">
+    (function modifySlimScrollbar() {
+        setTimeout(() => {
+            if ($(".slimScrollBar") && $(".slimScrollBar").width() < 8) {
+                $(".slimScrollBar").css("width", "8px");
+                $(".slimScrollBar").css("background-color", "#3291c7");
+                $(".slimScrollBar").css("margin-right", "1px");
+                $(".slimScrollBar").hide(200);
+            } else {
+                modifySlimScrollbar();
+            }
+        }, 10);
+    })();
+</script>

@@ -220,7 +220,7 @@ namespace SimpleFeedly.Rss {
 
             buttons.splice(0, 0, {
                 title: J.isMobile() ? '' : 'Page as read',
-                cssClass: 'text-green text-bold',
+                cssClass: 'text-green',
                 icon: 'fa fa-check-square-o',
                 separator: 'right',
                 hint: 'Mark this page as read',
@@ -258,7 +258,7 @@ namespace SimpleFeedly.Rss {
             if (!J.isMobile()) {
                 buttons.splice(1, 0, {
                     title: J.isMobile() ? '' : 'Block',
-                    cssClass: 'text-red text-bold',
+                    cssClass: 'text-red',
                     icon: 'fa fa-ban',
                     separator: 'right',
                     hint: 'Block feed items',

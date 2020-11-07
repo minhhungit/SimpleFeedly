@@ -972,6 +972,7 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\skins\dark001\theme.less" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1507,6 +1508,7 @@
       <DependentUpon>ClientTypes.tt</DependentUpon>
     </Content>
     <TypeScriptCompile Include="Modules\Common\Formatters\CustomLookupFormatter.ts" />
+    <TypeScriptCompile Include="Modules\Common\Helpers\J.initSkins.ts" />
     <TypeScriptCompile Include="Modules\Common\Helpers\J.ts" />
     <TypeScriptCompile Include="Modules\Common\Helpers\StaticTextBlock.ts" />
     <TypeScriptCompile Include="Modules\Administration\Language\LanguageDialog.ts" />
@@ -1931,6 +1933,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\skins\dark001\assets\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

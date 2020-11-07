@@ -1715,7 +1715,51 @@ var SimpleFeedly;
         LanguageList.getValue = getValue;
     })(LanguageList = SimpleFeedly.LanguageList || (SimpleFeedly.LanguageList = {}));
 })(SimpleFeedly || (SimpleFeedly = {}));
+var J;
+(function (J) {
+    function createCookie(name, value, days) {
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            var expires = "; expires=" + date.toUTCString();
+        }
+        else
+            var expires = "";
+        document.cookie = name + "=" + value + expires + "; path=/";
+    }
+    J.createCookie = createCookie;
+    function readCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ')
+                c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0)
+                return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+    J.readCookie = readCookie;
+    function eraseCookie(name) {
+        createCookie(name, "", -1);
+    }
+    J.eraseCookie = eraseCookie;
+    function initSkins() {
+        var curSkinClass = readCookie("ThemePreference") || "blue";
+        //console.log(curSkinClass);
+        switch (curSkinClass.toLowerCase().trim()) {
+            case "dark-001":
+                Serenity.DataGrid.defaultRowHeight = 30;
+                Serenity.DataGrid.defaultHeaderHeight = 30;
+                break;
+            default:
+        }
+    }
+    J.initSkins = initSkins;
+})(J || (J = {}));
 /// <reference path="../Common/Helpers/LanguageList.ts" />
+/// <reference path="Helpers/J.initSkins.ts" />
 var SimpleFeedly;
 (function (SimpleFeedly) {
     var ScriptInitialization;
@@ -1727,6 +1771,7 @@ var SimpleFeedly;
             $.fn['colorbox'].settings.maxWidth = "95%";
             $.fn['colorbox'].settings.maxHeight = "95%";
         }
+        J.initSkins();
         window.onerror = Q.ErrorHandling.runtimeErrorHandler;
     })(ScriptInitialization = SimpleFeedly.ScriptInitialization || (SimpleFeedly.ScriptInitialization = {}));
 })(SimpleFeedly || (SimpleFeedly = {}));
@@ -2598,6 +2643,7 @@ var SimpleFeedly;
                     $('body').addClass('skin-' + theme)
                         .toggleClass('dark-sidebar', darkSidebar)
                         .toggleClass('light-sidebar', !darkSidebar);
+                    window.location.reload();
                 });
                 Q.addOption(select, 'blue', Q.text('Site.Layout.ThemeBlue'));
                 Q.addOption(select, 'blue-light', Q.text('Site.Layout.ThemeBlueLight'));
@@ -2611,6 +2657,7 @@ var SimpleFeedly;
                 Q.addOption(select, 'yellow-light', Q.text('Site.Layout.ThemeYellowLight'));
                 Q.addOption(select, 'black', Q.text('Site.Layout.ThemeBlack'));
                 Q.addOption(select, 'black-light', Q.text('Site.Layout.ThemeBlackLight'));
+                Q.addOption(select, 'dark-001', Q.text('Site.Layout.Dark001'));
                 select.val(_this.getCurrentTheme());
                 return _this;
             }
@@ -3746,7 +3793,7 @@ var SimpleFeedly;
                 });
                 buttons.splice(0, 0, {
                     title: J.isMobile() ? '' : 'Page as read',
-                    cssClass: 'text-green text-bold',
+                    cssClass: 'text-green',
                     icon: 'fa fa-check-square-o',
                     separator: 'right',
                     hint: 'Mark this page as read',
@@ -3777,7 +3824,7 @@ var SimpleFeedly;
                 if (!J.isMobile()) {
                     buttons.splice(1, 0, {
                         title: J.isMobile() ? '' : 'Block',
-                        cssClass: 'text-red text-bold',
+                        cssClass: 'text-red',
                         icon: 'fa fa-ban',
                         separator: 'right',
                         hint: 'Block feed items',
