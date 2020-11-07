@@ -3628,7 +3628,7 @@ var SimpleFeedly;
             __extends(RssFeedItemsGrid, _super);
             function RssFeedItemsGrid(container) {
                 var _this = _super.call(this, container) || this;
-                _this.nbrNotCheckedItems = $("<span style=\"margin-left: 10px; font-size: 20px; color: #f1f1f1; display: none; line-height: 50px; border: dashed 1px #DDD; padding: 2px\" />");
+                _this.nbrNotCheckedItems = $("<span style=\"margin-left: 10px; font-size: 20px; color: #4eaee6; display: none; line-height: 50px; border: dashed 1px #DDD; padding: 2px\" />");
                 _this.nbrNotCheckedItems.insertAfter($(".sidebar-toggle"));
                 $('body').addClass('sidebar-collapse');
                 $(".grid-title").hide();

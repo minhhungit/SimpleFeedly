@@ -112,19 +112,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/12/2020 14:39:20</publishTime>
     </File>
     <File Include="bin/SimpleFeedly.Core.dll">
-      <publishTime>11/07/2020 19:36:28</publishTime>
+      <publishTime>11/07/2020 20:15:30</publishTime>
     </File>
     <File Include="bin/SimpleFeedly.Core.dll.config">
       <publishTime>05/01/2020 10:33:05</publishTime>
     </File>
     <File Include="bin/SimpleFeedly.Core.pdb">
-      <publishTime>11/07/2020 19:36:28</publishTime>
+      <publishTime>11/07/2020 20:15:30</publishTime>
     </File>
     <File Include="bin/SimpleFeedly.Web.dll">
-      <publishTime>11/07/2020 19:36:29</publishTime>
+      <publishTime>11/07/2020 20:15:32</publishTime>
     </File>
     <File Include="bin/SimpleFeedly.Web.pdb">
-      <publishTime>11/07/2020 19:36:29</publishTime>
+      <publishTime>11/07/2020 20:15:32</publishTime>
     </File>
     <File Include="bin/StackExchange.Exceptional.dll">
       <publishTime>03/31/2017 08:00:42</publishTime>
@@ -3793,7 +3793,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/25/2020 15:45:27</publishTime>
     </File>
     <File Include="Scripts/site/SimpleFeedly.Web.js">
-      <publishTime>11/07/2020 19:57:36</publishTime>
+      <publishTime>11/07/2020 20:18:24</publishTime>
     </File>
     <File Include="Scripts/site/texts/site.texts.de.json">
       <publishTime>04/25/2020 15:45:28</publishTime>
@@ -4207,7 +4207,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/12/2020 03:39:45</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>11/07/2020 19:36:30</publishTime>
+      <publishTime>11/07/2020 20:18:33</publishTime>
     </File>
     <File Include="Welcome.htm">
       <publishTime>04/17/2020 14:22:44</publishTime>

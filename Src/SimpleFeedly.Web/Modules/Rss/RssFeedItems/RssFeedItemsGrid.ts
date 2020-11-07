@@ -17,7 +17,7 @@ namespace SimpleFeedly.Rss {
         private rowSelection: Serenity.GridRowSelectionMixin;
         private _pagerMixin: Common.CustomPagerWithOnlyNextPreviousMixin<RssFeedItemsRow>;
         private cardContainer: JQuery;
-        private nbrNotCheckedItems: JQuery = $(`<span style="margin-left: 10px; font-size: 20px; color: #f1f1f1; display: none; line-height: 50px; border: dashed 1px #DDD; padding: 2px" />`);
+        private nbrNotCheckedItems: JQuery = $(`<span style="margin-left: 10px; font-size: 20px; color: #4eaee6; display: none; line-height: 50px; border: dashed 1px #DDD; padding: 2px" />`);
 
         private isCalled: boolean;
 
